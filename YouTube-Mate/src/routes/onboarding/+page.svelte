@@ -1,11 +1,12 @@
 <script lang="ts">
+import { LL } from '$lib/i18n/i18n-svelte';
 import { enhance } from '$app/forms';  
-import { FileButton } from '@skeletonlabs/skeleton';
+import { Avatar, FileButton } from '@skeletonlabs/skeleton';
 
 let files: FileList;
 </script>
 
-<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+<p>{ $LL.onboarding.messages.main() }</p>
 <form
   class="pt-4"
   method="POST"
@@ -14,14 +15,14 @@ let files: FileList;
   }}
 >
   <label for="name">
-    <span>Username</span>
+    <span>{ $LL.onboarding.labels.username() }</span>
     <input type="text" id="username" value="sedat" minlength="4" required>
   </label>
-  <p class="my-4">Lorem Ipsum is not simply random text.</p>
+  <p class="my-4">{ $LL.onboarding.messages.avatar() }</p>
   <div class="flex justify-center">
-    <FileButton bind:files button="btn variant-filled-surface">Upload File</FileButton>
+    <FileButton bind:files button="btn variant-filled-surface">{ $LL.onboarding.labels.uploadFile() }</FileButton>
   </div>
-  <p class="pt-4">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+  <p class="pt-4">{ $LL.onboarding.messages.final() }</p>
   <div class="flex justify-end my-4">
     <button class="btn variant-filled-success btn-base">Lets Go!</button>
   </div>
