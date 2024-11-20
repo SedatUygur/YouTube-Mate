@@ -1,6 +1,11 @@
 <script lang="ts">
 	import '../app.postcss';
 	import { AppBar, AppShell, LightSwitch } from '@skeletonlabs/skeleton';
+  import { setLocale } from '$lib/i18n/i18n-svelte.ts';
+	import type { LayoutData } from './$types.js';
+	
+  export let data: LayoutData;
+	setLocale(data.locale);
 </script>
 
 <div class="grid grid-rows-[auto_1fr_auto]">
