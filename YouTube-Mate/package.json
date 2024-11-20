@@ -48,5 +48,28 @@
 	},
 	"dependencies": {
 		"@prisma/client": "^5.22.0"
+	},
+	"license": "MIT",
+	"engines": {
+		"npm": ">= 7.0.0",
+		"yarn": "Please use npm instead of yarn.",
+		"pnpm": "Please use npm instead of pnpm."
+	},
+	"bugs": {
+		"url": "https://github.com/SedatUygur/YouTube-Mate/issues"
+	},
+	"keywords": [
+		"YouTube",
+		"YouTubeMate",
+		"YouTube Mate",
+		"YouTube-Mate",
+		"svelte",
+		"typescript",
+		"tailwindcss"
+	],
+	"author": "Sedat Uygur ('https://github.com/SedatUygur')",
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:SedatUygur/YouTube-Mate.git"
 	}
 }
