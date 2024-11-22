@@ -2,9 +2,9 @@
 
 When contributing to `YouTube-Mate`, whether on GitHub or in other community spaces:
 
-- Be respectful, civil, and open-minded.
-- Before opening a new pull request, try searching through the [issue tracker](https://github.com/SedatUygur/YouTube-Mate/issues) for known issues or fixes.
-- If you want to make code changes based on your personal opinion(s), make sure you open an issue first describing the changes you want to make, and open a pull request only when your suggestions get approved by maintainers.
+-   Be respectful, civil, and open-minded.
+-   Before opening a new pull request, try searching through the [issue tracker](https://github.com/SedatUygur/YouTube-Mate/issues) for known issues or fixes.
+-   If you want to make code changes based on your personal opinion(s), make sure you open an issue first describing the changes you want to make, and open a pull request only when your suggestions get approved by maintainers.
 
 ## How to Contribute
 
@@ -15,7 +15,6 @@ In an effort to respect your time, if you wanted to implement a change that has 
 ### Setup your environment
 
 Fork the [YouTube-Mate repository](https://github.com/SedatUygur/YouTube-Mate) to your own GitHub account and then clone it to your local device.
-
 
 ```bash
 git clone git@github.com:YOUR_USER_NAME/YouTube-Mate.git
@@ -47,6 +46,7 @@ DB_PASS=your_database_password
 DB_NAME=your_database_name
 DATABASE_URL=postgresql://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
 ```
+
 If you are using Docker, you can use the following values:
 
 ```bash
@@ -58,7 +58,7 @@ DB_NAME=youtubemate
 DB_PORT=5432
 ```
 
-* DATABASE_URL: The full database connection URL. This is required and is used by prisma.
+-   DATABASE_URL: The full database connection URL. This is required and is used by prisma.
 
 #### Set up PostgreSQL by Docker Compose
 
@@ -101,7 +101,7 @@ git push
 ```
 
 Then, [create a pull request](https://github.com/SedatUygur/YouTube-Mate/pulls)
- from your fork to the `main` branch of the `YouTube-Mate` repository.
+from your fork to the `main` branch of the `YouTube-Mate` repository.
 
 ## Code Style
 

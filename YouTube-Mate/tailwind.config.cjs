@@ -1,5 +1,5 @@
 // 1. Import the Skeleton plugin
-const { skeleton } = require('@skeletonlabs/tw-plugin');
+import { skeleton } from '@skeletonlabs/tw-plugin';
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -8,10 +8,11 @@ module.exports = {
 	content: [
 		'./src/**/*.{html,js,svelte,ts}',
 		// 3. Append the path to the Skeleton package
-		require('path').join(require.resolve(
-			'@skeletonlabs/skeleton'),
+		// eslint-disable-next-line @typescript-eslint/no-require-imports
+		require('path').join(
+			require.resolve('@skeletonlabs/skeleton'),
 			'../**/*.{html,js,svelte,ts}'
-		)
+		),
 	],
 	theme: {
 		extend: {},
@@ -19,7 +20,7 @@ module.exports = {
 	plugins: [
 		// 4. Append the Skeleton plugin (after other plugins)
 		skeleton({
-			themes: { preset: [ "skeleton" ] }
-		})
-	]
-}
+			themes: { preset: ['skeleton'] },
+		}),
+	],
+};

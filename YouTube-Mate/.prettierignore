@@ -1,4 +1,15 @@
-# Package Managers
-package-lock.json
+.DS_Store
+node_modules
+/build
+/.svelte-kit
+/package
+.typesafe-i18n.json
+.env
+.env.*
+!.env.example
+!*.cjs
+src/lib/i18n/*.ts
+# Ignore files for PNPM, NPM and YARN
 pnpm-lock.yaml
+package-lock.json
 yarn.lock

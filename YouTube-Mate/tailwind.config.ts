@@ -12,18 +12,18 @@ const config = {
 	content: [
 		'./src/**/*.{html,js,svelte,ts}',
 		// 3. Append the path to the Skeleton package
-		join(require.resolve(
-			'@skeletonlabs/skeleton'),
-			'../**/*.{html,js,svelte,ts}'
-		)
+		join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts}'),
 	],
 	theme: {
 		extend: {},
 	},
 	plugins: [
 		// 4. Append the Skeleton plugin (after other plugins)
-		skeleton, typography, forms, containerQueries
-	]
+		skeleton,
+		typography,
+		forms,
+		containerQueries,
+	],
 } satisfies Config;
 
 export default config;
