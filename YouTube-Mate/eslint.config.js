@@ -1,4 +1,3 @@
-import prettier from 'eslint-config-prettier';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import eslint from '@eslint/js';
 import svelte from 'eslint-plugin-svelte';
@@ -16,7 +15,6 @@ export default tseslint.config(
 	...tseslint.configs.strictTypeChecked, // a superset of recommended that includes more opinionated rules which may also catch bugs.
 	...tseslint.configs.stylisticTypeChecked, // additional rules that enforce consistent styling without significantly catching bugs or changing logic.
 	...svelte.configs['flat/recommended'],
-	prettier,
 	...svelte.configs['flat/prettier'],
 	eslintPluginPrettierRecommended,
 	{

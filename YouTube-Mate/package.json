@@ -8,13 +8,14 @@
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"format": "prettier --plugin-search-dir . --write .",
-		"lint": "eslint . --fix",
+		"lint": "eslint .",
+		"lint:fix": "eslint . --fix",
+		"format": "prettier --plugin-search-dir . --check .",
+		"format:fix": "prettier --plugin-search-dir . --write .",
 		"test:unit": "vitest",
 		"test": "standard && npm run test:unit -- --run && npm run test:e2e",
 		"test:e2e": "playwright test",
-		"typesafe-i18n": "typesafe-i18n",
-		"prepare": "husky"
+		"prepare": "husky install"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.45.3",
