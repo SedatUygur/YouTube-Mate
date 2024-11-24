@@ -27,11 +27,14 @@ export default tseslint.config(
 	},
 	{
 		ignores: [
-			'build/',
-			'package/',
 			'.svelte-kit/',
+			'build/',
 			'dist/',
+			'docker-data/',
 			'node_modules',
+			'package/',
+			'src/lib/i18n/*.ts',
+			'src/demo.*.ts',
 			'*.cjs',
 			'*.config.js',
 			'*.config.ts',
@@ -40,8 +43,6 @@ export default tseslint.config(
 			'.DS_Store',
 			'.env',
 			'.env.*',
-			'src/lib/i18n/*.ts',
-			'src/demo.*.ts',
 		],
 	},
 	{

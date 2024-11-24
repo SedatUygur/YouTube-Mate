@@ -21,3 +21,10 @@ body:
           placeholder: I would like to see...
       validations:
           required: true
+    - type: checkboxes
+      id: searched
+      attributes:
+          label: Have you checked if this issue has already been raised?
+          options:
+            - label: I did not find any similar issues
+            required: true

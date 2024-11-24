@@ -1,12 +1,13 @@
 .DS_Store
+docker-data/
 node_modules
 /build
-/.svelte-kit
 /package
-.typesafe-i18n.json
+/.svelte-kit
 .env
 .env.*
 !.env.example
+.typesafe-i18n.json
 !*.cjs
 src/lib/i18n/*.ts
 # Ignore files for PNPM, NPM and YARN
