@@ -1,6 +1,7 @@
 <script lang="ts">
+	import { SignIn } from '@auth/sveltekit/components';
 	import { LL } from '../lib/i18n/i18n-svelte.ts';
-	import { IconBrandYoutubeFilled } from '@tabler/icons-svelte';
+	//import { IconBrandYoutubeFilled } from '@tabler/icons-svelte';
 </script>
 
 <div class="hero-container flex flex-col items-center justify-center p-4">
@@ -16,8 +17,9 @@
 		uncover many web sites still in their infancy. Various versions have evolved over the years,
 		sometimes by accident, sometimes on purpose (injected humour and the like).
 	</p>
-	<a href="/onboarding" class="variant-filled-primary btn btn-base cursor-pointer">
+	<SignIn provider="google" signInPage="signin" />
+	<!--<a href="/onboarding" class="variant-filled-primary btn btn-base cursor-pointer">
 		{$LL.signUp()}
 		<IconBrandYoutubeFilled class="ml-1" size={36} stroke={1.5} />
-	</a>
+	</a>-->
 </div>
