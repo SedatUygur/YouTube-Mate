@@ -1,9 +1,10 @@
 <script lang="ts">
+	/* eslint-disable import/no-unresolved */
 	import '../app.postcss';
 	import { AppBar, LightSwitch } from '@skeletonlabs/skeleton';
+	import { signOut } from '@auth/sveltekit/client';
 	import { setLocale } from '../lib/i18n/i18n-svelte.ts';
 	import type { LayoutData } from './$types.js';
-
 	export let data: LayoutData;
 	setLocale(data.locale);
 </script>
@@ -13,6 +14,11 @@
 	<AppBar class="sticky top-0 z-10">
 		<svelte:fragment slot="lead"><a href="/">YouTube Mate</a></svelte:fragment>
 		<svelte:fragment slot="trail">
+			{#if data.session?.user}
+				<p>Welcome, {data.session.user.name}</p>
+				<button class="variant-filled btn btn-md" on:click={() => signOut()}>Signout</button
+				>
+			{/if}
 			<LightSwitch />
 		</svelte:fragment>
 	</AppBar>

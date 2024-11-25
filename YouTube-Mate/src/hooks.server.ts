@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import { type Handle } from '@sveltejs/kit';
 import { handle as handleAuth } from './auth.ts';
 import { sequence } from '@sveltejs/kit/hooks';

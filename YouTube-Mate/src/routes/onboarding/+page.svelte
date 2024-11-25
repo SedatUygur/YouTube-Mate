@@ -13,13 +13,13 @@
 	use:enhance={({ form, data, action, cancel }) =>
 		async ({ result, update }) => {}}
 >
-	<label for="name">
+	<label for="name" class="label">
 		<span>{$LL.onboarding.labels.username()}</span>
-		<input type="text" id="username" value="sedat" minlength="4" required />
+		<input class="input" type="text" id="username" value="sedat" minlength="4" required />
 	</label>
 	<p class="my-4">{$LL.onboarding.messages.avatar()}</p>
 	<div class="flex justify-center">
-		<FileButton bind:files button="btn variant-filled-surface"
+		<FileButton bind:files name="avatar" button="btn variant-filled-surface"
 			>{$LL.onboarding.labels.uploadFile()}</FileButton
 		>
 	</div>

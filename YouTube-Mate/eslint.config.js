@@ -43,6 +43,7 @@ export default tseslint.config(
 			'.DS_Store',
 			'.env',
 			'.env.*',
+			'e2e/demo.test.ts',
 		],
 	},
 	{

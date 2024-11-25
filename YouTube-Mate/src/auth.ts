@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import { SvelteKitAuth } from '@auth/sveltekit';
 import Google from '@auth/sveltekit/providers/google';
 import { PrismaAdapter } from '@auth/prisma-adapter';
