@@ -1,6 +1,6 @@
-# sv
+# YoutubeMate
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A project let users create, share and watch 👀 lists of YouTube channels
 
 ## Creating a project
 

@@ -4,6 +4,7 @@ node_modules
 # Output
 .output
 .vercel
+settings.json
 /.svelte-kit
 /build
 /prisma/dev.db

@@ -61,18 +61,18 @@ export default tseslint.config(
 		},
 		rules: {
 			'arrow-body-style': ['error', 'as-needed'],
+			'import/extensions': 0,
+			'import/no-dynamic-require': 'warn',
+			'import/no-extraneous-dependencies': 0,
+			'import/no-mutable-exports': 0,
+			'import/no-nodejs-modules': 'warn',
+			'import/prefer-default-export': 0,
+			'no-param-reassign': 0,
+			'no-unused-vars': 'off',
 			'prefer-arrow-callback': [
 				'error',
 				{ allowNamedFunctions: false, allowUnboundThis: true },
 			],
-			'import/prefer-default-export': 0,
-			'no-param-reassign': 0,
-			'import/extensions': 0,
-			'import/no-extraneous-dependencies': 0,
-			'import/no-mutable-exports': 0,
-			'no-unused-vars': 'off',
-			'import/no-dynamic-require': 'warn',
-			'import/no-nodejs-modules': 'warn',
 		},
 	}
 );
