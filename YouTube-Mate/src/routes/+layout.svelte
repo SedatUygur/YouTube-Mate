@@ -1,8 +1,6 @@
 <script lang="ts">
-	/* eslint-disable import/no-unresolved */
 	import '../app.postcss';
-	import { AppBar, LightSwitch } from '@skeletonlabs/skeleton';
-	import { signOut } from '@auth/sveltekit/client';
+	import Header from './Header.svelte';
 	import { setLocale } from '../lib/i18n/i18n-svelte.ts';
 	import type { LayoutData } from './$types.js';
 	export let data: LayoutData;
@@ -10,18 +8,7 @@
 </script>
 
 <div class="grid grid-rows-[auto_1fr_auto]">
-	<!-- Header -->
-	<AppBar class="sticky top-0 z-10">
-		<svelte:fragment slot="lead"><a href="/">YouTube Mate</a></svelte:fragment>
-		<svelte:fragment slot="trail">
-			{#if data.session?.user}
-				<p>Welcome, {data.session.user.name}</p>
-				<button class="variant-filled btn btn-md" on:click={() => signOut()}>Signout</button
-				>
-			{/if}
-			<LightSwitch />
-		</svelte:fragment>
-	</AppBar>
+	<Header />
 	<!-- Page -->
 	<div class="container mx-auto grid grid-cols-1 xl:grid-cols-[200px_minmax(0px,_1fr)_200px]">
 		<!-- Sidebar (Left) -->
