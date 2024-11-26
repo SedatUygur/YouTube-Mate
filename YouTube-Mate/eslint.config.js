@@ -44,6 +44,7 @@ export default tseslint.config(
 			'.env',
 			'.env.*',
 			'e2e/demo.test.ts',
+			'prisma/seeds/*.ts',
 		],
 	},
 	{

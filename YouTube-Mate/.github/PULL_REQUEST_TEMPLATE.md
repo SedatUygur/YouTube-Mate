@@ -1,17 +1,15 @@
 <!--- Please provide a general summary of your changes in the title above -->
 
-## Pull request type
+## What type of Pull Request is this?
 
-<!-- Please try to limit your pull request to one type, submit multiple pull requests if needed. -->
+**Delete all options except for the one that applies**
 
-Please check the type of change your PR introduces:
-
--   [ ] Bugfix
--   [ ] Feature
--   [ ] Code style update (formatting, renaming)
--   [ ] Refactoring (no functional changes, no api changes)
--   [ ] Build related changes
--   [ ] Other (please describe):
+-   Bug fix
+-   Feature
+-   Code style update (formatting, renaming)
+-   Refactoring (no functional changes, no API changes)
+-   Build related changes
+-   Other (please describe):
 
 ## What is the current behavior?
 
