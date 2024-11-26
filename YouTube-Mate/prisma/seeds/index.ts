@@ -1,7 +1,6 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../../src/prisma';
 import { seed as localeSeed } from './locales';
 
-const prisma = new PrismaClient();
 async function main() {
 	await localeSeed(prisma);
 }

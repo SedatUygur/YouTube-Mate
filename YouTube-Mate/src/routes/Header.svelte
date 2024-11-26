@@ -76,7 +76,8 @@
 						<div class="flex items-center gap-2">
 							<img
 								src={$page.data.session.user.image}
-								class="avatar h-7 w-7"
+								class="avatar h-7 w-7 rounded-full"
+								referrerpolicy="no-referrer"
 								alt="User Avatar"
 							/>
 							<p class="hidden font-bold md:block">

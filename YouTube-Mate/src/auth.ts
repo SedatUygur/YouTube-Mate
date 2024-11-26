@@ -1,18 +1,53 @@
 /* eslint-disable import/no-unresolved */
-import { SvelteKitAuth } from '@auth/sveltekit';
+import { SvelteKitAuth, type DefaultSession } from '@auth/sveltekit';
 import Google from '@auth/sveltekit/providers/google';
-import { PrismaAdapter } from '@auth/prisma-adapter';
-import { prisma } from './prisma.ts';
-/*import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from '$env/static/private';
+import PrismaAdapter from './PrismaAdapter';
+import { prisma, userSettings } from './prisma.ts';
 
-if (!GOOGLE_CLIENT_ID) {
-	throw new Error('Missing GOOGLE_CLIENT_ID in .env');
+declare module '@auth/sveltekit' {
+	interface Session {
+		user: {
+			id: string;
+			settings: typeof userSettings;
+		} & DefaultSession['user'];
+	}
+
+	interface User {
+		settings: typeof userSettings;
+	}
 }
-if (!GOOGLE_CLIENT_SECRET) {
-	throw new Error('Missing GOOGLE_CLIENT_SECRET in .env');
-}*/
 
 export const { handle, signIn, signOut } = SvelteKitAuth({
 	adapter: PrismaAdapter(prisma),
 	providers: [Google],
+	callbacks: {
+		session: ({ session, user }) => {
+			session.user = {
+				id: user.id,
+				name: user.name,
+				email: user.email,
+				image: user.image,
+				settings: user.settings,
+				emailVerified: new Date(),
+			};
+			//event.locals.session = session;
+			return session;
+		},
+	},
+	events: {
+		async createUser(message) {
+			/*const locale = await prisma.locale.findFirst({
+				where: {
+					id: event.locals.locale,
+				},
+			});*/
+			await prisma.userSettings.create({
+				data: {
+					//localeId: locale?.id ?? 'en-US',
+					localeId: 'en-US',
+					userId: message.user.id,
+				},
+			});
+		},
+	},
 });
