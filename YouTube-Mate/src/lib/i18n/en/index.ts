@@ -4,7 +4,9 @@ const en = {
 	// TODO: your translations go here
 	tagline:
 		"Presenting the ultimate YouTube experience. Whether you're looking for new content to watch or want to share your own curated list with friends, our app has got you covered.",
-	signUp: 'Sign up with YouTube',
+	loginYouTube: 'Login with YouTube',
+	logOut: 'Logout',
+	pleaseWait: 'Please wait...',
 	message: 'Hello World',
 	onboarding: {
 		labels: {

@@ -3,13 +3,21 @@
 	/* eslint-disable import-x/no-unresolved */
 	/* eslint-disable @typescript-eslint/no-unsafe-call */
 	/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-	import { AppBar, LightSwitch } from '@skeletonlabs/skeleton';
+	import { AppBar, LightSwitch, ProgressRadial } from '@skeletonlabs/skeleton';
 	import { signOut } from '@auth/sveltekit/client';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
-	const userSignout = () => signOut();
+	import { LL } from '$lib/i18n/i18n-svelte';
+
 	const goSettings = () => goto('/settings');
 	const goUserProfile = () => goto('/me');
+
+	let loading = false;
+	const signOutClick = (event: { currentTarget: EventTarget & HTMLButtonElement }) => {
+		event.currentTarget.disabled = true;
+		loading = true;
+		void signOut();
+	};
 
 	let isDropdownOpen = true; // default state (dropdown close)
 
@@ -118,9 +126,17 @@
 							</a>
 						</li>
 						<li>
-							<a on:click={userSignout} class="variant-ringed-tertiary btn" href="/">
+							<a on:click|once={signOutClick} class="variant-ringed-tertiary btn" href="/">
 								<span class="badge bg-primary-500"></span>
-								<span class="flex-auto">Logout</span>
+
+								{#if loading}
+									<span class="flex-auto">{$LL.pleaseWait()}</span><ProgressRadial
+										class="ml-2 h-6 w-6"
+										stroke={100}
+									/>
+								{:else}
+									<span class="flex-auto">{$LL.logOut()}</span>
+								{/if}
 							</a>
 						</li>
 					{/if}

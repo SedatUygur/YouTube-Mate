@@ -1,11 +1,14 @@
 <script lang="ts">
 	/* eslint-disable import/no-unresolved */
 	/* eslint-disable import-x/no-unresolved */
-	/* eslint-disable @typescript-eslint/no-unsafe-argument */
+	/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 	import { page } from '$app/stores';
-	import { SignIn } from '@auth/sveltekit/components';
+	//import { SignIn } from '@auth/sveltekit/components';
 	import { LL } from '../lib/i18n/i18n-svelte.ts';
 	//import { IconBrandYoutubeFilled } from '@tabler/icons-svelte';
+	import { signIn } from '@auth/sveltekit/client';
+	import { ProgressRadial } from '@skeletonlabs/skeleton';
+	let loading = false;
 </script>
 
 <div class="hero-container flex flex-col items-center justify-center p-4">
@@ -72,7 +75,7 @@
 				</figcaption>
 			</figure>
 		</div>
-		<SignIn
+		<!-- <SignIn
 			className="btn btn-lg variant-filled"
 			provider="google"
 			signInPage="signin"
@@ -83,7 +86,22 @@
 			}}
 		>
 			<span slot="submitButton">{$LL.signUp()}</span>
-			<!-- <IconBrandYoutubeFilled class="ml-1" size={36} stroke={1.5} /> -->
-		</SignIn>
+			<IconBrandYoutubeFilled class="ml-1" size={36} stroke={1.5} /> 
+		</SignIn>-->
+		<button
+			on:click|once={function loginClick() {
+				this.disabled = true;
+				loading = true;
+				void signIn('google');
+			}}
+			class="variant-filled-primary btn cursor-pointer"
+		>
+			{#if loading}
+				{$LL.pleaseWait()} <ProgressRadial class="ml-2 h-6 w-6" stroke={100} />
+			{:else}
+				{$LL.loginYouTube()}
+			{/if}
+			<!-- <IconBrandYoutube class="ml-1" size={36} stroke={1} /> -->
+		</button>
 	{/if}
 </div>

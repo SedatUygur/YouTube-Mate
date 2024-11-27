@@ -5,6 +5,9 @@ const tr = {
 	tagline:
 		'En iyi YouTube deneyimini sunuyoruz. İster izleyecek yeni içerik arıyor olun ister kendi seçilmiş listenizi arkadaşlarınızla paylaşmak istiyor olun, uygulamamız ihtiyacınızı karşılayacaktır.',
 	signUp: 'YouTube kaydolun',
+	loginYouTube: 'YouTube giriş yap',
+	logOut: 'Çıkış yap',
+	pleaseWait: 'Lütfen bekleyiniz...',
 	message: 'Merhaba Dünya',
 	onboarding: {
 		labels: {
