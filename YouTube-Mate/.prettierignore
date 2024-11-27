@@ -1,6 +1,7 @@
 .DS_Store
 docker-data/
 node_modules
+prisma
 /build
 /package
 /.svelte-kit
@@ -10,6 +11,7 @@ node_modules
 .typesafe-i18n.json
 !*.cjs
 src/lib/i18n/*.ts
+
 # Ignore files for PNPM, NPM and YARN
 pnpm-lock.yaml
 package-lock.json

@@ -4,12 +4,12 @@
 
 **Delete all options except for the one that applies**
 
--   Bug fix
--   Feature
--   Code style update (formatting, renaming)
--   Refactoring (no functional changes, no API changes)
--   Build related changes
--   Other (please describe):
+- Bug fix
+- Feature
+- Code style update (formatting, renaming)
+- Refactoring (no functional changes, no API changes)
+- Build related changes
+- Other (please describe):
 
 ## What is the current behavior?
 

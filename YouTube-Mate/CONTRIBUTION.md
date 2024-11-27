@@ -2,9 +2,9 @@
 
 When contributing to `YouTube-Mate`, whether on GitHub or in other community spaces:
 
--   Be respectful, civil, and open-minded.
--   Before opening a new pull request, try searching through the [issue tracker](https://github.com/SedatUygur/YouTube-Mate/issues) for known issues or fixes.
--   If you want to make code changes based on your personal opinion(s), make sure you open an issue first describing the changes you want to make, and open a pull request only when your suggestions get approved by maintainers.
+- Be respectful, civil, and open-minded.
+- Before opening a new pull request, try searching through the [issue tracker](https://github.com/SedatUygur/YouTube-Mate/issues) for known issues or fixes.
+- If you want to make code changes based on your personal opinion(s), make sure you open an issue first describing the changes you want to make, and open a pull request only when your suggestions get approved by maintainers.
 
 ## How to Contribute
 
@@ -62,7 +62,7 @@ DB_NAME=youtubemate
 DB_PORT=5432
 ```
 
--   DATABASE_URL: The full database connection URL. This is required and is used by prisma.
+- DATABASE_URL: The full database connection URL. This is required and is used by prisma.
 
 #### Set up PostgreSQL by Docker Compose
 
@@ -88,10 +88,10 @@ View the database diagram here (./prisma/YouTubeMate-ERD.md).
 2. Go to the OAuth consent screen tab, fill first step leaving the rest blank and click Save. This will create a project for you
 3. Now Publish your OAuth consent screen App.
 4. Go to the [Credentials tab](https://console.cloud.google.com/apis/credentials) and click Create Credentials -> OAuth Client ID
-    - Choose Web Application
-    - Add `http://localhost:5173` to the Authorized JavaScript origins
-    - Add `http://localhost:5173/auth/callback/google` to the Authorized redirect URIs.
-    - Click Create.
+   - Choose Web Application
+   - Add `http://localhost:5173` to the Authorized JavaScript origins
+   - Add `http://localhost:5173/auth/callback/google` to the Authorized redirect URIs.
+   - Click Create.
 5. Copy the Client ID and Client Secret and paste them into the `.env` file.
 
 ```bash

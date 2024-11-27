@@ -106,21 +106,13 @@
 					<!-- <hr class="opacity-20" /> -->
 					{#if $page.data.session?.user}
 						<li>
-							<a
-								on:click={goUserProfile}
-								class="variant-ringed-tertiary btn"
-								href="/me"
-							>
+							<a on:click={goUserProfile} class="variant-ringed-tertiary btn" href="/me">
 								<span class="badge bg-primary-500"></span>
 								<span class="flex-auto">Profile</span>
 							</a>
 						</li>
 						<li>
-							<a
-								on:click={goSettings}
-								class="variant-ringed-tertiary btn"
-								href="/settings"
-							>
+							<a on:click={goSettings} class="variant-ringed-tertiary btn" href="/settings">
 								<span class="badge bg-primary-500"></span>
 								<span class="flex-auto">Settings</span>
 							</a>

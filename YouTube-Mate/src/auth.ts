@@ -27,6 +27,7 @@ declare module '@auth/sveltekit' {
 export const { handle, signIn, signOut } = SvelteKitAuth({
 	adapter: PrismaAdapter(prisma),
 	providers: [Google],
+	trustHost: true,
 	callbacks: {
 		session: ({ session, user }) => {
 			session.user = {

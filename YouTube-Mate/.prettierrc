@@ -4,7 +4,7 @@
 	"semi": true,
 	"trailingComma": "es5",
 	"printWidth": 100,
-	"tabWidth": 4,
+	"tabWidth": 2,
 	"plugins": ["prettier-plugin-svelte", "prettier-plugin-tailwindcss"],
 	"tailwindConfig": "./tailwind.config.ts",
 	"overrides": [
