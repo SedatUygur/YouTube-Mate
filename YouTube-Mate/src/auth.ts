@@ -1,10 +1,11 @@
 /* eslint-disable import/no-unresolved */
-import { SvelteKitAuth, type DefaultSession } from '@auth/sveltekit';
+import { SvelteKitAuth } from '@auth/sveltekit';
+//import type { DefaultSession } from '@auth/core/types';
 import Google from '@auth/sveltekit/providers/google';
-import PrismaAdapter from './PrismaAdapter';
+import PrismaAdapter from './PrismaAdapter.ts';
 import { prisma, userSettings } from './prisma.ts';
 
-declare module '@auth/sveltekit' {
+declare module '@auth/core/types' {
 	interface Session {
 		user: {
 			id: string;
@@ -14,6 +15,12 @@ declare module '@auth/sveltekit' {
 
 	interface User {
 		settings: typeof userSettings;
+	}
+}
+
+declare module '@auth/sveltekit' {
+	interface SvelteKitAuthConfig {
+		adapter: PrismaAdapter;
 	}
 }
 

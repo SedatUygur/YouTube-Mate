@@ -14,7 +14,11 @@ export const load: LayoutServerLoad = async (event) => {
 	) {
 		throw redirect(302, '/onboarding');
 	}
-	if (session?.user.settings && session.user.settings.onboarded && eventRouteId !== '/') {
+	if (
+		session?.user.settings &&
+		session.user.settings.onboarded &&
+		eventRouteId === '/protected/onboarding'
+	) {
 		throw redirect(302, '/');
 	}
 	return {

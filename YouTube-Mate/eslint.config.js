@@ -54,7 +54,7 @@ export default tseslint.config(
 				projectService: true,
 				ecmaVersion: 'latest',
 				sourceType: 'module',
-				extraFileExtensions: ['.svelte'],
+				extraFileExtensions: ['.cjs', '.js', '.ts', '.svelte'],
 				tsconfigRootDir: import.meta.dirname,
 				parser: tseslint.parser,
 				svelteConfig,

@@ -132,7 +132,7 @@
 							</a>
 						</li>
 					{/if}
-					<li><LightSwitch /></li>
+					<li><LightSwitch height="h-6" rounded="rounded-full" /></li>
 				</ul>
 			</nav>
 		</div>
