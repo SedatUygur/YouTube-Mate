@@ -2,12 +2,12 @@
 	/* eslint-disable import/no-unresolved */
 	/* eslint-disable import-x/no-unresolved */
 	/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-	import { page } from '$app/stores';
 	//import { SignIn } from '@auth/sveltekit/components';
-	import { LL } from '../lib/i18n/i18n-svelte.ts';
-	//import { IconBrandYoutubeFilled } from '@tabler/icons-svelte';
 	import { signIn } from '@auth/sveltekit/client';
 	import { ProgressRadial } from '@skeletonlabs/skeleton';
+	import { LL } from '../lib/i18n/i18n-svelte.ts';
+	import { page } from '$app/stores';
+
 	let loading = false;
 </script>
 
@@ -101,7 +101,6 @@
 			{:else}
 				{$LL.loginYouTube()}
 			{/if}
-			<!-- <IconBrandYoutube class="ml-1" size={36} stroke={1} /> -->
 		</button>
 	{/if}
 </div>

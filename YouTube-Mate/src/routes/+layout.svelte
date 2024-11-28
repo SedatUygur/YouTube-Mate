@@ -1,11 +1,71 @@
 <script lang="ts">
+	/* eslint-disable import/no-unresolved */
 	import '../app.postcss';
 	import Header from './Header.svelte';
 	import { setLocale } from '../lib/i18n/i18n-svelte.ts';
 	import type { LayoutData } from './$types.js';
+	/*import ogSquareImageSrc from '$lib/SEO/assets/home-open-graph-square.jpg';
+	import ogImageSrc from '$lib/SEO/assets/home-open-graph.jpg';
+	import twitterImageSrc from '$lib/SEO/assets/home-twitter.jpg';
+	import featuredImageSrc from '$lib/SEO/assets/home.jpg';*/
+	import SEO from '$lib/SEO/components/index.svelte';
+	import website from '$lib/SEO/config/website';
+
 	export let data: LayoutData;
 	setLocale(data.locale);
+
+	const { author, siteUrl } = website;
+	let title = 'Home';
+	const breadcrumbs = [
+		{
+			name: 'Home',
+			slug: '',
+		},
+	];
+	let metadescription = 'YouTube Mate is an app allow users to create and share YouTube watchlists';
+	/*const featuredImageAlt = 'picture of a person with long, curly hair, wearing a red had taking a picture with an analogue camera';
+	const featuredImage = {
+		url: featuredImageSrc,
+		alt: featuredImageAlt,
+		width: 672,
+		height: 448,
+		caption: 'Home page',
+	};
+	const ogImage = {
+		url: ogImageSrc,
+		alt: featuredImageAlt,
+	};
+	const ogSquareImage = {
+		url: ogSquareImageSrc,
+		alt: featuredImageAlt,
+	};
+
+	const twitterImage = {
+		url: twitterImageSrc,
+		alt: featuredImageAlt,
+	};*/
+	const entityMeta = {
+		url: `${siteUrl}/`,
+		faviconWidth: 512,
+		faviconHeight: 512,
+		caption: author,
+	};
+	const seoProps = {
+		title,
+		slug: '',
+		entityMeta,
+		datePublished: '2024-11-28T14:19:33.000+0100',
+		lastUpdated: '2021-11-28T14:19:33.000+0100',
+		breadcrumbs,
+		metadescription,
+		/*featuredImage,
+		ogImage,
+		ogSquareImage,
+		twitterImage,*/
+	};
 </script>
+
+<SEO {...seoProps} />
 
 <div class="grid grid-rows-[auto_1fr_auto]">
 	<Header />
