@@ -19,10 +19,10 @@ const config = {
 	},
 	plugins: [
 		// 4. Append the Skeleton plugin (after other plugins)
-		skeleton,
 		typography,
 		forms,
 		containerQueries,
+		skeleton,
 	],
 } satisfies Config;
 

@@ -1,3 +1,3 @@
 module.exports = {
-	'**/*.{js,ts,cjs,svelte,tsx}': [() => 'tsc -p tsconfig.json --noEmit', 'eslint'],
+	'**/*.{js,ts,cjs,svelte,tsx}': [() => 'npm run check', 'eslint'],
 };

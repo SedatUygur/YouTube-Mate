@@ -5,10 +5,10 @@
 	import { page } from '$app/stores';
 </script>
 
-<p>{$LL.onboarding.messages.main()}</p>
+<p>{$LL.pages.onboarding.messages.main()}</p>
 <form class="pt-4" method="POST">
 	<label for="name" class="label">
-		<span>{$LL.onboarding.labels.username()}</span>
+		<span>{$LL.pages.onboarding.labels.username()}</span>
 		<input
 			class="disabled input"
 			type="text"
@@ -17,10 +17,9 @@
 			value={$page.data.session?.user.name}
 			disabled
 			minlength="4"
-			required
-		/>
+			required />
 	</label>
-	<p class="pt-4">{$LL.onboarding.messages.final()}</p>
+	<p class="pt-4">{$LL.pages.onboarding.messages.final()}</p>
 	<div class="my-4 flex justify-end">
 		<button class="variant-filled-success btn">Lets Go!</button>
 	</div>

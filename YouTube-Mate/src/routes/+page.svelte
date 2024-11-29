@@ -7,28 +7,35 @@
 	import { ProgressRadial } from '@skeletonlabs/skeleton';
 	import { LL } from '../lib/i18n/i18n-svelte.ts';
 	import { page } from '$app/stores';
+	import type { PageData } from './$types';
 
+	export let data: PageData;
 	let loading = false;
 </script>
 
 <div class="hero-container flex flex-col items-center justify-center p-4">
 	{#if $page.data.session}
-		<h1>Welcome to YoutubeMate</h1>
-		<p class="my-4 text-center">{$LL.tagline()}</p>
-		<h2>Why do we use it?</h2>
-		<p class="my-4">
-			It is a long established fact that a reader will be distracted by the readable content of a
-			page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less
-			normal distribution of letters, as opposed to using 'Content here, content here', making it
-			look like readable English. Many desktop publishing packages and web page editors now use
-			Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web
-			sites still in their infancy. Various versions have evolved over the years, sometimes by
-			accident, sometimes on purpose (injected humour and the like). Lorem ipsum dolor sit amet,
-			consectetur adipiscing elit. Phasellus pharetra nisl ipsum, ac vulputate lacus rutrum a. Sed
-			quis erat quam. Vestibulum ullamcorper molestie nulla, pharetra fringilla diam accumsan ac.
-			Praesent dignissim dapibus aliquam. Nulla dapibus velit leo, at convallis odio molestie
-			pretium. Nunc maximus vel lectus eu interdum. Nunc quis nisl lacus.
+		<p class="my-4 text-center">
+			{#if !data.lists.length}
+				{$LL.pages.root.loggedIn.messages.createList()}
+			{/if}
 		</p>
+		<a
+			href="/protected/create"
+			class="variant-filled-secondary btn"
+			data-sveltekit-preload-data="hover">{$LL.buttons.create()}</a>
+		<ul class="list-nav mt-4">
+			{#each data.lists as list}
+				<li>
+					<a href={`/list/${list.id}`}>
+						<span class="flex-auto">
+							<dt>{list.title}</dt>
+							<dd>{list.description}</dd>
+						</span>
+					</a>
+				</li>
+			{/each}
+		</ul>
 	{:else}
 		<h2 id="methods" data-text="Sign-in methods" tabindex="-1" role="presentation">
 			<span class="devsite-heading" role="heading" aria-level="2">Sign-in methods</span><button
@@ -36,12 +43,11 @@
 				class="devsite-heading-link button-flat material-icons"
 				aria-label="Copy link to this section: Sign-in methods"
 				data-title="Copy link to this section: Sign-in methods"
-				data-id="methods"
-			></button>
+				data-id="methods"></button>
 		</h2>
 		<p>
-			The Sign-in template supports 4 sign-in methods: Provider sign-in, username and password, PIN
-			code, and QR code.
+			The Sign-in template supports 3 sign-in methods: Provider sign-in, username and password, QR
+			code.
 		</p>
 		<figure class="attempt-left">
 			<figcaption>
@@ -67,14 +73,15 @@
 				</figcaption>
 			</figure>
 
-			<figure class="attempt-right">
+			<!--<figure class="attempt-right">
 				<figcaption>
 					<strong>PIN method</strong>: This method displays a mandatory PIN code (up to 12
 					characters in length) provided by the app and instructions for where the user should enter
 					it. The code can be refreshed as needed if it times out. (Android Auto example)
 				</figcaption>
-			</figure>
+			</figure>-->
 		</div>
+		<p class="my-4 text-center">{$LL.pages.root.messages.tagline()}</p>
 		<!-- <SignIn
 			className="btn btn-lg variant-filled"
 			provider="google"
@@ -94,12 +101,11 @@
 				loading = true;
 				void signIn('google');
 			}}
-			class="variant-filled-primary btn cursor-pointer"
-		>
+			class="variant-filled-primary btn cursor-pointer">
 			{#if loading}
-				{$LL.pleaseWait()} <ProgressRadial class="ml-2 h-6 w-6" stroke={100} />
+				{$LL.messages.pleaseWait()} <ProgressRadial class="ml-2 h-6 w-6" stroke={100} />
 			{:else}
-				{$LL.loginYouTube()}
+				{$LL.buttons.loginYouTube()}
 			{/if}
 		</button>
 	{/if}

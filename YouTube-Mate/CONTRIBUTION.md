@@ -80,6 +80,12 @@ Use the following command to generate the Prisma client:
 npx prisma migrate dev
 ```
 
+Use the following command to generate the Prisma markdown document:
+
+```bash
+npx prisma generate
+```
+
 View the database diagram here (./prisma/YouTubeMate-ERD.md).
 
 ### Getting Google OAuth API Credentials

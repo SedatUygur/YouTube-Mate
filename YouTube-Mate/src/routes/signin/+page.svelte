@@ -11,8 +11,7 @@
 		signInPage="signin"
 		options={{
 			redirectTo: `/onboarding`,
-		}}
-	>
+		}}>
 		<span slot="submitButton">Sign in with Google</span>
 	</SignIn>
 </div>

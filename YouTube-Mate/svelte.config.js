@@ -19,16 +19,15 @@ const config = {
 		// If your environment is not supported, or you settled on a specific environment, switch out the adapter.
 		// See https://svelte.dev/docs/kit/adapters for more information about adapters.
 		adapter: process.env.NODE_BUILD ? nodeAdapter() : adapter(),
-		csp: {
+		/*csp: {
 			directives: {
 				'script-src': ['self'],
 			},
-			// must be specified with either the `report-uri` or `report-to` directives, or both
 			reportOnly: {
 				'script-src': ['self'],
 				'report-uri': ['/'],
 			},
-		},
+		},*/
 	},
 };
 

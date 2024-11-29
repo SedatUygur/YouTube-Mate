@@ -5,7 +5,7 @@
 	/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 	/* eslint-disable @typescript-eslint/no-unsafe-call */
 	/* eslint-disable @typescript-eslint/no-explicit-any */
-	/* eslint-disable no-useless-escape */
+	/* eslint-disable svelte/no-at-html-tags */
 	import hash from 'object-hash';
 	export let article = false;
 	export let author;
@@ -209,13 +209,13 @@
 	};
 	let jsonLdString = JSON.stringify(schemaOrgObject);
 
-	let jsonLdScript = `
+	let jsonLdScript =
+		`
 		<script type="application/ld+json">
 			${jsonLdString}
-		<\/script>
-	`;
+		<` + `/script>`;
 </script>
 
 <svelte:head>
-	{jsonLdScript}
+	{@html jsonLdScript}
 </svelte:head>

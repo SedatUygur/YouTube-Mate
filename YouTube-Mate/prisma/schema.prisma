@@ -167,7 +167,7 @@ model Account {
   ///
   /// @format uint 
   /// @minimum 1
-  expires_in        Int?    @map("expiresIn")
+  expires_at        Int?    @map("expiresAt")
   
   /// Account token type.
   token_type        String? @map("tokenType")
@@ -230,7 +230,7 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-enum Visiblity {
+enum Visibility {
   Public
   Unlisted
   Private
@@ -246,14 +246,14 @@ model List {
   /// @format uuid
   id          String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   
-  /// List name.
-  name        String
+  /// List title.
+  title        String
 
   /// List description.
   description String?
 
-  /// Visiblity of list.
-  visibility  Visiblity
+  /// Visibility of list.
+  visibility  Visibility
   
   //----
   // RELATIONS
