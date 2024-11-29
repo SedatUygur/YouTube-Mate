@@ -13,10 +13,10 @@
 	const goUserProfile = () => goto('/me');
 
 	let loading = false;
-	const signOutClick = (event: { currentTarget: EventTarget & HTMLButtonElement }) => {
-		event.currentTarget.disabled = true;
+	const signOutClick = () => {
 		loading = true;
 		void signOut();
+		return false;
 	};
 
 	let isDropdownOpen = true; // default state (dropdown close)

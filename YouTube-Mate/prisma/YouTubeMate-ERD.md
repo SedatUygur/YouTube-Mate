@@ -8,12 +8,12 @@
 erDiagram
 "User" {
   String id PK
-  DateTime createdAt
-  DateTime updatedAt
   String name "nullable"
   String email UK "nullable"
   DateTime emailVerified "nullable"
   String image "nullable"
+  DateTime createdAt
+  DateTime updatedAt
 }
 "UserSettings" {
   String id PK
@@ -79,6 +79,20 @@ erDiagram
   String name
   String originId
   ListItemType type
+  String imageUrl
+  String youTubeMetaOriginId FK "nullable"
+  DateTime createdAt
+  DateTime updatedAt
+}
+"YouTubeMeta" {
+  String originId UK
+  String name
+  String description
+  Int subscriberCount
+  String avatarUrl
+  String bannerUrl "nullable"
+  String customUrl
+  Boolean isVerified
   DateTime createdAt
   DateTime updatedAt
 }
@@ -89,6 +103,7 @@ erDiagram
 "List" }o--|| "User" : creator
 "ListItem" }o--|| "ListItemMeta" : meta
 "ListItem" }o--|| "List" : list
+"ListItemMeta" }o--o| "YouTubeMeta" : youtubeMeta
 ```
 
 ### `User`
@@ -96,12 +111,12 @@ This comment will get attached to the `User` node in the AST
 
 **Properties**
   - `id`: Primary Key.
-  - `createdAt`: Creation time of user.
-  - `updatedAt`: Update time of user.
   - `name`: Name of user.
   - `email`: Email address.
   - `emailVerified`: Email Verification time of user.
   - `image`: Avatar of user.
+  - `createdAt`: Creation time of user.
+  - `updatedAt`: Update time of user.
 
 ### `UserSettings`
 This comment will get attached to the `UserSettings` node in the AST
@@ -191,5 +206,21 @@ This comment will get attached to the `ListItemMeta` node in the AST
   - `name`: List item meta name.
   - `originId`: List item meta origin id.
   - `type`: List item meta type.
+  - `imageUrl`: List item meta image url.
+  - `youTubeMetaOriginId`: Belong YouTube meta origin id.
   - `createdAt`: Creation time of list item meta.
   - `updatedAt`: Update time of list item meta.
+
+### `YouTubeMeta`
+
+**Properties**
+  - `originId`: YouTube meta origin id.
+  - `name`: YouTube meta name.
+  - `description`: YouTube meta description.
+  - `subscriberCount`: YouTube meta subscriber count.
+  - `avatarUrl`: YouTube meta avatar url.
+  - `bannerUrl`: YouTube meta banner url.
+  - `customUrl`: YouTube meta custom url.
+  - `isVerified`: YouTube meta is verified.
+  - `createdAt`: Creation time of YouTube meta.
+  - `updatedAt`: Update time of YouTube meta.

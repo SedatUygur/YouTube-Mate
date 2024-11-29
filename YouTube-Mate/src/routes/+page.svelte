@@ -1,7 +1,7 @@
 <script lang="ts">
 	/* eslint-disable import/no-unresolved */
 	/* eslint-disable import-x/no-unresolved */
-	/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+
 	//import { SignIn } from '@auth/sveltekit/components';
 	import { signIn } from '@auth/sveltekit/client';
 	import { ProgressRadial } from '@skeletonlabs/skeleton';
@@ -13,7 +13,7 @@
 	let loading = false;
 </script>
 
-<div class="hero-container flex flex-col items-center justify-center p-4">
+<div class="hero-container mx-auto flex max-w-sm flex-col items-center justify-center p-4">
 	{#if $page.data.session}
 		<p class="my-4 text-center">
 			{#if !data.lists.length}
@@ -24,10 +24,11 @@
 			href="/protected/create"
 			class="variant-filled-secondary btn"
 			data-sveltekit-preload-data="hover">{$LL.buttons.create()}</a>
-		<ul class="list-nav mt-4">
+		<ul class="list-nav">
 			{#each data.lists as list}
 				<li>
 					<a href={`/list/${list.id}`}>
+						<span class="badge bg-primary-500">💀</span>
 						<span class="flex-auto">
 							<dt>{list.title}</dt>
 							<dd>{list.description}</dd>
@@ -97,10 +98,10 @@
 		</SignIn>-->
 		<button
 			on:click|once={function loginClick() {
-				this.disabled = true;
 				loading = true;
 				void signIn('google');
 			}}
+			disabled={loading}
 			class="variant-filled-primary btn cursor-pointer">
 			{#if loading}
 				{$LL.messages.pleaseWait()} <ProgressRadial class="ml-2 h-6 w-6" stroke={100} />

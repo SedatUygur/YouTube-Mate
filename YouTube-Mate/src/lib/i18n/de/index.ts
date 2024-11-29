@@ -15,6 +15,7 @@ const de = {
 		title: 'Titel',
 		description: 'Beschreibung',
 		visibility: 'Sichtweite',
+		views: '{0} aufrufe',
 	},
 	enums: {
 		visibility: {
@@ -52,6 +53,14 @@ const de = {
 				main: 'Willkommen bei Youtube-Mate! Lassen Sie uns Ihr Profil einrichten.',
 				avatar: 'Laden Sie Ihren Avatar hoch.',
 				final: 'Das ist alles! Fangen wir an!',
+			},
+		},
+		create: {
+			labels: {
+				channelSearch: 'Kanalsuche',
+			},
+			messages: {
+				channelSearch: 'Suche nach einem Kanal...',
 			},
 		},
 	},

@@ -15,6 +15,7 @@ const tr = {
 		title: 'Başlık',
 		description: 'Tanım',
 		visibility: 'Görünürlük',
+		views: '{0} görüntüleme',
 	},
 	enums: {
 		visibility: {
@@ -52,6 +53,14 @@ const tr = {
 				main: 'Hoşgeldin Youtube-Mate kullanıcısı! Haydi profilinizi oluşturalım.',
 				avatar: 'Avatarınızı yükleyin.',
 				final: 'Hepsi bu kadardı! Hadi başlayalım!',
+			},
+		},
+		create: {
+			labels: {
+				channelSearch: 'Kanal Arama',
+			},
+			messages: {
+				channelSearch: 'Bir kanal aranıyor...',
 			},
 		},
 	},

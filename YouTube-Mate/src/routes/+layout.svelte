@@ -70,7 +70,7 @@
 <div class="grid grid-rows-[auto_1fr_auto]">
 	<Header />
 	<!-- Page -->
-	<div class="container mx-auto grid grid-cols-1 xl:grid-cols-[200px_minmax(0px,_1fr)_200px]">
+	<div class="container mx-auto grid grid-cols-1">
 		<!-- Sidebar (Left) -->
 		<!-- NOTE: hidden in smaller screen sizes -->
 		<!-- <aside class="sticky top-0 col-span-1 hidden h-screen bg-yellow-500 p-4 xl:block">(sidebar)</aside> -->
@@ -81,7 +81,7 @@
       <p class="h-[512px] bg-purple-500 p-4">Paragraph 3</p>
     </main> 
 	-->
-		<main class="mx-auto w-80 max-w-sm pt-2">
+		<main class="w-full px-2 pt-2 md:px-4 lg:px-8">
 			<slot />
 		</main>
 		<!-- Sidebar (Right) -->

@@ -23,12 +23,6 @@ model User {
   /// @format uuid
   id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   
-  /// Creation time of user.
-  createdAt     DateTime  @default(now())
-
-  /// Update time of user.
-  updatedAt     DateTime  @updatedAt
-
   /// Name of user.
   name          String?
 
@@ -46,17 +40,23 @@ model User {
   //----
   // RELATIONS
   //----
-  /// List of accounts.
+  /// List of user accounts.
   accounts      Account[]
 
-  /// List of sessions.
+  /// List of user sessions.
   sessions      Session[]
 
-  /// List of watchlists.
+  /// List of user watchlists.
   lists         List[]
 
-  /// List of settings.
+  /// User settings.
   settings      UserSettings?
+
+  /// Creation time of user.
+  createdAt     DateTime  @default(now())
+
+  /// Update time of user.
+  updatedAt     DateTime  @updatedAt
 }
 
 enum ColorScheme {
@@ -158,10 +158,10 @@ model Account {
   providerAccountId String
   
   /// Account refresh token.
-  refresh_token     String? @db.Text @map("refreshToken")
+  refresh_token     String? @map("refreshToken") @db.Text
 
   /// Account access token.
-  access_token      String? @db.Text @map("accessToken")
+  access_token      String? @map("accessToken") @db.Text
   
   /// Expiration day(s) value.
   ///
@@ -176,7 +176,7 @@ model Account {
   scope             String?
   
   /// Account token id.
-  id_token          String? @db.Text @map("idToken")
+  id_token          String? @map("idToken") @db.Text
   
   /// Account session state.
   session_state     String? @map("sessionState")
@@ -325,23 +325,73 @@ model ListItemMeta {
   /// Primary Key.
   ///
   /// @format uuid
-  id        String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id                  String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   
   /// List item meta name.
-  name      String
+  name                String
   
   /// List item meta origin id.
-  originId  String
+  originId            String
 
   /// List item meta type.
-  type      ListItemType
+  type                ListItemType
   
   /// Belong items list.
-  listItem  ListItem[]
+  listItem            ListItem[]
+
+  /// List item meta image url.
+  imageUrl            String
+
+  //----
+  // RELATIONS
+  //----
+  /// Belong YouTube meta.
+  youtubeMeta         YouTubeMeta? @relation(fields: [youTubeMetaOriginId], references: [originId])
+
+  /// Belong YouTube meta origin id.
+  youTubeMetaOriginId String?
   
   /// Creation time of list item meta.
-  createdAt DateTime     @default(now())
+  createdAt           DateTime     @default(now())
 
   /// Update time of list item meta.
-  updatedAt DateTime     @updatedAt
+  updatedAt           DateTime     @updatedAt
+}
+
+model YouTubeMeta {
+  //----
+  // COLUMNS
+  //----
+  /// YouTube meta origin id.
+  originId        String         @unique
+
+  /// YouTube meta name.
+  name            String
+  
+  /// YouTube meta description.
+  description     String
+
+  /// YouTube meta subscriber count.
+  subscriberCount Int
+  
+  /// YouTube meta avatar url.
+  avatarUrl       String
+  
+  /// YouTube meta banner url.
+  bannerUrl       String?
+  
+  /// YouTube meta custom url.
+  customUrl       String
+  
+  /// YouTube meta is verified.
+  isVerified      Boolean        @default(false)
+  
+  /// Belong lists of list item meta.
+  ListItemMeta    ListItemMeta[]
+
+  /// Creation time of YouTube meta.
+  createdAt       DateTime       @default(now())
+
+  /// Update time of YouTube meta.
+  updatedAt       DateTime       @updatedAt
 }

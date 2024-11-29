@@ -15,6 +15,7 @@ const en = {
 		title: 'Title',
 		description: 'Description',
 		visibility: 'Visibility',
+		views: '{0} views',
 	},
 	enums: {
 		visibility: {
@@ -52,6 +53,14 @@ const en = {
 				main: "Welcome to listd! Let's setup your profile.",
 				avatar: 'Upload your avatar.',
 				final: "That's all! Let's get started!",
+			},
+		},
+		create: {
+			labels: {
+				channelSearch: 'Channel Search',
+			},
+			messages: {
+				channelSearch: 'Search for a channel...',
 			},
 		},
 	},

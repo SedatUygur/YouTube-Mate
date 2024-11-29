@@ -70,6 +70,7 @@ export default tseslint.config(
 			'import/prefer-default-export': 0,
 			'no-param-reassign': 0,
 			'no-restricted-imports': ['error', { paths: ['$env/static/private'] }],
+			'no-self-assign': 0,
 			'no-unused-vars': 'off',
 			'prefer-arrow-callback': ['error', { allowNamedFunctions: false, allowUnboundThis: true }],
 		},

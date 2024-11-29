@@ -33,6 +33,7 @@
 		"@tailwindcss/forms": "^0.5.9",
 		"@tailwindcss/typography": "^0.5.15",
 		"@types/eslint": "^9.6.0",
+		"@types/luxon": "^3.4.2",
 		"@types/node": "^22.10.0",
 		"@types/object-hash": "^3.0.6",
 		"@typescript-eslint/parser": "^8.15.0",
@@ -70,8 +71,11 @@
 	"dependencies": {
 		"@auth/prisma-adapter": "^2.7.4",
 		"@auth/sveltekit": "^1.7.4",
+		"@googleapis/youtube": "^20.0.0",
 		"@prisma/client": "^5.22.0",
 		"@prisma/generator-helper": "^5.22.0",
+		"luxon": "^3.5.0",
+		"redis": "^4.7.0",
 		"zod": "^3.23.8"
 	},
 	"license": "MIT",

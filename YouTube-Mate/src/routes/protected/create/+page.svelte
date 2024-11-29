@@ -7,12 +7,27 @@
 	/* eslint-disable @typescript-eslint/restrict-template-expressions */
 	//import Seo from '$/routes/SEO.svelte';
 	import { browser } from '$app/environment';
+	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import SEO from '$lib/SEO/components/index.svelte';
 	import { LL } from '$lib/i18n/i18n-svelte';
 	import type { ActionData, PageData } from '../../$types';
+	import type { YouTubeChannelMetaAPIResponse } from '$/lib/YouTubeAPI';
+	import ChannelCard from '../../ChannelCard.svelte';
+	import ChannelCardActions from '../../ChannelActions.svelte';
+	import ChannelSearch from '../../ChannelSearch.svelte';
 	export let data: PageData;
 	export let form: ActionData;
+
+	let channels: YouTubeChannelMetaAPIResponse[] = [];
+	$: channelIds = channels.reduce((byId, channel, index) => {
+		if (channel.originId) {
+			byId.set(channel.originId, index);
+		}
+		return byId;
+	}, new Map<string, number>());
+	$: channelIdList = [...channelIds.keys()];
+
 	$: if (form?.success) {
 		const url = `/list/${form.listId}`;
 		if (browser) {
@@ -42,7 +57,7 @@
 </script>
 
 <SEO {...seoProps} />
-<form class="mt-4 flex flex-col gap-4" method="post">
+<form action="?/create" class="mx-auto mt-4 flex max-w-lg flex-col gap-4" method="post" use:enhance>
 	{#if form?.error}
 		<aside class="alert variant-filled-error">
 			<div class="alert-message">
@@ -66,6 +81,24 @@
 			{/each}
 		</select>
 	</label>
+	<span class="label">Channels</span>
+	{#if !channels.length}
+		<span class="block text-gray-400">Search for a channel below to add it to the list.</span>
+	{:else}
+		<div class="grid max-h-96 grid-cols-2 overflow-y-auto">
+			{#each channels as channel}
+				<ChannelCard compact locale={data.locale} {channel}>
+					<ChannelCardActions {channel} bind:channels bind:channelIds />
+				</ChannelCard>
+			{/each}
+		</div>
+	{/if}
+	<select name="channelIds" multiple bind:value={channelIdList} class="hidden">
+		{#each channelIdList as channelId}
+			<option value={channelId}>{channelId}</option>
+		{/each}
+	</select>
+	<ChannelSearch {form} {data} bind:channels bind:channelIds />
 	<div class="flex justify-end">
 		<button class="variant-filled-secondary btn">{$LL.buttons.create()}</button>
 	</div>
