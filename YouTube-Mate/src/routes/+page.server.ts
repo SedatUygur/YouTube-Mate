@@ -1,5 +1,5 @@
 import type { PageServerLoad } from './$types';
-import { prisma } from '../prisma.ts';
+import { prisma } from '../lib/config/prisma.ts';
 import type { List } from '@prisma/client';
 
 export const load: PageServerLoad = async (events) => {

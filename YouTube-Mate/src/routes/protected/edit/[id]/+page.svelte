@@ -2,25 +2,23 @@
 	/* eslint-disable import/no-unresolved */
 	/* eslint-disable import-x/no-unresolved */
 	/* eslint-disable @typescript-eslint/no-floating-promises */
-
+	/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 	/* eslint-disable @typescript-eslint/restrict-template-expressions */
+	import SEO from '$lib/SEO/components/index.svelte';
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
-	import SEO from '$lib/SEO/components/index.svelte';
-	import type { ActionData, PageData } from '../../$types';
-	import ListForm from '../../../lib/components/ListForm.svelte';
-
-	export let data: PageData;
-	export let form: ActionData;
-
+	import ListForm from '../../../../lib/components/ListForm.svelte';
+	export let data;
+	export let form;
 	$: if (form?.success) {
-		const url = `/list/${form.listId}`;
 		if (browser) {
+			const url = `/list/${form.listId}`;
 			goto(url);
 		}
 	}
-	let title = 'Create list';
-	let metadescription = 'Create list with new component';
+
+	let title = 'Edit a List';
+	let metadescription = 'Edit a List with new component';
 	const breadcrumbs = [
 		{
 			name: 'Home',
@@ -35,7 +33,7 @@
 		breadcrumbs,
 		title,
 		metadescription,
-		slug: 'create',
+		slug: 'edit',
 		datePublished: '2024-11-29T14:19:33.000+0100',
 		lastUpdated: '2024-11-29T14:19:33.000+0100',
 	};
@@ -43,8 +41,8 @@
 
 <SEO {...seoProps} />
 <ListForm
-	list={undefined}
-	action="/create?/create"
+	action={`/protected/edit/${data.list.id}?/update`}
+	list={data.list}
 	locale={data.locale}
 	results={form?.results}
 	error={form?.error} />

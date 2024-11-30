@@ -1,28 +1,37 @@
-/* eslint-disable @typescript-eslint/no-base-to-string */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/only-throw-error */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable import/no-unresolved */
 import { ListItemType, Visibility } from '@prisma/client';
-import { fail } from '@sveltejs/kit';
+import { error as httpError, fail } from '@sveltejs/kit';
 import { LL, setLocale } from '$lib/i18n/i18n-svelte';
 import { get } from 'svelte/store';
 import { z, ZodError } from 'zod';
-import type { Actions } from '../../$types';
-import { prisma } from '../../../lib/config/prisma.ts';
 import * as YouTubeAPI from '$lib/YouTubeAPI';
+import { prisma } from '$lib/config/prisma';
+import { getList } from '$/lib/queries';
 
-export function load() {
+export async function load({ params, locals }) {
+	const { list, channelIds } = await getList(params.id, locals.session?.user?.id);
+	if (!list) {
+		setLocale(locals.locale);
+		const $LL = get(LL);
+		throw httpError(404, $LL.errors.notFound());
+	}
 	return {
+		list,
+		channelIds,
 		visibility: Visibility,
 		visibilities: Object.values(Visibility) as Visibility[],
 	};
 }
 
-export const actions: Actions = {
-	create: async (event) => {
-		let isSuccess = false;
-		let insertedId = '';
+export const actions = {
+	// TODO: change to update
+	update: async (event) => {
 		const $LL = get(LL);
 		setLocale(event.locals.locale);
 		const ListCreateRequestSchema = z.object({
@@ -31,28 +40,39 @@ export const actions: Actions = {
 			visibility: z.nativeEnum(Visibility),
 			channelIds: z.array(z.string().trim().min(1)),
 		});
+		const session = await event.locals.auth();
 		const formData = await event.request.formData();
-		const formDataObject = Object.fromEntries(formData) as any;
 		const channels = formData.getAll('channelIds');
+
+		const formDataObject = Object.fromEntries(formData) as any;
 		formDataObject.channelIds = channels;
 		try {
 			const { title, description, visibility, channelIds } =
 				await ListCreateRequestSchema.parseAsync(formDataObject);
-			const session = await event.locals.auth();
-			if (session?.user) {
-				const user = session.user;
-				const insertedList = await prisma.list.create({
-					data: {
-						title,
-						description,
-						visibility,
-						userId: user.id,
-					},
-				});
-				isSuccess = true;
-				insertedId = insertedList.id;
+			const { id: listId } = event.params;
+			const result = await prisma.list.updateMany({
+				where: {
+					id: listId,
+					userId: session?.user.id,
+				},
+				data: {
+					title,
+					description,
+					visibility,
+				},
+			});
+
+			if (result.count === 0) {
+				return fail(404, { error: 'List not found.' });
 			}
 
+			await prisma.listItem.deleteMany({
+				where: {
+					listId,
+				},
+			});
+
+			// TODO: fail gracefully... use transactions... refactor this
 			await Promise.all(
 				channelIds.map(async (id) => {
 					let existing = await prisma.listItemMeta.findFirst({
@@ -80,7 +100,7 @@ export const actions: Actions = {
 					}
 					await prisma.listItem.create({
 						data: {
-							listId: insertedId,
+							listId,
 							listItemMetaId: existing.id,
 							name: existing.name,
 						},
@@ -90,8 +110,8 @@ export const actions: Actions = {
 			);
 
 			return {
-				success: isSuccess,
-				listId: insertedId,
+				success: true,
+				listId,
 			};
 		} catch (e) {
 			const error = e as Error;
@@ -103,9 +123,10 @@ export const actions: Actions = {
 			return fail(400, { error: message });
 		}
 	},
-	search: async (event) => {
-		const formData = await event.request.formData();
-		const q = (formData.get('search') ?? '').toString();
+	// TODO: share this function with edit / create
+	search: async (event: { request: { formData: () => any } }) => {
+		const formData = event.request.formData();
+		const q = (formData.get('search') || '').toString();
 		const results = await YouTubeAPI.searchChannels(q);
 		return { results };
 	},

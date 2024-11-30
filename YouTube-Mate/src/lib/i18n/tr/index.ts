@@ -8,6 +8,7 @@ const tr = {
 	message: 'Merhaba Dünya',
 	buttons: {
 		create: 'Oluştur',
+		update: 'Güncelle',
 		logOut: 'Çıkış yap',
 		loginYouTube: "YouTube'a giriş yap",
 	},

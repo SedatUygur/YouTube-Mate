@@ -19,7 +19,7 @@
 {:else}
 	<button
 		on:click={() => {
-			channels.push(channel);
+			channels.unshift(channel);
 			channels = channels;
 		}}
 		type="button"

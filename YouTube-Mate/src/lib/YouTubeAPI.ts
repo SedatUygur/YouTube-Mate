@@ -52,8 +52,10 @@ export function parseYTDate(date: string | null | undefined) {
 	return date ? new Date(date).getTime() : Date.now();
 }
 
-export function parseYTNumber(number: string | null | undefined) {
-	return Number(number ?? 0);
+export function parseYTNumber(numberStr: string | null | undefined) {
+	let number = Number(numberStr);
+	number = !number || Number.isNaN(number) ? 0 : number;
+	return number;
 }
 
 export function createYouTubeMetaAPIResponse(originId: string, channel: youtube_v3.Schema$Channel) {
@@ -122,7 +124,7 @@ async function getAllVideos(
 		part: searchParts,
 		channelId,
 		type: ['video'],
-		order: 'date',
+		order: 'viewCount',
 		maxResults: 50,
 		pageToken,
 	});
@@ -145,7 +147,9 @@ async function getAllVideos(
 				channelId,
 				channelTitle: video.snippet?.channelTitle ?? 'No Channel Title',
 				commentCount: parseYTNumber(video.statistics?.commentCount),
-				definition: video.contentDetails?.definition ?? '',
+				definition: video.contentDetails?.definition
+					? video.contentDetails.definition.toUpperCase()
+					: '',
 				defaultLanguage: video.snippet?.defaultLanguage ?? '',
 				defaultAudioLanguage: video.snippet?.defaultAudioLanguage ?? '',
 				description: video.snippet?.description ?? 'No Video Description',

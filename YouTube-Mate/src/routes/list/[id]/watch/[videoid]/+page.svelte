@@ -11,7 +11,7 @@
 	import { ProgressRadial } from '@skeletonlabs/skeleton';
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
-	import ViewCount from '../../../../ViewCount.svelte';
+	import ViewCount from '../../../../../lib/components/ViewCount.svelte';
 	import { formatNumberCompact, formatRelativeDate } from '$/lib/formatters';
 	export let data;
 	let breadcrumbs: HTMLDivElement;

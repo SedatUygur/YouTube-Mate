@@ -31,7 +31,7 @@
 			{formatDuration(video.duration)}
 		</p>
 		<p class="absolute bottom--1 right-1 rounded-md bg-white bg-opacity-60 px-1.5 py-0.5">
-			{video.definition.toUpperCase()}
+			{video.definition}
 		</p>
 	</div>
 	<div class="m-2">

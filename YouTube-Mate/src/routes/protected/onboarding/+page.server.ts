@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import { redirect } from '@sveltejs/kit';
 import type { Actions } from '../../$types';
-import { prisma } from '../../../prisma.ts';
+import { prisma } from '../../../lib/config/prisma.ts';
 
 export const actions: Actions = {
 	default: async (event) => {

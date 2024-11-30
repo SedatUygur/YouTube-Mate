@@ -2,8 +2,8 @@
 import { SvelteKitAuth } from '@auth/sveltekit';
 //import type { DefaultSession } from '@auth/core/types';
 import Google from '@auth/sveltekit/providers/google';
-import PrismaAdapter from './PrismaAdapter.ts';
-import { prisma, userSettings } from './prisma.ts';
+import PrismaAdapter from './lib/config/PrismaAdapter.ts';
+import { prisma, userSettings } from './lib/config/prisma.ts';
 
 declare module '@auth/core/types' {
 	interface Session {

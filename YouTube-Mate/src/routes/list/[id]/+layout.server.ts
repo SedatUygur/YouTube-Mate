@@ -1,34 +1,17 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/only-throw-error */
 /* eslint-disable import/no-unresolved */
 import { LL, setLocale } from '$/lib/i18n/i18n-svelte';
-import { prisma } from '../../../prisma.ts';
 import { error } from '@sveltejs/kit';
 import { get } from 'svelte/store';
 import * as YouTubeAPI from '$lib/YouTubeAPI';
+import { getList } from '$/lib/queries';
 
 export async function load({ params, locals }) {
 	try {
 		// TODO: handle visibility
-		const list = await prisma.list.findFirst({
-			where: {
-				id: params.id,
-			},
-			include: {
-				items: {
-					include: {
-						meta: {
-							include: {
-								youtubeMeta: true,
-							},
-						},
-					},
-				},
-			},
-		});
-		const channelIds = list?.items.map((item) => item.meta.originId) ?? [];
+		const { list, channelIds } = await getList(params.id);
 		if (list) {
 			return {
 				list,

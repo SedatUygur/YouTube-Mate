@@ -8,6 +8,7 @@ const de = {
 	message: 'Hallo Welt',
 	buttons: {
 		create: 'Erstellen',
+		update: 'Aktualisieren',
 		logOut: 'Abmelden',
 		loginYouTube: 'Melden Sie sich mit YouTube an',
 	},

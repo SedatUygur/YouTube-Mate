@@ -6,7 +6,7 @@ declare global {
 		// interface Error {}
 		interface Locals {
 			locale: import('$lib/i18n/i18n-types.ts').Locales;
-			session: Session;
+			session: Session | undefined;
 		}
 		// interface PageData {}
 		// interface PageState {}

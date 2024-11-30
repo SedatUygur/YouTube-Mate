@@ -25,6 +25,10 @@ type RootTranslation = {
 		 */
 		create: string
 		/**
+		 * U​p​d​a​t​e
+		 */
+		update: string
+		/**
 		 * L​o​g​o​u​t
 		 */
 		logOut: string
@@ -158,6 +162,10 @@ export type TranslationFunctions = {
 		 * Create
 		 */
 		create: () => LocalizedString
+		/**
+		 * Update
+		 */
+		update: () => LocalizedString
 		/**
 		 * Logout
 		 */

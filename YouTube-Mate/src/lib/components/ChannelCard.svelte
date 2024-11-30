@@ -1,15 +1,34 @@
 <script lang="ts">
+	/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+	/* eslint-disable @typescript-eslint/no-unsafe-call */
+	import { onMount } from 'svelte';
 	import type { YouTubeChannelMetaAPIResponse } from '$/lib/YouTubeAPI';
 	export let channel: YouTubeChannelMetaAPIResponse;
 	export let locale: string;
 	export let compact = false;
+	export let shouldFocus = false;
+
+	let element: HTMLDivElement | null = null;
+
+	onMount(() => {
+		if (element && shouldFocus) {
+			element.scrollIntoView({
+				behavior: 'smooth',
+			});
+		}
+	});
+
 	const subscriberFormatter = new Intl.NumberFormat(locale, {
 		notation: 'compact',
 		compactDisplay: 'short',
 	});
 </script>
 
-<div class="card overflow-hidden p-4" class:grid={compact} class:content-center={compact}>
+<div
+	bind:this={element}
+	class="card overflow-hidden p-4"
+	class:grid={compact}
+	class:content-center={compact}>
 	<header>
 		<div class="flex gap-2" class:flex-col={compact} class:items-center={compact}>
 			{#if compact}
