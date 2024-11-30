@@ -2,6 +2,7 @@
 docker-data/
 node_modules
 prisma
+test-results
 /build
 /package
 /.svelte-kit

@@ -89,6 +89,14 @@ erDiagram
   String name
   String description
   Int subscriberCount
+  Int videoCount
+  Int viewCount
+  String countryCode "nullable"
+  String favoritesPlaylist "nullable"
+  String likesPlaylist "nullable"
+  String uploadsPlaylist "nullable"
+  String watchHistoryPlaylist "nullable"
+  String watchLaterPlaylist "nullable"
   String avatarUrl
   String bannerUrl "nullable"
   String customUrl
@@ -133,9 +141,9 @@ This comment will get attached to the `Locale` node in the AST
 
 **Properties**
   - `id`: Primary Key.
-  - `languageCode`: Language code.
-  - `countryCode`: Country code.
-  - `script`: 
+  - `languageCode`: Locale language code.
+  - `countryCode`: Locale country code.
+  - `script`: Locale script.
   - `formalName`: Formal locale name.
   - `nativeName`: Native locale name.
   - `commonName`: Common locale name.
@@ -218,6 +226,14 @@ This comment will get attached to the `ListItemMeta` node in the AST
   - `name`: YouTube meta name.
   - `description`: YouTube meta description.
   - `subscriberCount`: YouTube meta subscriber count.
+  - `videoCount`: YouTube meta video count.
+  - `viewCount`: YouTube meta view count.
+  - `countryCode`: YouTube meta country code.
+  - `favoritesPlaylist`: YouTube meta favorites playlist.
+  - `likesPlaylist`: YouTube meta likes playlist.
+  - `uploadsPlaylist`: YouTube meta uploads playlist.
+  - `watchHistoryPlaylist`: YouTube meta watch history playlist.
+  - `watchLaterPlaylist`: YouTube meta watch later playlist.
   - `avatarUrl`: YouTube meta avatar url.
   - `bannerUrl`: YouTube meta banner url.
   - `customUrl`: YouTube meta custom url.

@@ -111,11 +111,13 @@ model Locale {
   /// @maxLength 15
   id           String         @unique @db.VarChar(15)
   
-  /// Language code.
+  /// Locale language code.
   languageCode String
   
-  /// Country code.
+  /// Locale country code.
   countryCode  String?
+  
+  /// Locale script.
   script       String?
 
   /// Formal locale name.
@@ -373,6 +375,30 @@ model YouTubeMeta {
 
   /// YouTube meta subscriber count.
   subscriberCount Int
+
+  /// YouTube meta video count.
+  videoCount Int
+
+  /// YouTube meta view count.
+  viewCount Int
+
+  /// YouTube meta country code.
+  countryCode  String?
+
+  /// YouTube meta favorites playlist.
+  favoritesPlaylist String?
+
+  /// YouTube meta likes playlist.
+  likesPlaylist String?
+
+  /// YouTube meta uploads playlist.
+  uploadsPlaylist String?
+
+  /// YouTube meta watch history playlist.
+  watchHistoryPlaylist String?
+
+  /// YouTube meta watch later playlist.
+  watchLaterPlaylist String?
   
   /// YouTube meta avatar url.
   avatarUrl       String

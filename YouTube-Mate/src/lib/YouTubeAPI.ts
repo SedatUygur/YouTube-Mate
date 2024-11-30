@@ -1,4 +1,4 @@
-import { youtube, youtube_v3 } from '@googleapis/youtube';
+import { youtube, type youtube_v3 } from '@googleapis/youtube';
 import type { YouTubeMeta } from '@prisma/client';
 import { config } from './config/config.server.ts';
 import redisClient from './config/redis.client.ts';
@@ -7,31 +7,45 @@ const ytClient = youtube({
 	version: 'v3',
 	auth: config.YOUTUBE_API_KEY,
 });
-const channelParts = ['id', 'snippet', 'statistics', 'brandingSettings'];
 
-export type YouTubeChannelMetaAPIResponse = Omit<YouTubeMeta, 'createdAt' | 'updatedAt'>;
+const channelParts = ['id', 'brandingSettings', 'contentDetails', 'snippet', 'statistics'];
+const searchParts = ['id', 'snippet'];
+
+export type YouTubeChannelMetaAPIResponse = Omit<
+	YouTubeMeta,
+	'createdAt' | 'updatedAt' | 'isVerified'
+>;
 
 export interface YouTubeVideoAPIResponse {
-	thumbnails: {
-		high: string | null;
-		low: string | null;
-	};
-	title: string;
-	description: string;
-	videoId: string;
-	channelTitle: string;
+	categoryId: string;
 	channelId: string;
-	publishedAt: number;
-	viewCount: number;
-	likes: number;
+	channelTitle: string;
+	commentCount: number;
+	defaultLanguage: string;
+	defaultAudioLanguage: string;
+	definition: string;
+	description: string;
 	duration: string;
+	favoriteCount: number;
+	licensedContent: boolean;
+	likeCount: number;
+	live: boolean;
+	publishedAt: number;
+	tags: string[];
+	title: string;
 	upcoming: boolean;
+	videoId: string;
+	viewCount: number;
 	livestream: {
 		viewers: number;
 		liveChatId: string;
 		actualStartAt: number;
 		scheduledStartAt: number;
 	} | null;
+	thumbnails: {
+		high: string | null;
+		low: string | null;
+	};
 }
 
 export function parseYTDate(date: string | null | undefined) {
@@ -43,22 +57,46 @@ export function parseYTNumber(number: string | null | undefined) {
 }
 
 export function createYouTubeMetaAPIResponse(originId: string, channel: youtube_v3.Schema$Channel) {
-	const subscriberCountNumber = Number(channel.statistics?.subscriberCount);
+	const subscriberCountNumber = !channel.statistics?.hiddenSubscriberCount
+		? Number(channel.statistics?.subscriberCount)
+		: 0;
 	const subscriberCount = Number.isNaN(subscriberCountNumber) ? 0 : subscriberCountNumber;
+	const videoCount = channel.statistics?.videoCount ? Number(channel.statistics.videoCount) : 0;
+	const viewCount = channel.statistics?.viewCount ? Number(channel.statistics.viewCount) : 0;
 	// TODO: i18n
-	const name = channel.snippet?.title ?? 'No Title';
+	const name = channel.snippet?.title ?? 'No title';
+	const description = channel.snippet?.description ?? 'No description';
+	const countryCode = channel.snippet?.country ?? 'No country';
 	// TODO: use our own avatar service
 	const avatarUrl =
 		channel.snippet?.thumbnails?.default?.url ?? `https://ui-avatars.com/api/?name=${name}`;
+	const bannerUrl = channel.brandingSettings?.image?.bannerImageUrl ?? null;
+	const customUrl = channel.snippet?.customUrl ?? '@notfound';
+	const favoritesPlaylist =
+		channel.contentDetails?.relatedPlaylists?.favorites ?? 'No favorite playlists';
+	const likesPlaylist = channel.contentDetails?.relatedPlaylists?.likes ?? 'No like playlists';
+	const uploadsPlaylist =
+		channel.contentDetails?.relatedPlaylists?.uploads ?? 'No uploaded playlists';
+	const watchHistoryPlaylist =
+		channel.contentDetails?.relatedPlaylists?.watchHistory ?? 'No watch history playlists';
+	const watchLaterPlaylist =
+		channel.contentDetails?.relatedPlaylists?.watchLater ?? 'No watch later playlists';
 	return {
 		name,
 		originId,
-		description: channel.snippet?.description ?? 'No description set.',
+		description,
 		subscriberCount,
 		avatarUrl,
-		bannerUrl: channel.brandingSettings?.image?.bannerImageUrl ?? null,
-		customUrl: channel.snippet?.customUrl ?? '@notfound',
-		isVerified: false,
+		bannerUrl,
+		customUrl,
+		countryCode,
+		videoCount,
+		viewCount,
+		favoritesPlaylist,
+		likesPlaylist,
+		uploadsPlaylist,
+		watchHistoryPlaylist,
+		watchLaterPlaylist,
 	};
 }
 
@@ -81,7 +119,7 @@ async function getAllVideos(
 	pageToken?: string
 ): Promise<YouTubeVideoAPIResponse[]> {
 	const { data } = await ytClient.search.list({
-		part: ['id', 'snippet'],
+		part: searchParts,
 		channelId,
 		type: ['video'],
 		order: 'date',
@@ -95,56 +133,55 @@ async function getAllVideos(
 		return all;
 	}, []);
 	const { data: videoData } = await ytClient.videos.list({
-		part: [
-			'id',
-			'contentDetails',
-			'liveStreamingDetails',
-			'localizations',
-			'snippet',
-			'statistics',
-		],
+		part: ['id', 'contentDetails', 'liveStreamingDetails', 'snippet', 'statistics'],
 		id: ids,
 		maxResults: 50,
 	});
 	videoData.items?.forEach((video) => {
 		if (video.id) {
 			const videoResponse = {
-				thumbnails: {
-					high:
-						video.snippet?.thumbnails?.maxres?.url ??
-						video.snippet?.thumbnails?.standard?.url ??
-						video.snippet?.thumbnails?.high?.url ??
-						null,
-					low:
-						video.snippet?.thumbnails?.medium?.url ??
-						video.snippet?.thumbnails?.default?.url ??
-						null,
-				},
 				// TODO: i18n
-				title: video.snippet?.title ?? 'No Video Title',
-				description: video.snippet?.description ?? '',
-				videoId: video.id,
-				channelTitle: video.snippet?.channelTitle ?? 'No Channel Title',
+				categoryId: video.snippet?.categoryId ?? 'No Category Id',
 				channelId,
-				publishedAt: video.snippet?.publishedAt
-					? new Date(video.snippet.publishedAt).getTime()
-					: Date.now(),
-				viewCount: parseYTNumber(video.statistics?.viewCount),
-				likes: parseYTNumber(video.statistics?.likeCount),
+				channelTitle: video.snippet?.channelTitle ?? 'No Channel Title',
+				commentCount: parseYTNumber(video.statistics?.commentCount),
+				definition: video.contentDetails?.definition ?? '',
+				defaultLanguage: video.snippet?.defaultLanguage ?? '',
+				defaultAudioLanguage: video.snippet?.defaultAudioLanguage ?? '',
+				description: video.snippet?.description ?? 'No Video Description',
 				duration: video.contentDetails?.duration ?? 'PT0S',
+				favoriteCount: parseYTNumber(video.statistics?.favoriteCount),
+				licensedContent: video.contentDetails?.licensedContent ?? false,
+				likeCount: parseYTNumber(video.statistics?.likeCount),
+				live: video.snippet?.liveBroadcastContent === 'live',
+				tags: video.snippet?.tags ?? [],
+				title: video.snippet?.title ?? 'No Video Title',
 				upcoming: video.snippet?.liveBroadcastContent === 'upcoming',
+				videoId: video.id,
+				viewCount: parseYTNumber(video.statistics?.viewCount),
 				livestream: video.liveStreamingDetails
 					? {
-							live: video.snippet?.liveBroadcastContent === 'live',
 							viewers: parseYTNumber(video.liveStreamingDetails.concurrentViewers),
 							liveChatId: video.liveStreamingDetails.activeLiveChatId ?? '',
 							actualStartAt: parseYTDate(video.liveStreamingDetails.actualStartTime),
 							scheduledStartAt: parseYTDate(video.liveStreamingDetails.scheduledStartTime),
 						}
 					: null,
+				publishedAt: video.snippet?.publishedAt
+					? new Date(video.snippet.publishedAt).getTime()
+					: Date.now(),
+				thumbnails: {
+					high:
+						video.snippet?.thumbnails?.maxres?.url?.replace('_live', '') ??
+						video.snippet?.thumbnails?.standard?.url?.replace('_live', '') ??
+						video.snippet?.thumbnails?.high?.url?.replace('_live', '') ??
+						null,
+					low:
+						video.snippet?.thumbnails?.medium?.url?.replace('_live', '') ??
+						video.snippet?.thumbnails?.default?.url?.replace('_live', '') ??
+						null,
+				},
 			};
-			videoResponse.thumbnails.high = videoResponse.thumbnails.high?.replace('_live', '') ?? null;
-			videoResponse.thumbnails.low = videoResponse.thumbnails.low?.replace('_live', '') ?? null;
 			videos.push(videoResponse);
 		}
 	});
@@ -181,7 +218,7 @@ export async function getVideos(channelIds: string[]) {
 export async function searchChannels(q: string) {
 	// TODO: proxy, cache and use an API Key pool...
 	const { data: searchResults } = await ytClient.search.list({
-		part: ['id', 'snippet'],
+		part: searchParts,
 		q,
 		type: ['channel'],
 		maxResults: 50,

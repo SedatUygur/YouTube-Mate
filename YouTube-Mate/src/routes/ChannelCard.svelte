@@ -31,6 +31,12 @@
 					<div>
 						{subscriberFormatter.format(Number(channel.subscriberCount))} subscribers
 					</div>
+					<div>
+						{subscriberFormatter.format(Number(channel.viewCount))} views
+					</div>
+					<div>
+						{subscriberFormatter.format(Number(channel.videoCount))} videos
+					</div>
 				</div>
 			{/if}
 		</div>

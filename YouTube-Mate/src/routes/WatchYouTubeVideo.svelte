@@ -21,11 +21,17 @@
 			src={video.thumbnails.low}
 			alt={video.title} />
 		<!-- TODO: use icon library -->
-		<p class="absolute bottom-1 left-1 rounded-md bg-black bg-opacity-60 px-1.5 py-0.5 text-xs">
-			{formatNumberCompact(video.likes, locale)} 👍
+		<p class="absolute bottom-1 left-1 rounded-md bg-white bg-opacity-60 px-1.5 py-0.5 text-xs">
+			{formatNumberCompact(video.likeCount, locale)} 👍
 		</p>
-		<p class="absolute bottom-1 right-1 rounded-md bg-black bg-opacity-60 px-1.5 py-0.5">
+		<p class="absolute bottom--1 left-1 rounded-md bg-white bg-opacity-60 px-1.5 py-0.5 text-xs">
+			{formatNumberCompact(video.commentCount, locale)} 💬
+		</p>
+		<p class="absolute bottom-1 right-1 rounded-md bg-white bg-opacity-60 px-1.5 py-0.5">
 			{formatDuration(video.duration)}
+		</p>
+		<p class="absolute bottom--1 right-1 rounded-md bg-white bg-opacity-60 px-1.5 py-0.5">
+			{video.definition.toUpperCase()}
 		</p>
 	</div>
 	<div class="m-2">
@@ -39,5 +45,6 @@
 		</div>
 		<!-- TODO: something better than ellipses... -->
 		<p class="my-2 line-clamp-2 break-words">{video.title}</p>
+		<p class="my-2 line-clamp-2 break-words">{video.description}</p>
 	</div>
 </a>

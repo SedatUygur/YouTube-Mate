@@ -15,6 +15,7 @@ module.exports = {
 	},
 	plugins: [
 		// 4. Append the Skeleton plugin (after other plugins)
+		require('@tailwindcss/forms'),
 		skeleton({
 			themes: { preset: ['skeleton'] },
 		}),

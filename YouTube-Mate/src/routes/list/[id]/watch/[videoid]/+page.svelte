@@ -80,7 +80,9 @@
 				{/await}
 				<div class="mb-4 flex items-center gap-4">
 					<span class="variant-soft-primary chip text-2xl"
-						>{formatNumberCompact(video.likes, data.locale)} 👍</span>
+						>{formatNumberCompact(video.likeCount, data.locale)} 👍</span>
+					<span class="variant-soft-primary chip text-2xl"
+						>{formatNumberCompact(video.commentCount, data.locale)} 💬</span>
 					<ViewCount locale={data.locale} viewCount={video.viewCount} />
 					<span>{formatRelativeDate(video.publishedAt, data.locale)}</span>
 				</div>
