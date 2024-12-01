@@ -14,6 +14,7 @@
 </script>
 
 <div class="hero-container mx-auto flex max-w-sm flex-col items-center justify-center p-4">
+	<h1>YouTubeMate</h1>
 	{#if $page.data.session}
 		<p class="my-4 text-center">
 			{#if !data.lists.length}
@@ -39,12 +40,7 @@
 		</ul>
 	{:else}
 		<h2 id="methods" data-text="Sign-in methods" tabindex="-1" role="presentation">
-			<span class="devsite-heading" role="heading" aria-level="2">Sign-in methods</span><button
-				type="button"
-				class="devsite-heading-link button-flat material-icons"
-				aria-label="Copy link to this section: Sign-in methods"
-				data-title="Copy link to this section: Sign-in methods"
-				data-id="methods"></button>
+			<span class="devsite-heading" role="heading" aria-level="2">Sign-in methods</span>
 		</h2>
 		<p>
 			The Sign-in template supports 3 sign-in methods: Provider sign-in, username and password, QR

@@ -22,6 +22,7 @@ export default tseslint.config(
 			globals: {
 				...globals.browser,
 				...globals.node,
+				NodeJS: true,
 			},
 		},
 	},
@@ -31,6 +32,7 @@ export default tseslint.config(
 			'build/',
 			'dist/',
 			'docker-data/',
+			'e2e/',
 			'node_modules',
 			'package/',
 			'src/lib/i18n/*.ts',
@@ -43,7 +45,6 @@ export default tseslint.config(
 			'.DS_Store',
 			'.env',
 			'.env.*',
-			'e2e/demo.test.ts',
 			'prisma/',
 		],
 	},

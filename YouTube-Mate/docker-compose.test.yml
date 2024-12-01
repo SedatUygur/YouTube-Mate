@@ -1,0 +1,9 @@
+services:
+  db:
+    extends:
+      file: docker-compose.yml
+      service: db
+  redis:
+    extends:
+      file: docker-compose.yml
+      service: redis

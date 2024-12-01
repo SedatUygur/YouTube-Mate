@@ -30,14 +30,14 @@ npm install
 
 This project uses [PostgreSQL](https://www.postgresql.org/) as its database.
 
-The project has a `docker-compose.yml` file ready to use if you have [Docker](https://www.docker.com/) installed.
+The project has a `docker-compose.dev.yml` file ready to use if you have [Docker](https://www.docker.com/) installed.
 
 You can also install Postgres on your local machine [directly](https://www.prisma.io/dataguide/postgresql/setting-up-a-local-postgresql-database) or use a cloud service.
 
-move `.env.example` to `.env`
+copy `.env.example` to `.env`
 
 ```bash
- mv .env.example .env
+ cp .env.example .env
 ```
 
 #### `.env` variables for PostgreSQL
@@ -69,7 +69,7 @@ DB_PORT=5432
 If you have [Docker](https://www.docker.com/) installed, you can use the following command to start a PostgreSQL container:
 
 ```bash
-docker-compose up -d
+docker-compose -f docker-compose.dev.yml up -d --wait
 ```
 
 #### Prisma Setup
@@ -87,6 +87,14 @@ npx prisma generate
 ```
 
 View the database diagram here (./prisma/YouTubeMate-ERD.md).
+
+#### Playwright Setup
+
+Ensure you have the Playwright executables installed to run tests:
+
+```bash
+npx playwright install
+```
 
 ### Getting Google OAuth API Credentials
 

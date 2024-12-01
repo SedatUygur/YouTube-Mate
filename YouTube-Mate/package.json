@@ -3,20 +3,24 @@
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
-		"dev": "concurrently \"vite dev\" typesafe-i18n",
 		"build": "vite build",
-		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"lint": "eslint .",
-		"lint:fix": "eslint . --fix",
+		"dev": "concurrently \"vite dev\" typesafe-i18n",
+		"docker-down:test": "docker compose -f docker-compose.test.yml down",
+		"docker-up:test": "docker compose -f docker-compose.test.yml up -d --wait --force-recreate",
 		"format": "prettier --plugin-search-dir . --check .",
 		"format:fix": "prettier --plugin-search-dir . --write .",
-		"test:unit": "vitest",
-		"test": "standard && npm run test:unit -- --run && npm run test:e2e",
-		"test:e2e": "playwright test",
-		"typecheck": "npm run check",
-		"prepare": "husky install"
+		"lint": "eslint .",
+		"lint:fix": "eslint . --fix",
+		"migrate:init": "prisma migrate dev --name init",
+		"prepare": "husky install",
+		"preview": "vite preview",
+		"test:unit": "vitest run",
+		"test": "npm run test:unit && npm run test:e2e",
+		"test:e2e": "npm run docker-up:test && npm run migrate:init && set NODE_ENV=test&& dotenv prisma db seed && playwright test && npm run docker-down:test",
+		"test:e2e:debug": "npm run docker-up:test && npm run migrate:init && dotenvx NODE_ENV=test prisma db seed && playwright test --debug && npm run docker-down:test",
+		"typecheck": "npm run check"
 	},
 	"prisma": {
 		"seed": "tsx prisma/seeds/index.ts"
@@ -75,6 +79,7 @@
 		"@googleapis/youtube": "^20.0.0",
 		"@prisma/client": "^5.22.0",
 		"@prisma/generator-helper": "^5.22.0",
+		"dotenv-cli": "^7.4.4",
 		"luxon": "^3.5.0",
 		"redis": "^4.7.0",
 		"zod": "^3.23.8"

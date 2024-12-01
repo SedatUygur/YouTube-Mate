@@ -4,6 +4,7 @@ node_modules
 # Output
 .output
 .vercel
+auth.json
 settings.json
 /.svelte-kit
 /build

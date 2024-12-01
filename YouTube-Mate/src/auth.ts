@@ -49,13 +49,14 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
 					id: event.locals.locale,
 				},
 			});*/
-			await prisma.userSettings.create({
+			const settings = await prisma.userSettings.create({
 				data: {
 					//localeId: locale?.id ?? 'en-US',
 					localeId: 'en-US',
 					userId: message.user.id,
 				},
 			});
+			message.user.settings = settings;
 		},
 	},
 });
