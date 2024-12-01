@@ -134,61 +134,63 @@ async function getAllVideos(
 		}
 		return all;
 	}, []);
-	const { data: videoData } = await ytClient.videos.list({
-		part: ['id', 'contentDetails', 'liveStreamingDetails', 'snippet', 'statistics'],
-		id: ids,
-		maxResults: 50,
-	});
-	videoData.items?.forEach((video) => {
-		if (video.id) {
-			const videoResponse = {
-				// TODO: i18n
-				categoryId: video.snippet?.categoryId ?? 'No Category Id',
-				channelId,
-				channelTitle: video.snippet?.channelTitle ?? 'No Channel Title',
-				commentCount: parseYTNumber(video.statistics?.commentCount),
-				definition: video.contentDetails?.definition
-					? video.contentDetails.definition.toUpperCase()
-					: '',
-				defaultLanguage: video.snippet?.defaultLanguage ?? '',
-				defaultAudioLanguage: video.snippet?.defaultAudioLanguage ?? '',
-				description: video.snippet?.description ?? 'No Video Description',
-				duration: video.contentDetails?.duration ?? 'PT0S',
-				favoriteCount: parseYTNumber(video.statistics?.favoriteCount),
-				licensedContent: video.contentDetails?.licensedContent ?? false,
-				likeCount: parseYTNumber(video.statistics?.likeCount),
-				live: video.snippet?.liveBroadcastContent === 'live',
-				tags: video.snippet?.tags ?? [],
-				title: video.snippet?.title ?? 'No Video Title',
-				upcoming: video.snippet?.liveBroadcastContent === 'upcoming',
-				videoId: video.id,
-				viewCount: parseYTNumber(video.statistics?.viewCount),
-				livestream: video.liveStreamingDetails
-					? {
-							viewers: parseYTNumber(video.liveStreamingDetails.concurrentViewers),
-							liveChatId: video.liveStreamingDetails.activeLiveChatId ?? '',
-							actualStartAt: parseYTDate(video.liveStreamingDetails.actualStartTime),
-							scheduledStartAt: parseYTDate(video.liveStreamingDetails.scheduledStartTime),
-						}
-					: null,
-				publishedAt: video.snippet?.publishedAt
-					? new Date(video.snippet.publishedAt).getTime()
-					: Date.now(),
-				thumbnails: {
-					high:
-						video.snippet?.thumbnails?.maxres?.url?.replace('_live', '') ??
-						video.snippet?.thumbnails?.standard?.url?.replace('_live', '') ??
-						video.snippet?.thumbnails?.high?.url?.replace('_live', '') ??
-						null,
-					low:
-						video.snippet?.thumbnails?.medium?.url?.replace('_live', '') ??
-						video.snippet?.thumbnails?.default?.url?.replace('_live', '') ??
-						null,
-				},
-			};
-			videos.push(videoResponse);
-		}
-	});
+	if (ids.length) {
+		const { data: videoData } = await ytClient.videos.list({
+			part: ['id', 'contentDetails', 'liveStreamingDetails', 'snippet', 'statistics'],
+			id: ids,
+			maxResults: 50,
+		});
+		videoData.items?.forEach((video) => {
+			if (video.id) {
+				const videoResponse = {
+					// TODO: i18n
+					categoryId: video.snippet?.categoryId ?? 'No Category Id',
+					channelId,
+					channelTitle: video.snippet?.channelTitle ?? 'No Channel Title',
+					commentCount: parseYTNumber(video.statistics?.commentCount),
+					definition: video.contentDetails?.definition
+						? video.contentDetails.definition.toUpperCase()
+						: '',
+					defaultLanguage: video.snippet?.defaultLanguage ?? '',
+					defaultAudioLanguage: video.snippet?.defaultAudioLanguage ?? '',
+					description: video.snippet?.description ?? 'No Video Description',
+					duration: video.contentDetails?.duration ?? 'PT0S',
+					favoriteCount: parseYTNumber(video.statistics?.favoriteCount),
+					licensedContent: video.contentDetails?.licensedContent ?? false,
+					likeCount: parseYTNumber(video.statistics?.likeCount),
+					live: video.snippet?.liveBroadcastContent === 'live',
+					tags: video.snippet?.tags ?? [],
+					title: video.snippet?.title ?? 'No Video Title',
+					upcoming: video.snippet?.liveBroadcastContent === 'upcoming',
+					videoId: video.id,
+					viewCount: parseYTNumber(video.statistics?.viewCount),
+					livestream: video.liveStreamingDetails
+						? {
+								viewers: parseYTNumber(video.liveStreamingDetails.concurrentViewers),
+								liveChatId: video.liveStreamingDetails.activeLiveChatId ?? '',
+								actualStartAt: parseYTDate(video.liveStreamingDetails.actualStartTime),
+								scheduledStartAt: parseYTDate(video.liveStreamingDetails.scheduledStartTime),
+							}
+						: null,
+					publishedAt: video.snippet?.publishedAt
+						? new Date(video.snippet.publishedAt).getTime()
+						: Date.now(),
+					thumbnails: {
+						high:
+							video.snippet?.thumbnails?.maxres?.url?.replace('_live', '') ??
+							video.snippet?.thumbnails?.standard?.url?.replace('_live', '') ??
+							video.snippet?.thumbnails?.high?.url?.replace('_live', '') ??
+							null,
+						low:
+							video.snippet?.thumbnails?.medium?.url?.replace('_live', '') ??
+							video.snippet?.thumbnails?.default?.url?.replace('_live', '') ??
+							null,
+					},
+				};
+				videos.push(videoResponse);
+			}
+		});
+	}
 	if (data.nextPageToken) {
 		return getAllVideos(channelId, videos, data.nextPageToken);
 	}
