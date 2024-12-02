@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/only-throw-error */
 /* eslint-disable @typescript-eslint/unbound-method */
 /* eslint-disable import/no-unresolved */
 import { redirect, type Handle } from '@sveltejs/kit';
@@ -24,7 +23,7 @@ const handleDetectLocale = (async ({ event, resolve }) => {
 const handleProtected = (async ({ event, resolve }) => {
 	const session = await event.locals.auth();
 	if (!session && event.route.id?.includes('protected')) {
-		throw redirect(302, '/');
+		redirect(302, '/');
 	}
 	return resolve(event);
 }) satisfies Handle;

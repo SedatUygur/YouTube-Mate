@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/only-throw-error */
 /* eslint-disable import/no-unresolved */
 import { redirect } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
@@ -12,14 +11,14 @@ export const load: LayoutServerLoad = async (event) => {
 		!session.user.settings.onboarded &&
 		eventRouteId !== '/protected/onboarding'
 	) {
-		throw redirect(302, '/onboarding');
+		redirect(302, '/onboarding');
 	}
 	if (
 		session?.user.settings &&
 		session.user.settings.onboarded &&
 		eventRouteId === '/protected/onboarding'
 	) {
-		throw redirect(302, '/');
+		redirect(302, '/');
 	}
 	return {
 		session,

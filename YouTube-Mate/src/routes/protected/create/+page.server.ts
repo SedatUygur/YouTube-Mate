@@ -9,7 +9,7 @@ import { LL, setLocale } from '$lib/i18n/i18n-svelte';
 import { get } from 'svelte/store';
 import { z, ZodError } from 'zod';
 import type { Actions } from '../../$types';
-import { prisma } from '../../../lib/config/prisma.ts';
+import { prisma } from '$lib/config/prisma.ts';
 import * as YouTubeAPI from '$lib/YouTubeAPI';
 
 export function load() {

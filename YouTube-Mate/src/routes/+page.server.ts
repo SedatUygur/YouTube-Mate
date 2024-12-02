@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { PageServerLoad } from './$types';
 import { prisma } from '../lib/config/prisma.ts';
 import type { ListWithItems } from '../lib/config/prisma.list.ts';

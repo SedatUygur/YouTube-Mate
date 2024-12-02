@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/only-throw-error */
+
 /* eslint-disable import/no-unresolved */
 import { LL, setLocale } from '$/lib/i18n/i18n-svelte';
 import { error } from '@sveltejs/kit';
@@ -29,5 +29,5 @@ export async function load({ params, locals }) {
 	}
 	setLocale(locals.locale);
 	const $LL = get(LL);
-	throw error(404, $LL.errors.notFound());
+	error(404, $LL.errors.notFound());
 }

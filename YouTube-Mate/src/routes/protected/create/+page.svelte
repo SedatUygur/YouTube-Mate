@@ -7,7 +7,7 @@
 	import { goto } from '$app/navigation';
 	import SEO from '$lib/SEO/components/index.svelte';
 	import type { ActionData, PageData } from '../../$types';
-	import ListForm from '../../../lib/components/ListForm.svelte';
+	import ListForm from '$lib/components/ListForm.svelte';
 
 	export let data: PageData;
 	export let form: ActionData;

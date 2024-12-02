@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import type { PrismaClient } from '@prisma/client';
@@ -8,6 +9,10 @@ import type { Adapter } from '@auth/core/adapters';
 export default function CustomPrismaAdapter(client: PrismaClient): Adapter {
 	return {
 		...PrismaAdapter(client),
+		// @ts-ignore
+		createUser({ id, ...data }) {
+			return client.user.create({ data });
+		},
 		// @ts-ignore
 		async getUser(id: string) {
 			return client.user.findUnique({

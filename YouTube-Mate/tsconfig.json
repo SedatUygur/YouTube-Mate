@@ -7,13 +7,15 @@
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"moduleResolution": "bundler",
+		"noImplicitAny": false,
 		"outDir": ".svelte-kit/output",
 		"paths": {
 			"$/*": ["./src/*"],
 			"$lib": ["./src/lib"],
 			"$lib/*": ["./src/lib/*"],
 			"$app": ["./node_modules/@sveltejs/kit/types"],
-			"$app/*": ["./node_modules/@sveltejs/kit/types/index.d.ts"]
+			"$app/*": ["./node_modules/@sveltejs/kit/types/index.d.ts"],
+			"anchorme": ["./node_modules/anchorme/dist/node/index.d.ts"]
 		},
 		"plugins": [
 			{
