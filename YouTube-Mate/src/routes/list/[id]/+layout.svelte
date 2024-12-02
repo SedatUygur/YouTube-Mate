@@ -10,6 +10,7 @@
 	import ChannelCard from '$lib/components/ChannelCard.svelte';
 	import type { YouTubeVideoAPIResponse } from '$lib/YouTubeAPI';
 	import { page } from '$app/stores';
+	import { setupViewTransition } from 'sveltekit-view-transition';
 
 	export let data;
 
@@ -37,11 +38,14 @@
 			filter = value;
 		}, 500);
 	};
+	const { transition } = setupViewTransition();
 </script>
 
 <slot />
 {#if !$page.params.videoid}
-	<h2 class="font-bold" data-testid="list-title">{data.list?.title}</h2>
+	<h2 use:transition={'title'} data-testid="list-title" class="inline font-bold">
+		{data.list?.title}
+	</h2>
 	<p>{data.list?.description}</p>
 	<div
 		class="my-4 grid grid-cols-1 place-content-center md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"

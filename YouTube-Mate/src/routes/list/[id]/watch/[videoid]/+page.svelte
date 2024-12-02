@@ -1,6 +1,6 @@
 <script lang="ts">
 	/* eslint-disable import/no-unresolved */
-
+	/* eslint-disable import-x/no-duplicates */
 	/* eslint-disable @typescript-eslint/no-unsafe-argument */
 	/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 	/* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -8,10 +8,10 @@
 	/* eslint-disable @typescript-eslint/no-unsafe-return */
 	/* eslint-disable @typescript-eslint/restrict-template-expressions */
 	import { ProgressRadial } from '@skeletonlabs/skeleton';
-	import { formatNumberCompact, formatRelativeDate, parseDescription } from '$lib/formatters';
 	import anchorme from 'anchorme';
 	import { afterNavigate, beforeNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { formatNumberCompact, formatRelativeDate, parseDescription } from '$lib/formatters';
 	import VideoPlayerStore from '$lib/stores/VideoPlayerStore.ts';
 	import ViewCount from '$lib/components/ViewCount.svelte';
 	import YouTubeVideo from '$lib/components/YouTubeVideo.svelte';

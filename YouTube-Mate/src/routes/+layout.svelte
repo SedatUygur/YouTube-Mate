@@ -10,11 +10,14 @@
 	import twitterImageSrc from '$lib/SEO/assets/home-twitter.jpg';
 	import featuredImageSrc from '$lib/SEO/assets/home.jpg';*/
 	import { afterNavigate } from '$app/navigation';
+	import { setupViewTransition } from 'sveltekit-view-transition';
 	import SEO from '$lib/SEO/components/index.svelte';
 	import website from '$lib/SEO/config/website';
 
 	export let data: LayoutData;
+
 	setLocale(data.locale);
+	setupViewTransition();
 
 	afterNavigate(() => {
 		// Fix for firefox

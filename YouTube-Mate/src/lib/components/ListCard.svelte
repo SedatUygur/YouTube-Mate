@@ -1,22 +1,37 @@
 <script lang="ts">
+	/* eslint-disable import/no-unresolved */
+	import { setupViewTransition } from 'sveltekit-view-transition';
 	import Avatar from './Avatar.svelte';
 	import type { ListWithItems } from '../config/prisma.list.ts';
 
 	export let list: ListWithItems;
+
 	const truncatedItems = list.items?.slice(0, 3) ?? [];
 	const hiddenItems = (list.items?.length ?? 0) - truncatedItems.length;
+	const { transition } = setupViewTransition();
 </script>
 
 <div class="card flex flex-col justify-between p-4">
 	<div>
-		<a class="text-xl hover:text-primary-500 hover:underline" href="/list/{list.id}"
-			>{list.title}</a>
+		<a
+			use:transition={{
+				name: 'title',
+				shouldApply({ navigation }) {
+					return navigation.to?.params?.id === list.id;
+				},
+				applyImmediately({ navigation, isInViewport }) {
+					return isInViewport && navigation.from?.params?.id === list.id;
+				},
+			}}
+			class="text-xl hover:text-primary-500 hover:underline"
+			href="/list/{list.id}">{list.title}</a>
 		{#if list.items}
 			<div class="mt-4">
 				{#each truncatedItems as item}
 					<Avatar
 						avatarUrl={item.meta?.youtubeMeta?.avatarUrl}
-						altText={item.meta?.youtubeMeta?.name} />
+						altText={item.meta?.youtubeMeta?.name}
+						channelId={item.meta?.youtubeMeta?.originId} />
 				{/each}
 				{#if hiddenItems > 0}
 					<span

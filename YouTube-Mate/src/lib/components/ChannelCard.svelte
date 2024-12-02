@@ -33,7 +33,7 @@
 	class:content-center={compact}>
 	<header>
 		<div class="flex gap-2" class:flex-col={compact} class:items-center={compact}>
-			<Avatar avatarUrl={channel.avatarUrl} altText={channel.name} />
+			<Avatar avatarUrl={channel.avatarUrl} altText={channel.name} channelId={channel.originId} />
 			{#if compact}
 				<div class="text-center font-bold">{channel.name}</div>
 			{:else}
