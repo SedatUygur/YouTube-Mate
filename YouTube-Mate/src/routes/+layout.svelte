@@ -1,5 +1,6 @@
 <script lang="ts">
 	/* eslint-disable import/no-unresolved */
+	/* eslint-disable @typescript-eslint/no-non-null-assertion */
 	import '../app.postcss';
 	import Header from './Header.svelte';
 	import { setLocale } from '../lib/i18n/i18n-svelte.ts';
@@ -8,11 +9,22 @@
 	import ogImageSrc from '$lib/SEO/assets/home-open-graph.jpg';
 	import twitterImageSrc from '$lib/SEO/assets/home-twitter.jpg';
 	import featuredImageSrc from '$lib/SEO/assets/home.jpg';*/
+	import { afterNavigate } from '$app/navigation';
 	import SEO from '$lib/SEO/components/index.svelte';
 	import website from '$lib/SEO/config/website';
 
 	export let data: LayoutData;
 	setLocale(data.locale);
+
+	afterNavigate(() => {
+		// Fix for firefox
+		// Issue: https://github.com/sveltejs/kit/issues/2733
+		document.querySelector('#page')!.scrollTo({
+			behavior: 'smooth',
+			left: 0,
+			top: 0,
+		});
+	});
 
 	const { author, siteUrl } = website;
 	let title = 'Home';
@@ -67,7 +79,7 @@
 
 <SEO {...seoProps} />
 
-<div class="grid grid-rows-[auto_1fr_auto]">
+<div id="page" class="grid grid-rows-[auto_1fr_auto]">
 	<Header />
 	<!-- Page -->
 	<div class="container mx-auto grid grid-cols-1">

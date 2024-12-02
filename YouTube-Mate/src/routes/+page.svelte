@@ -7,36 +7,29 @@
 	import { LL } from '../lib/i18n/i18n-svelte.ts';
 	import type { PageData } from './$types';
 	import { page } from '$app/stores';
+	import ListCard from '$/lib/components/ListCard.svelte';
 
 	export let data: PageData;
 	let loading = false;
 </script>
 
-<div class="hero-container mx-auto flex max-w-sm flex-col items-center justify-center p-4">
+<div class="hero-container flex flex-col items-center justify-center p-4">
 	<h1>YouTubeMate</h1>
 	{#if $page.data.session}
-		<p class="my-4 text-center">
-			{#if !data.lists.length}
+		{#if !data.lists.length}
+			<p class="my-4 text-center">
 				{$LL.pages.root.loggedIn.messages.createList()}
-			{/if}
-		</p>
+			</p>
+		{/if}
 		<a
 			href="/protected/create"
-			class="variant-filled-secondary btn"
+			class="variant-filled-secondary btn max-w-xs"
 			data-sveltekit-preload-data="hover">{$LL.buttons.create()}</a>
-		<ul class="list-nav">
+		<div class="video-grid mt-4">
 			{#each data.lists as list}
-				<li class="list">
-					<a href={`/list/${list.id}`}>
-						<span class="badge bg-primary-500">💀</span>
-						<span class="flex-auto">
-							<dt>{list.title}</dt>
-							<dd>{list.description}</dd>
-						</span>
-					</a>
-				</li>
+				<ListCard {list} />
 			{/each}
-		</ul>
+		</div>
 	{:else}
 		<h2 id="methods" data-text="Sign-in methods" tabindex="-1" role="presentation">
 			<span class="devsite-heading" role="heading" aria-level="2">Sign-in methods</span>

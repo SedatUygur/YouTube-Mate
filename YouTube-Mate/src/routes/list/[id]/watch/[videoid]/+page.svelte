@@ -1,7 +1,6 @@
 <script lang="ts">
 	/* eslint-disable import/no-unresolved */
 
-	/* eslint-disable @typescript-eslint/no-explicit-any */
 	/* eslint-disable @typescript-eslint/no-unsafe-argument */
 	/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 	/* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -10,27 +9,38 @@
 	/* eslint-disable @typescript-eslint/restrict-template-expressions */
 	import { ProgressRadial } from '@skeletonlabs/skeleton';
 	import { formatNumberCompact, formatRelativeDate } from '$/lib/formatters';
+	import anchorme from 'anchorme';
 	import { afterNavigate, page } from '$app/navigation';
 	import ViewCount from '../../../../../lib/components/ViewCount.svelte';
 
 	export let data;
 	let breadcrumbs: HTMLDivElement;
+	let videoStats: HTMLDivElement;
+	let descriptionVisible = false;
 
-	$: videoPromise = data.streamed.videos.then((videos: any[]) =>
+	$: videoPromise = data.streamed.videos.then((videos) =>
 		videos.find((v) => v.videoId === $page.params.videoid)
 	);
 
-	$: channelPromise = videoPromise.then((video: { channelId: any }) =>
-		data.list.items.find(
-			(item: { meta: { originId: any } }) => item.meta.originId === video.channelId
-		)
+	$: channelPromise = videoPromise.then((video) =>
+		data.list.items.find((item) => item.meta.originId === video?.channelId)
 	);
 
 	afterNavigate(() => {
+		descriptionVisible = false;
 		breadcrumbs.scrollIntoView({
 			behavior: 'smooth',
 		});
 	});
+
+	const toggleDescription = () => {
+		descriptionVisible = !descriptionVisible;
+		if (!descriptionVisible) {
+			videoStats.scrollIntoView({
+				behavior: 'smooth',
+			});
+		}
+	};
 </script>
 
 <div bind:this={breadcrumbs} class="flex w-full flex-wrap gap-2 text-2xl">
@@ -82,7 +92,7 @@
 						</div>
 					{/if}
 				{/await}
-				<div class="mb-4 flex items-center gap-4">
+				<div bind:this={videoStats} class="mb-4 flex items-center gap-4">
 					<span class="variant-soft-primary chip text-2xl"
 						>{formatNumberCompact(video.likeCount, data.locale)} 👍</span>
 					<span class="variant-soft-primary chip text-2xl"
@@ -90,11 +100,25 @@
 					<ViewCount locale={data.locale} viewCount={video.viewCount} />
 					<span>{formatRelativeDate(video.publishedAt, data.locale)}</span>
 				</div>
-				<span
-					class="block overflow-hidden whitespace-pre-wrap break-words"
-					data-testid="video-description">
-					{video.description}
-				</span>
+			</div>
+			<div
+				data-testid="video-description"
+				class:h-16={!descriptionVisible}
+				class="light:text-gray-200 unstyled card relative mt-4 overflow-hidden whitespace-pre-wrap break-words p-4 text-2xl dark:text-gray-400">
+				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+				{@html anchorme({
+					input: video.description,
+					options: {
+						attributes: {
+							rel: 'noopener noreferrer',
+							target: '_blank',
+							class: 'text-secondary-500 underline',
+						},
+					},
+				})}
+				<button
+					class="absolute bottom-[1px] right-4 inline-block bg-gradient-to-r from-transparent from-5% via-surface-100 p-2 pl-6 font-bold hover:cursor-pointer hover:text-primary-500 dark:via-surface-800"
+					on:click={toggleDescription}>{descriptionVisible ? 'Show less' : '...more'}</button>
 			</div>
 		{:else}
 			<h2>Not Found</h2>

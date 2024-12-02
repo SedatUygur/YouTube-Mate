@@ -71,9 +71,7 @@
 				<input on:input={updateFilter} class="input" />
 			</label>
 		</div>
-		<div
-			class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
-			data-testid="video-list">
+		<div class="video-grid" data-testid="video-list">
 			{#each filterVideos(videos, filter) as video}
 				<WatchYouTubeVideo
 					active={$page.params.videoid === video.videoId}

@@ -1,6 +1,5 @@
 <script lang="ts">
 	/* eslint-disable import/no-unresolved */
-
 	/* eslint-disable @typescript-eslint/no-non-null-assertion */
 	import {
 		Visibility,
@@ -95,14 +94,5 @@
 			<option value={channelId}>{channelId}</option>
 		{/each}
 	</select>
-	<ChannelSearch {results} {locale} bind:channels bind:channelIds />
-	<div class="my-4 flex justify-end">
-		<button class="variant-filled-secondary btn">
-			{#if list}
-				{$LL.buttons.update()}
-			{:else}
-				{$LL.buttons.create()}
-			{/if}
-		</button>
-	</div>
 </form>
+<ChannelSearch {results} {locale} bind:channels bind:channelIds />
