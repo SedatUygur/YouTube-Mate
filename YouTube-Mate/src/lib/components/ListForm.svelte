@@ -1,6 +1,6 @@
 <script lang="ts">
 	/* eslint-disable import/no-unresolved */
-	/* eslint-disable import-x/no-unresolved */
+
 	/* eslint-disable @typescript-eslint/no-non-null-assertion */
 	import {
 		Visibility,
@@ -10,9 +10,9 @@
 		type YouTubeMeta,
 	} from '@prisma/client';
 	import type { YouTubeChannelMetaAPIResponse } from '$/lib/YouTubeAPI';
-	import { enhance } from '$app/forms';
 	import { LL } from '$lib/i18n/i18n-svelte';
-	import ChannelCard from '$/lib/components/ChannelCard.svelte';
+	import { enhance } from '$app/forms';
+	import ChannelCard from './ChannelCard.svelte';
 	import ChannelCardActions from './ChannelActions.svelte';
 	import ChannelSearch from './ChannelSearch.svelte';
 	type ListWithItems = List & {

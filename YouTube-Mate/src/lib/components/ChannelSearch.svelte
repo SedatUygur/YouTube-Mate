@@ -1,12 +1,12 @@
 <script lang="ts">
 	/* eslint-disable import/no-unresolved */
-	/* eslint-disable import-x/no-unresolved */
+
 	/* eslint-disable @typescript-eslint/no-misused-promises */
 	import { LL } from '$lib/i18n/i18n-svelte';
-	import { applyAction, enhance } from '$app/forms';
 	import { ProgressRadial } from '@skeletonlabs/skeleton';
 	import type { YouTubeChannelMetaAPIResponse } from '$/lib/YouTubeAPI';
 	//import type { ActionData, PageData } from '../../routes/$types';
+	import { applyAction, enhance } from '$app/forms';
 	import ChannelCard from './ChannelCard.svelte';
 	import ChannelCardActions from './ChannelActions.svelte';
 
@@ -50,7 +50,7 @@
 			</div>
 		{/if}
 		{#if results}
-			<div class="h-full" class:hidden={loading}>
+			<div class="results h-full" class:hidden={loading}>
 				{#each results as result}
 					<ChannelCard {locale} channel={result}>
 						<ChannelCardActions channel={result} bind:channels bind:channelIds />

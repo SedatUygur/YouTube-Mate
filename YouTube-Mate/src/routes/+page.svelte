@@ -1,13 +1,12 @@
 <script lang="ts">
 	/* eslint-disable import/no-unresolved */
-	/* eslint-disable import-x/no-unresolved */
 
 	//import { SignIn } from '@auth/sveltekit/components';
 	import { signIn } from '@auth/sveltekit/client';
 	import { ProgressRadial } from '@skeletonlabs/skeleton';
 	import { LL } from '../lib/i18n/i18n-svelte.ts';
-	import { page } from '$app/stores';
 	import type { PageData } from './$types';
+	import { page } from '$app/stores';
 
 	export let data: PageData;
 	let loading = false;
@@ -27,7 +26,7 @@
 			data-sveltekit-preload-data="hover">{$LL.buttons.create()}</a>
 		<ul class="list-nav">
 			{#each data.lists as list}
-				<li>
+				<li class="list">
 					<a href={`/list/${list.id}`}>
 						<span class="badge bg-primary-500">💀</span>
 						<span class="flex-auto">

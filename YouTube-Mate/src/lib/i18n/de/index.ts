@@ -8,6 +8,7 @@ const de = {
 	message: 'Hallo Welt',
 	buttons: {
 		create: 'Erstellen',
+		edit: 'Bearbeiten',
 		update: 'Aktualisieren',
 		logOut: 'Abmelden',
 		loginYouTube: 'Melden Sie sich mit YouTube an',
@@ -17,6 +18,7 @@ const de = {
 		description: 'Beschreibung',
 		visibility: 'Sichtweite',
 		views: '{0} aufrufe',
+		filter: 'Filter',
 	},
 	enums: {
 		visibility: {
@@ -46,6 +48,9 @@ const de = {
 			},
 		},
 		onboarding: {
+			buttons: {
+				letsGo: 'Lass uns gehen!',
+			},
 			labels: {
 				username: 'Benutzername',
 				uploadFile: 'Datei hochladen',

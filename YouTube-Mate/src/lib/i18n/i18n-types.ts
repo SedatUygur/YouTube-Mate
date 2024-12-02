@@ -25,6 +25,10 @@ type RootTranslation = {
 		 */
 		create: string
 		/**
+		 * E​d​i​t
+		 */
+		edit: string
+		/**
 		 * U​p​d​a​t​e
 		 */
 		update: string
@@ -55,6 +59,10 @@ type RootTranslation = {
 		 * @param {unknown} 0
 		 */
 		views: RequiredParams<'0'>
+		/**
+		 * F​i​l​t​e​r
+		 */
+		filter: string
 	}
 	enums: {
 		visibility: {
@@ -110,6 +118,12 @@ type RootTranslation = {
 			}
 		}
 		onboarding: {
+			buttons: {
+				/**
+				 * L​e​t​s​ ​G​o​!
+				 */
+				letsGo: string
+			}
 			labels: {
 				/**
 				 * U​s​e​r​n​a​m​e
@@ -163,6 +177,10 @@ export type TranslationFunctions = {
 		 */
 		create: () => LocalizedString
 		/**
+		 * Edit
+		 */
+		edit: () => LocalizedString
+		/**
 		 * Update
 		 */
 		update: () => LocalizedString
@@ -192,6 +210,10 @@ export type TranslationFunctions = {
 		 * {0} views
 		 */
 		views: (arg0: unknown) => LocalizedString
+		/**
+		 * Filter
+		 */
+		filter: () => LocalizedString
 	}
 	enums: {
 		visibility: {
@@ -247,6 +269,12 @@ export type TranslationFunctions = {
 			}
 		}
 		onboarding: {
+			buttons: {
+				/**
+				 * Lets Go!
+				 */
+				letsGo: () => LocalizedString
+			}
 			labels: {
 				/**
 				 * Username

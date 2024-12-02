@@ -1,8 +1,7 @@
 <script lang="ts">
 	/* eslint-disable import/no-unresolved */
-	/* eslint-disable import-x/no-unresolved */
+	/* eslint-disable import-x/no-duplicates */
 	/* eslint-disable @typescript-eslint/no-floating-promises */
-
 	/* eslint-disable @typescript-eslint/restrict-template-expressions */
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';

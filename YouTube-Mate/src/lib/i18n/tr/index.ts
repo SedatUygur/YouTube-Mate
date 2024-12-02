@@ -8,6 +8,7 @@ const tr = {
 	message: 'Merhaba Dünya',
 	buttons: {
 		create: 'Oluştur',
+		edit: 'Düzenle',
 		update: 'Güncelle',
 		logOut: 'Çıkış yap',
 		loginYouTube: "YouTube'a giriş yap",
@@ -17,6 +18,7 @@ const tr = {
 		description: 'Tanım',
 		visibility: 'Görünürlük',
 		views: '{0} görüntüleme',
+		filter: 'Filtrele',
 	},
 	enums: {
 		visibility: {
@@ -46,6 +48,9 @@ const tr = {
 			},
 		},
 		onboarding: {
+			buttons: {
+				letsGo: 'Hadi gidelim!',
+			},
 			labels: {
 				username: 'Kullanıcı adı',
 				uploadFile: 'Dosya Yükle',

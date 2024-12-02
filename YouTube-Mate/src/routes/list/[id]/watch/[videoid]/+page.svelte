@@ -1,6 +1,6 @@
 <script lang="ts">
 	/* eslint-disable import/no-unresolved */
-	/* eslint-disable import-x/no-unresolved */
+
 	/* eslint-disable @typescript-eslint/no-explicit-any */
 	/* eslint-disable @typescript-eslint/no-unsafe-argument */
 	/* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -9,20 +9,23 @@
 	/* eslint-disable @typescript-eslint/no-unsafe-return */
 	/* eslint-disable @typescript-eslint/restrict-template-expressions */
 	import { ProgressRadial } from '@skeletonlabs/skeleton';
-	import { afterNavigate } from '$app/navigation';
-	import { page } from '$app/stores';
-	import ViewCount from '../../../../../lib/components/ViewCount.svelte';
 	import { formatNumberCompact, formatRelativeDate } from '$/lib/formatters';
+	import { afterNavigate, page } from '$app/navigation';
+	import ViewCount from '../../../../../lib/components/ViewCount.svelte';
+
 	export let data;
 	let breadcrumbs: HTMLDivElement;
+
 	$: videoPromise = data.streamed.videos.then((videos: any[]) =>
 		videos.find((v) => v.videoId === $page.params.videoid)
 	);
+
 	$: channelPromise = videoPromise.then((video: { channelId: any }) =>
 		data.list.items.find(
 			(item: { meta: { originId: any } }) => item.meta.originId === video.channelId
 		)
 	);
+
 	afterNavigate(() => {
 		breadcrumbs.scrollIntoView({
 			behavior: 'smooth',
@@ -55,6 +58,7 @@
 			<!-- svelte-ignore element_invalid_self_closing_tag -->
 			<iframe
 				class="aspect-video w-full"
+				data-testid="video-embed"
 				src={`https://www.youtube.com/embed/${video?.videoId}`}
 				title="YouTube video player"
 				frameborder="0"
@@ -86,7 +90,9 @@
 					<ViewCount locale={data.locale} viewCount={video.viewCount} />
 					<span>{formatRelativeDate(video.publishedAt, data.locale)}</span>
 				</div>
-				<span class="block overflow-hidden whitespace-pre-wrap break-words">
+				<span
+					class="block overflow-hidden whitespace-pre-wrap break-words"
+					data-testid="video-description">
 					{video.description}
 				</span>
 			</div>

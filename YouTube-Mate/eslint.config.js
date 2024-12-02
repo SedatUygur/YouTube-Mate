@@ -30,6 +30,7 @@ export default tseslint.config(
 		ignores: [
 			'.svelte-kit/',
 			'build/',
+			'/coverage*',
 			'dist/',
 			'docker-data/',
 			'e2e/',
@@ -62,6 +63,7 @@ export default tseslint.config(
 			},
 		},
 		rules: {
+			'@typescript-eslint/no-throw-literal': 0,
 			'arrow-body-style': ['error', 'as-needed'],
 			'import/extensions': 0,
 			'import/no-dynamic-require': 'warn',

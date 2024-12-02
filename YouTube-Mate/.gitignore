@@ -2,23 +2,27 @@ test-results
 node_modules
 
 # Output
+.nyc_output
 .output
 .vercel
 auth.json
 settings.json
 /.svelte-kit
 /build
-/prisma/dev.db
+coverage
+/coverage*
 /docker-data
+/prisma/dev.db
+scripts/exportDB.ts
 # OS
 .DS_Store
 Thumbs.db
 
 # Env
 .env
+.env.test
 .env.*
 !.env.example
-!.env.test
 
 # Vite
 vite.config.js.timestamp-*

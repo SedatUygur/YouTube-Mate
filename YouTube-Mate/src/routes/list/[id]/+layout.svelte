@@ -1,14 +1,15 @@
 <script lang="ts">
 	/* eslint-disable import/no-unresolved */
-	/* eslint-disable import-x/no-unresolved */
+
 	/* eslint-disable @typescript-eslint/no-unsafe-argument */
 	/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 	/* eslint-disable @typescript-eslint/restrict-template-expressions */
-	import { page } from '$app/stores';
+	import { LL } from '$lib/i18n/i18n-svelte';
 	import { ProgressRadial } from '@skeletonlabs/skeleton';
 	import WatchYouTubeVideo from '../../../lib/components/WatchYouTubeVideo.svelte';
 	import ChannelCard from '../../../lib/components/ChannelCard.svelte';
 	import type { YouTubeVideoAPIResponse } from '$/lib/YouTubeAPI';
+	import { page } from '$app/stores';
 
 	export let data;
 
@@ -23,7 +24,7 @@
 		);
 	};
 
-	const updateFilter = (e: KeyboardEvent & { currentTarget: EventTarget & HTMLInputElement }) => {
+	const updateFilter = (e: Event & { currentTarget: EventTarget & HTMLInputElement }) => {
 		const { value } = e.target as HTMLInputElement;
 		clearTimeout(timeout);
 		// immediately clear filter when input field is cleared
@@ -40,10 +41,11 @@
 
 <slot />
 {#if !$page.params.videoid}
-	<h2 class="font-bold">{data.list?.title}</h2>
+	<h2 class="font-bold" data-testid="list-title">{data.list?.title}</h2>
 	<p>{data.list?.description}</p>
 	<div
-		class="my-4 grid grid-cols-1 place-content-center md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+		class="my-4 grid grid-cols-1 place-content-center md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+		data-testid="channel-card-list">
 		{#each data.list.items as item}
 			{#if item.meta.youtubeMeta}
 				<ChannelCard locale={data.locale} channel={item.meta.youtubeMeta} />
@@ -52,7 +54,8 @@
 	</div>
 	{#if data.session?.user?.id === data.list.userId}
 		<div class="mb-4 flex justify-end">
-			<a href={`/protected/edit/${data.list.id}`} class="variant-ghost-primary btn">Edit</a>
+			<a href={`/protected/edit/${data.list.id}`} class="variant-ghost-primary btn"
+				>{$LL.buttons.edit()}</a>
 		</div>
 	{/if}
 {/if}
@@ -63,10 +66,14 @@
 		</span>
 	{:then videos}
 		<div class="my-4">
-			<input on:keyup={updateFilter} class="input" />
+			<label class="label">
+				<span>{$LL.labels.filter()}</span>
+				<input on:input={updateFilter} class="input" />
+			</label>
 		</div>
 		<div
-			class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+			class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
+			data-testid="video-list">
 			{#each filterVideos(videos, filter) as video}
 				<WatchYouTubeVideo
 					active={$page.params.videoid === video.videoId}

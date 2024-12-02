@@ -2,21 +2,54 @@
 
 A project let users create, share and watch 👀 lists of YouTube channels
 
-## Creating a project
+# Tech Stack
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Backend
 
-```bash
-# create a new project in the current directory
-npx sv create
+- [SvelteKit](https://kit.svelte.dev/)
+- [Auth.js](https://authjs.dev/)
+- Databases
+  - [Postgres](https://www.postgresql.org/)
+    - [Prisma](https://www.prisma.io/)
+  - [Redis](https://redis.io/)
+    - [node-redis](https://www.npmjs.com/package/redis)
 
-# create a new project in my-app
-npx sv create my-app
-```
+## Frontend
+
+- [Svelte](https://svelte.dev/)
+- [tailwind](https://tailwindcss.com/)
+- [Skeleton UI](https://www.skeleton.dev/)
+
+## Libraries
+
+- [typesafe-i18n](https://github.com/ivanhofer/typesafe-i18n/)
+- [zod](https://www.npmjs.com/package/zod)
+- [@googleapis/youtube](https://www.npmjs.com/package/@googleapis/youtube)
+- [luxon](https://www.npmjs.com/package/luxon)
+
+## Code Quality
+
+- [eslint](https://www.npmjs.com/package/eslint)
+  - [eslint-config-airbnb-typescript](https://www.npmjs.com/package/eslint-config-airbnb-typescript)
+- [prettier](https://www.npmjs.com/package/prettier)
+- [lint-staged](https://www.npmjs.com/package/lint-staged)
+- [husky](https://www.npmjs.com/package/husky)
+
+## Testing
+
+- E2E / Integration
+  - [Playwright](https://playwright.dev/)
+- Coverage
+  - [Istanbul](https://www.npmjs.com/package/nyc)
+
+## CI / CD
+
+- [Docker](https://www.docker.com/)
+- [Github Actions](https://github.com/features/actions)
 
 ## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Once you've installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
 ```bash
 npm run dev

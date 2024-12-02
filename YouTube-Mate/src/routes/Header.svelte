@@ -1,12 +1,11 @@
 <script lang="ts">
 	/* eslint-disable import/no-unresolved */
-	/* eslint-disable import-x/no-unresolved */
 	/* eslint-disable @typescript-eslint/no-unsafe-call */
 	/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+	/* eslint-disable @typescript-eslint/no-unsafe-return */
 	import { AppBar, LightSwitch, ProgressRadial } from '@skeletonlabs/skeleton';
 	import { signOut } from '@auth/sveltekit/client';
-	import { page } from '$app/stores';
-	import { goto } from '$app/navigation';
+	import { page, goto } from '$app/stores';
 	import { LL } from '$lib/i18n/i18n-svelte';
 
 	const goSettings = () => goto('/settings');

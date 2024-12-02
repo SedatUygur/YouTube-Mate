@@ -5,7 +5,7 @@ export default defineConfig({
 		locale: 'en-US',
 	},
 	webServer: {
-		command: 'dotenv npm run build && dotenv npm run preview',
+		command: 'dotenv -e .env.test -- npm run preview',
 		port: 4173,
 	},
 

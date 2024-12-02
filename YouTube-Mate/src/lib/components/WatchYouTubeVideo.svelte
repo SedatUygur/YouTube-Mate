@@ -1,10 +1,11 @@
 <script lang="ts">
 	/* eslint-disable import/no-unresolved */
-	/* eslint-disable import-x/no-unresolved */
-	import { page } from '$app/stores';
+
 	import { formatNumberCompact, formatDuration, formatRelativeDate } from '$lib/formatters';
-	import ViewCount from './ViewCount.svelte';
 	import type { YouTubeVideoAPIResponse } from '$lib/YouTubeAPI';
+	import { page } from '$app/stores';
+	import ViewCount from './ViewCount.svelte';
+
 	export let locale: string;
 	export let active: boolean;
 	export let video: YouTubeVideoAPIResponse;
