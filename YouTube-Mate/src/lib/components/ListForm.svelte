@@ -8,7 +8,7 @@
 		type ListItemMeta,
 		type YouTubeMeta,
 	} from '@prisma/client';
-	import type { YouTubeChannelMetaAPIResponse } from '$/lib/YouTubeAPI';
+	import type { YouTubeChannelMetaAPIResponse } from '$lib/YouTubeAPI';
 	import { LL } from '$lib/i18n/i18n-svelte';
 	import { enhance } from '$app/forms';
 	import ChannelCard from './ChannelCard.svelte';

@@ -7,7 +7,7 @@
 	import { LL } from '../lib/i18n/i18n-svelte.ts';
 	import type { PageData } from './$types';
 	import { page } from '$app/stores';
-	import ListCard from '$/lib/components/ListCard.svelte';
+	import ListCard from '$lib/components/ListCard.svelte';
 
 	export let data: PageData;
 	let loading = false;

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { YouTubeChannelMetaAPIResponse } from '$/lib/YouTubeAPI';
+	import type { YouTubeChannelMetaAPIResponse } from '$lib/YouTubeAPI';
 	export let channelIds: Map<string, number>;
 	export let channel: YouTubeChannelMetaAPIResponse;
 	export let channels: YouTubeChannelMetaAPIResponse[];

@@ -2,7 +2,7 @@
 	/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 	/* eslint-disable @typescript-eslint/no-unsafe-call */
 	import { onMount } from 'svelte';
-	import type { YouTubeChannelMetaAPIResponse } from '$/lib/YouTubeAPI';
+	import type { YouTubeChannelMetaAPIResponse } from '$lib/YouTubeAPI';
 	import Avatar from './Avatar.svelte';
 
 	export let channel: YouTubeChannelMetaAPIResponse;

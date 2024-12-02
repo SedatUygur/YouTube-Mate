@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { DateTime, Duration } from 'luxon';
 const formatters = new Map<string, Intl.NumberFormat>();
 export const getCompactNumberFormatter = (locale: string): Intl.NumberFormat => {
@@ -26,3 +27,13 @@ export const formatDuration = (duration: string) => {
 	}
 	return interval.toFormat(format);
 };
+
+export const parseDescription = (description: string, classNames: string): string =>
+	description.replace(
+		/(?:(\d*):)?([0-5]?[0-9]):([0-5][0-9])/gi,
+		(match, hours, minutes, seconds) => {
+			const totalSeconds =
+				Number(hours || 0) * 60 * 60 + Number(minutes || 0) * 60 + Number(seconds || 0);
+			return `<a class="tabular-nums ${classNames}" href="?t=${totalSeconds}">${match}</a>`;
+		}
+	);

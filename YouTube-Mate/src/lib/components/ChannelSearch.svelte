@@ -4,7 +4,7 @@
 	/* eslint-disable @typescript-eslint/no-misused-promises */
 	import { LL } from '$lib/i18n/i18n-svelte';
 	import { ProgressRadial } from '@skeletonlabs/skeleton';
-	import type { YouTubeChannelMetaAPIResponse } from '$/lib/YouTubeAPI';
+	import type { YouTubeChannelMetaAPIResponse } from '$lib/YouTubeAPI';
 	//import type { ActionData, PageData } from '../../routes/$types';
 	import { applyAction, enhance } from '$app/forms';
 	import ChannelCard from './ChannelCard.svelte';

@@ -6,9 +6,9 @@
 	/* eslint-disable @typescript-eslint/restrict-template-expressions */
 	import { LL } from '$lib/i18n/i18n-svelte';
 	import { ProgressRadial } from '@skeletonlabs/skeleton';
-	import WatchYouTubeVideo from '../../../lib/components/WatchYouTubeVideo.svelte';
-	import ChannelCard from '../../../lib/components/ChannelCard.svelte';
-	import type { YouTubeVideoAPIResponse } from '$/lib/YouTubeAPI';
+	import YouTubeThumbnail from '$lib/components/YouTubeThumbnail.svelte';
+	import ChannelCard from '$lib/components/ChannelCard.svelte';
+	import type { YouTubeVideoAPIResponse } from '$lib/YouTubeAPI';
 	import { page } from '$app/stores';
 
 	export let data;
@@ -73,7 +73,7 @@
 		</div>
 		<div class="video-grid" data-testid="video-list">
 			{#each filterVideos(videos, filter) as video}
-				<WatchYouTubeVideo
+				<YouTubeThumbnail
 					active={$page.params.videoid === video.videoId}
 					locale={data.locale}
 					{video} />

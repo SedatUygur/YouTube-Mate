@@ -25,7 +25,8 @@
 		"test": "npm run test:unit && npm run test:e2e",
 		"test:e2e": "npm run docker-down:test && npm run docker-up:test",
 		"test:e2e:watch": "npm run docker-down:test:watch && npm run docker-up:test:watch",
-		"typecheck": "npm run check"
+		"typecheck": "npm run check",
+		"update:interactive": "npx npm-check-updates -i"
 	},
 	"prisma": {
 		"seed": "tsx prisma/seeds/index.ts"
@@ -86,10 +87,12 @@
 		"@googleapis/youtube": "^20.0.0",
 		"@prisma/client": "^5.22.0",
 		"@prisma/generator-helper": "^5.22.0",
+		"@types/youtube-player": "^5.5.11",
 		"anchorme": "^3.0.8",
 		"dotenv-cli": "^7.4.4",
 		"luxon": "^3.5.0",
 		"redis": "^4.7.0",
+		"youtube-player": "^5.6.0",
 		"zod": "^3.23.8"
 	},
 	"license": "MIT",
