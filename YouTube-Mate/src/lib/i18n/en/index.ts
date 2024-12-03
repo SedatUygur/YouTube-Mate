@@ -34,6 +34,7 @@ const en = {
 		titleRequired: 'Title cannot be empty.',
 		descriptionRequired: 'Description cannot be empty.',
 		notFound: 'Not found.',
+		listMinLength: 'A list must have at least 1 channel.',
 	},
 	messages: {
 		pleaseWait: 'Please wait...',

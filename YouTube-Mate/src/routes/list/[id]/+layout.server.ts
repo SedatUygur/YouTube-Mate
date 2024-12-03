@@ -11,7 +11,7 @@ import { getList } from '$/lib/queries';
 export async function load({ params, locals }) {
 	try {
 		// TODO: handle visibility
-		const { list, channelIds } = await getList(params.id);
+		const { list, channelIds } = await getList(params.id, locals.session?.user?.id);
 		if (list) {
 			return {
 				list,

@@ -44,6 +44,7 @@
 <SEO {...seoProps} />
 <ListForm
 	action={`/protected/edit/${data.list.id}?/update`}
+	formData={data.form}
 	list={data.list}
 	locale={data.locale}
 	results={form?.results}

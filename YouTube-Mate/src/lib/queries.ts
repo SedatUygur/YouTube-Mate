@@ -1,5 +1,6 @@
 /* eslint-disable import/no-unresolved */
 import { prisma } from './config/prisma';
+import { Visibility } from '@prisma/client';
 import { z } from 'zod';
 export async function getList(id: string, userId: string | undefined = undefined) {
 	const { success } = z.string().uuid().safeParse(id);
@@ -12,7 +13,15 @@ export async function getList(id: string, userId: string | undefined = undefined
 	const list = await prisma.list.findFirst({
 		where: {
 			id,
-			userId,
+			OR: [
+				{ visibility: Visibility.Public },
+				{ visibility: Visibility.Unlisted },
+				userId
+					? {
+							AND: [{ userId }, { visibility: Visibility.Private }],
+						}
+					: {},
+			],
 		},
 		include: {
 			items: {

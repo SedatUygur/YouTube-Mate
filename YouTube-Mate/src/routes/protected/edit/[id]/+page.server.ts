@@ -9,21 +9,33 @@ import { ListItemType, Visibility } from '@prisma/client';
 import { error as httpError, fail } from '@sveltejs/kit';
 import { LL, setLocale } from '$lib/i18n/i18n-svelte';
 import { get } from 'svelte/store';
-import { z, ZodError } from 'zod';
 import * as YouTubeAPI from '$lib/YouTubeAPI';
 import { prisma } from '$lib/config/prisma';
 import { getList } from '$/lib/queries';
+import { createListSchema } from '$/lib/schemas';
+import { superValidate } from 'sveltekit-superforms';
+import { zod } from 'sveltekit-superforms/adapters';
 
 export async function load({ params, locals }) {
+	const $LL = get(LL);
 	const { list, channelIds } = await getList(params.id, locals.session?.user?.id);
+	setLocale(locals.locale);
 	if (!list) {
-		setLocale(locals.locale);
-		const $LL = get(LL);
 		throw httpError(404, $LL.errors.notFound());
 	}
+	const schema = createListSchema($LL);
+	const form = await superValidate(
+		{
+			title: list.title,
+			description: list.description ?? '',
+			visibility: list.visibility,
+			channelIds,
+		},
+		zod(schema)
+	);
 	return {
+		form,
 		list,
-		channelIds,
 		visibility: Visibility,
 		visibilities: Object.values(Visibility) as Visibility[],
 	};
@@ -32,23 +44,15 @@ export async function load({ params, locals }) {
 export const actions = {
 	// TODO: change to update
 	update: async (event) => {
-		const $LL = get(LL);
 		setLocale(event.locals.locale);
-		const ListCreateRequestSchema = z.object({
-			title: z.string().trim().min(1, $LL.errors.titleRequired()),
-			description: z.string().trim().min(1, $LL.errors.descriptionRequired()).optional(),
-			visibility: z.nativeEnum(Visibility),
-			channelIds: z.array(z.string().trim().min(1)),
-		});
 		const session = await event.locals.auth();
-		const formData = await event.request.formData();
-		const channels = formData.getAll('channelIds');
-
-		const formDataObject = Object.fromEntries(formData) as any;
-		formDataObject.channelIds = channels;
+		const schema = createListSchema(get(LL));
+		const form = await superValidate(event.request, zod(schema));
+		if (!form.valid) {
+			return fail(400, { form });
+		}
 		try {
-			const { title, description, visibility, channelIds } =
-				await ListCreateRequestSchema.parseAsync(formDataObject);
+			const { title, description, visibility, channelIds } = form.data;
 			const { id: listId } = event.params;
 			const result = await prisma.list.updateMany({
 				where: {
@@ -110,16 +114,13 @@ export const actions = {
 			);
 
 			return {
+				form,
 				success: true,
 				listId,
 			};
 		} catch (e) {
 			const error = e as Error;
-			let { message } = error;
-			if (error instanceof ZodError) {
-				const errorMessages = error.issues.map((issue) => issue.message);
-				message = errorMessages.join('\n');
-			}
+			const { message } = error;
 			return fail(400, { error: message });
 		}
 	},

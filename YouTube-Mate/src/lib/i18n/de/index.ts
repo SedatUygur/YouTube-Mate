@@ -34,6 +34,7 @@ const de = {
 		titleRequired: 'Der Titel darf nicht leer sein.',
 		descriptionRequired: 'Die Beschreibung darf nicht leer sein.',
 		notFound: 'Nicht gefunden.',
+		listMinLength: 'Eine Liste muss mindestens 1 Kanal enthalten.',
 	},
 	messages: {
 		pleaseWait: 'Bitte warten...',

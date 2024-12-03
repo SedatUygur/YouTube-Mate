@@ -13,9 +13,9 @@
 	const goUserProfile = () => goto('/me');*/
 
 	let loading = false;
-	const signOutClick = () => {
+	const signOutClick = async () => {
 		loading = true;
-		void signOut();
+		await signOut();
 		return false;
 	};
 

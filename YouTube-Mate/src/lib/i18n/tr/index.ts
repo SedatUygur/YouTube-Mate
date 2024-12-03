@@ -34,6 +34,7 @@ const tr = {
 		titleRequired: 'Başlık boş bırakılamaz.',
 		descriptionRequired: 'Tanım boş bırakılamaz.',
 		notFound: 'Bulunamadı.',
+		listMinLength: 'Bir listede en az 1 kanal bulunmalıdır.',
 	},
 	messages: {
 		pleaseWait: 'Lütfen bekleyiniz...',

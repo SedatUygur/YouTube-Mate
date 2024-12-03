@@ -1,19 +1,22 @@
 /* eslint-disable @typescript-eslint/no-base-to-string */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 /* eslint-disable import/no-unresolved */
 import { ListItemType, Visibility } from '@prisma/client';
 import { fail } from '@sveltejs/kit';
 import { LL, setLocale } from '$lib/i18n/i18n-svelte';
 import { get } from 'svelte/store';
-import { z, ZodError } from 'zod';
 import type { Actions } from '../../$types';
 import { prisma } from '$lib/config/prisma.ts';
 import * as YouTubeAPI from '$lib/YouTubeAPI';
+import { createListSchema } from '$lib/schemas';
+import { superValidate } from 'sveltekit-superforms';
+import { zod } from 'sveltekit-superforms/adapters';
 
-export function load() {
+export async function load() {
+	const schema = createListSchema(get(LL));
+	const form = await superValidate(zod(schema));
 	return {
+		form,
 		visibility: Visibility,
 		visibilities: Object.values(Visibility) as Visibility[],
 	};
@@ -23,21 +26,14 @@ export const actions: Actions = {
 	create: async (event) => {
 		let isSuccess = false;
 		let insertedId = '';
-		const $LL = get(LL);
 		setLocale(event.locals.locale);
-		const ListCreateRequestSchema = z.object({
-			title: z.string().trim().min(1, $LL.errors.titleRequired()),
-			description: z.string().trim().min(1, $LL.errors.descriptionRequired()).optional(),
-			visibility: z.nativeEnum(Visibility),
-			channelIds: z.array(z.string().trim().min(1)),
-		});
-		const formData = await event.request.formData();
-		const formDataObject = Object.fromEntries(formData) as any;
-		const channels = formData.getAll('channelIds');
-		formDataObject.channelIds = channels;
+		const schema = createListSchema(get(LL));
+		const form = await superValidate(event.request, zod(schema));
+		if (!form.valid) {
+			return fail(400, { form });
+		}
 		try {
-			const { title, description, visibility, channelIds } =
-				await ListCreateRequestSchema.parseAsync(formDataObject);
+			const { title, description, visibility, channelIds } = form.data;
 			const session = await event.locals.auth();
 			if (session?.user) {
 				const user = session.user;
@@ -90,16 +86,13 @@ export const actions: Actions = {
 			);
 
 			return {
+				form,
 				success: isSuccess,
 				listId: insertedId,
 			};
 		} catch (e) {
 			const error = e as Error;
-			let { message } = error;
-			if (error instanceof ZodError) {
-				const errorMessages = error.issues.map((issue) => issue.message);
-				message = errorMessages.join('\n');
-			}
+			const { message } = error;
 			return fail(400, { error: message });
 		}
 	},
