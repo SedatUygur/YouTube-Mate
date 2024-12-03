@@ -6,6 +6,7 @@
 	export let avatarUrl = '';
 	export let altText = '';
 	export let channelId = '';
+	export let listId = '';
 
 	let currentUrl = '';
 	let showFallback = false;
@@ -28,9 +29,33 @@
 		referrerpolicy="no-referrer"
 		src={currentUrl}
 		alt={altText}
-		use:transition={`avatar-${channelId}`}
 		on:error={() => {
 			showFallback = true;
+		}}
+		use:transition={{
+			name: `avatar-${channelId}`,
+			shouldApply({ navigation }) {
+				// here we are navigating from main page to detail page
+				if (navigation.to?.params?.id != null) {
+					// we should apply if the id we are navigating to
+					// has the listId of this avatar
+					return navigation.to.params.id === listId;
+				}
+				// here we are navigating back from the detail to the home, we should apply
+				// only if we are coming from the page with the same id as listId
+				return navigation.from?.params?.id === listId;
+			},
+			applyImmediately({ navigation }) {
+				// here we are navigating from main page to detail page
+				if (navigation.to?.params?.id != null) {
+					// we should apply immediately if the id we are navigating to
+					// has the listId of this avatar
+					return navigation.to.params.id === listId;
+				}
+				// here we are navigating back from the detail to the home, we should apply
+				// immediately only if we are coming from the page with the same id as listId
+				return navigation.from?.params?.id === listId;
+			},
 		}} />
 {:else}
 	<span class="mr-1 inline-flex h-14 w-14 items-center justify-center rounded-full bg-secondary-500"

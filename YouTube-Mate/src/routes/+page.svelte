@@ -5,6 +5,7 @@
 	import { signIn } from '@auth/sveltekit/client';
 	import { ProgressRadial } from '@skeletonlabs/skeleton';
 	import { LL } from '../lib/i18n/i18n-svelte.ts';
+	import { PlusSquare } from 'lucide-svelte';
 	import type { PageData } from './$types';
 	import { page } from '$app/stores';
 	import ListCard from '$lib/components/ListCard.svelte';
@@ -23,8 +24,8 @@
 		{/if}
 		<a
 			href="/protected/create"
-			class="variant-filled-secondary btn max-w-xs"
-			data-sveltekit-preload-data="hover">{$LL.buttons.create()}</a>
+			class="variant-filled-success btn flex max-w-xs place-items-center gap-1"
+			data-sveltekit-preload-data="hover"><PlusSquare /> {$LL.buttons.create()}</a>
 		<div class="video-grid mt-4">
 			{#each data.lists as list}
 				<ListCard {list} />

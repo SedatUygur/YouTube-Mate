@@ -8,10 +8,13 @@ const tr = {
 	message: 'Merhaba Dünya',
 	buttons: {
 		create: 'Oluştur',
+		view: 'Görüntüle',
 		edit: 'Düzenle',
 		update: 'Güncelle',
 		logOut: 'Çıkış yap',
 		loginYouTube: "YouTube'a giriş yap",
+		remove: 'Sil',
+		add: 'Ekle',
 	},
 	labels: {
 		title: 'Başlık',

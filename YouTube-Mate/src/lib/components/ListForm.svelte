@@ -10,6 +10,7 @@
 	} from '@prisma/client';
 	import type { YouTubeChannelMetaAPIResponse } from '$lib/YouTubeAPI';
 	import { LL } from '$lib/i18n/i18n-svelte';
+	import { PlusSquare, FilePenLine } from 'lucide-svelte';
 	import { enhance } from '$app/forms';
 	import ChannelCard from './ChannelCard.svelte';
 	import ChannelCardActions from './ChannelActions.svelte';
@@ -47,11 +48,11 @@
 		</aside>
 	{/if}
 	<div class="flex justify-end">
-		<button class="variant-filled-secondary btn">
+		<button class="variant-filled-success btn flex gap-2">
 			{#if list}
-				{$LL.buttons.update()}
+				<FilePenLine /> {$LL.buttons.update()}
 			{:else}
-				{$LL.buttons.create()}
+				<PlusSquare /> {$LL.buttons.create()}
 			{/if}
 		</button>
 	</div>

@@ -7,6 +7,7 @@
 	import { signOut } from '@auth/sveltekit/client';
 	import { page } from '$app/stores';
 	import { LL } from '$lib/i18n/i18n-svelte';
+	import { House, LogOut, Rss, Settings, Store, UserRoundPen } from 'lucide-svelte';
 
 	/*const goSettings = () => goto('/settings');
 	const goUserProfile = () => goto('/me');*/
@@ -87,20 +88,17 @@
 					{/if}
 					<li>
 						<a class="variant-ringed-tertiary btn" href="/">
-							<span class="badge bg-primary-500"></span>
-							<span class="flex-auto">Home</span>
+							<span class="flex gap-1"><House />Home</span>
 						</a>
 					</li>
 					<li>
 						<a class="variant-ringed-tertiary btn" href="/">
-							<span class="badge bg-primary-500"></span>
-							<span class="flex-auto">About</span>
+							<span class="flex gap-1"><Store />About</span>
 						</a>
 					</li>
 					<li>
 						<a class="variant-ringed-tertiary btn" href="/">
-							<span class="badge bg-primary-500"></span>
-							<span class="flex-auto">Blog</span>
+							<span class="flex gap-1"><Rss />Blog</span>
 						</a>
 					</li>
 					<!-- <hr class="opacity-20" /> -->
@@ -108,27 +106,23 @@
 						<li>
 							<!--on:click={goUserProfile}-->
 							<a class="variant-ringed-tertiary btn" href="/me">
-								<span class="badge bg-primary-500"></span>
-								<span class="flex-auto">Profile</span>
+								<span class="flex gap-1"><UserRoundPen />Profile</span>
 							</a>
 						</li>
 						<li>
 							<!--on:click={goSettings}-->
 							<a class="variant-ringed-tertiary btn" href="/settings">
-								<span class="badge bg-primary-500"></span>
-								<span class="flex-auto">Settings</span>
+								<span class="flex gap-1"><Settings />Settings</span>
 							</a>
 						</li>
 						<li>
-							<a on:click|once={signOutClick} class="variant-ringed-tertiary btn" href="/">
-								<span class="badge bg-primary-500"></span>
-
+							<a on:click|once={signOutClick} class="variant-ringed-primary btn" href="/">
 								{#if loading}
 									<span class="flex-auto">{$LL.messages.pleaseWait()}</span><ProgressRadial
 										class="ml-2 h-6 w-6"
 										stroke={100} />
 								{:else}
-									<span class="flex-auto">{$LL.buttons.logOut()}</span>
+									<span class="flex gap-1"><LogOut />{$LL.buttons.logOut()}</span>
 								{/if}
 							</a>
 						</li>

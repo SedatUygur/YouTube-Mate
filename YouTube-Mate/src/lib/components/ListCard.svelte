@@ -1,12 +1,15 @@
 <script lang="ts">
 	/* eslint-disable import/no-unresolved */
 	import { setupViewTransition } from 'sveltekit-view-transition';
+	import { Eye, Pencil } from 'lucide-svelte';
+	import { LL } from '$lib/i18n/i18n-svelte';
 	import Avatar from './Avatar.svelte';
 	import type { ListWithItems } from '../config/prisma.list.ts';
 
 	export let list: ListWithItems;
 
-	const truncatedItems = list.items?.slice(0, 3) ?? [];
+	const truncatedItems =
+		list.items?.length === 4 ? list.items.slice() : (list.items?.slice(0, 3) ?? []);
 	const hiddenItems = (list.items?.length ?? 0) - truncatedItems.length;
 	const { transition } = setupViewTransition();
 </script>
@@ -31,24 +34,32 @@
 					<Avatar
 						avatarUrl={item.meta?.youtubeMeta?.avatarUrl}
 						altText={item.meta?.youtubeMeta?.name}
-						channelId={item.meta?.youtubeMeta?.originId} />
+						channelId={item.meta?.youtubeMeta?.originId}
+						listId={list.id} />
 				{/each}
 				{#if hiddenItems > 0}
 					<span
-						class="inline-flex h-14 w-14 items-center justify-center rounded-full bg-primary-500"
+						class="inline-flex h-14 w-14 items-center justify-center rounded-full bg-primary-500 text-white"
 						>+{hiddenItems}</span>
 				{/if}
 			</div>
 		{/if}
 		<p class="mt-4">{list.description}</p>
 	</div>
-	<div class="mt-4 flex justify-end gap-1">
-		<!--  TODO: find icon library -->
-		<a type="button" class="variant-filled-tertiary btn-icon btn-icon-sm" href="/list/{list.id}"
-			>View</a>
+	<div class="mt-4 flex justify-end gap-2">
 		<a
 			type="button"
-			class="variant-filled-tertiary btn-icon btn-icon-sm"
-			href="/protected/edit/{list.id}">Edit</a>
+			title={$LL.buttons.view()}
+			class="variant-filled-primary btn-icon btn-icon-sm"
+			href="/list/{list.id}">
+			<Eye class="h-4 w-4" />
+		</a>
+		<a
+			type="button"
+			title={$LL.buttons.edit()}
+			class="variant-filled-secondary btn-icon btn-icon-sm"
+			href="/protected/edit/{list.id}">
+			<Pencil class="h-4 w-4" />
+		</a>
 	</div>
 </div>

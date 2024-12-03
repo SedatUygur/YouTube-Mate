@@ -4,6 +4,7 @@
 	import { formatNumberCompact, formatDuration, formatRelativeDate } from '$lib/formatters';
 	import type { YouTubeVideoAPIResponse } from '$lib/YouTubeAPI';
 	import { page } from '$app/stores';
+	import { MessageSquareText, ThumbsUp } from 'lucide-svelte';
 	import ViewCount from './ViewCount.svelte';
 
 	export let locale: string;
@@ -21,21 +22,24 @@
 			class="aspect-video w-full rounded-lg"
 			src={video.thumbnails.low}
 			alt={video.title} />
-		<!-- TODO: use icon library -->
-		<p class="absolute bottom-1 left-1 rounded-md bg-white bg-opacity-60 px-1.5 py-0.5 text-xs">
-			{formatNumberCompact(video.likeCount, locale)} 👍
+		<p
+			class="absolute bottom-1 left-1 flex items-end gap-1 rounded-md bg-black bg-opacity-60 px-1.5 py-0.5 text-xs text-white">
+			<span class="leading-none">{formatNumberCompact(video.likeCount, locale)}</span>
+			<ThumbsUp class="h-4 w-4" />
 		</p>
-		<p class="absolute bottom--1 left-1 rounded-md bg-white bg-opacity-60 px-1.5 py-0.5 text-xs">
-			{formatNumberCompact(video.commentCount, locale)} 💬
+		<p
+			class="absolute bottom--1 left-1 flex items-end gap-1 rounded-md bg-black bg-opacity-60 px-1.5 py-0.5 text-xs text-white">
+			<span class="leading-none">{formatNumberCompact(video.commentCount, locale)}</span>
+			<MessageSquareText class="h-4 w-4" />
 		</p>
-		<p class="absolute bottom-1 right-1 rounded-md bg-white bg-opacity-60 px-1.5 py-0.5">
+		<p class="absolute bottom-1 right-1 rounded-md bg-white bg-opacity-60 px-1.5 py-0.5 text-white">
 			{formatDuration(video.duration)}
 		</p>
 		<p class="absolute bottom--1 right-1 rounded-md bg-white bg-opacity-60 px-1.5 py-0.5">
 			{video.definition}
 		</p>
 	</div>
-	<div class="m-2">
+	<div class="p-4">
 		<p class="font-bold">{video.channelTitle}</p>
 		<div
 			class:dark:text-gray-400={!active}

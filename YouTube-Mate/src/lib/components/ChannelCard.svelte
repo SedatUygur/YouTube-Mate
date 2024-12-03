@@ -1,7 +1,9 @@
 <script lang="ts">
+	/* eslint-disable import/no-unresolved */
 	/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 	/* eslint-disable @typescript-eslint/no-unsafe-call */
 	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
 	import type { YouTubeChannelMetaAPIResponse } from '$lib/YouTubeAPI';
 	import Avatar from './Avatar.svelte';
 
@@ -33,7 +35,11 @@
 	class:content-center={compact}>
 	<header>
 		<div class="flex gap-2" class:flex-col={compact} class:items-center={compact}>
-			<Avatar avatarUrl={channel.avatarUrl} altText={channel.name} channelId={channel.originId} />
+			<Avatar
+				avatarUrl={channel.avatarUrl}
+				altText={channel.name}
+				channelId={channel.originId}
+				listId={$page.params?.id} />
 			{#if compact}
 				<div class="text-center font-bold">{channel.name}</div>
 			{:else}

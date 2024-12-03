@@ -11,6 +11,7 @@
 	import anchorme from 'anchorme';
 	import { afterNavigate, beforeNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { MessageSquareText, ThumbsUp } from 'lucide-svelte';
 	import { formatNumberCompact, formatRelativeDate, parseDescription } from '$lib/formatters';
 	import VideoPlayerStore from '$lib/stores/VideoPlayerStore.ts';
 	import ViewCount from '$lib/components/ViewCount.svelte';
@@ -123,10 +124,10 @@
 					{/if}
 				{/await}
 				<div bind:this={videoStats} class="mb-4 flex items-center gap-4">
-					<span class="variant-soft-primary chip text-2xl"
-						>{formatNumberCompact(video.likeCount, data.locale)} 👍</span>
-					<span class="variant-soft-primary chip text-2xl"
-						>{formatNumberCompact(video.commentCount, data.locale)} 💬</span>
+					<span class="variant-soft-primary chip flex gap-2 text-2xl"
+						>{formatNumberCompact(video.likeCount, data.locale)} <ThumbsUp /></span>
+					<span class="variant-soft-primary chip flex gap-2 text-2xl"
+						>{formatNumberCompact(video.commentCount, data.locale)} <MessageSquareText /></span>
 					<ViewCount locale={data.locale} viewCount={video.viewCount} />
 					<span>{formatRelativeDate(video.publishedAt, data.locale)}</span>
 				</div>

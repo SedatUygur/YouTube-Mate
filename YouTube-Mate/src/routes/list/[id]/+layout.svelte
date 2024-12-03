@@ -11,6 +11,7 @@
 	import type { YouTubeVideoAPIResponse } from '$lib/YouTubeAPI';
 	import { page } from '$app/stores';
 	import { setupViewTransition } from 'sveltekit-view-transition';
+	import { SquarePen } from 'lucide-svelte';
 
 	export let data;
 
@@ -58,8 +59,8 @@
 	</div>
 	{#if data.session?.user?.id === data.list.userId}
 		<div class="mb-4 flex justify-end">
-			<a href={`/protected/edit/${data.list.id}`} class="variant-ghost-primary btn"
-				>{$LL.buttons.edit()}</a>
+			<a href={`/protected/edit/${data.list.id}`} class="variant-ghost-secondary btn flex gap-1"
+				><SquarePen /> {$LL.buttons.edit()}</a>
 		</div>
 	{/if}
 {/if}
