@@ -1,15 +1,18 @@
-/* eslint-disable @typescript-eslint/no-base-to-string */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 /* eslint-disable import/no-unresolved */
 import { ListItemType, Visibility } from '@prisma/client';
 import { fail } from '@sveltejs/kit';
 import { LL, setLocale } from '$lib/i18n/i18n-svelte';
 import { get } from 'svelte/store';
-import type { Actions } from '../../$types';
+//import type { Actions } from '../../$types';
 import { prisma } from '$lib/config/prisma.ts';
 import * as YouTubeAPI from '$lib/YouTubeAPI';
-import { createListSchema } from '$lib/schemas';
-import { superValidate } from 'sveltekit-superforms';
+import { createListSchema } from '$/lib/schemas';
+import { superValidate } from 'sveltekit-superforms/server';
 import { zod } from 'sveltekit-superforms/adapters';
 
 export async function load() {
@@ -22,10 +25,8 @@ export async function load() {
 	};
 }
 
-export const actions: Actions = {
+export const actions = {
 	create: async (event) => {
-		let isSuccess = false;
-		let insertedId = '';
 		setLocale(event.locals.locale);
 		const schema = createListSchema(get(LL));
 		const form = await superValidate(event.request, zod(schema));
@@ -34,21 +35,19 @@ export const actions: Actions = {
 		}
 		try {
 			const { title, description, visibility, channelIds } = form.data;
-			const session = await event.locals.auth();
-			if (session?.user) {
-				const user = session.user;
-				const insertedList = await prisma.list.create({
-					data: {
-						title,
-						description,
-						visibility,
-						userId: user.id,
-					},
-				});
-				isSuccess = true;
-				insertedId = insertedList.id;
-			}
+			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+			const { user } = event.locals.session!;
+			const insertedList = await prisma.list.create({
+				data: {
+					title,
+					description,
+					visibility,
 
+					userId: user.id,
+				},
+			});
+
+			// TODO: fail gracefully... use transactions... refactor this
 			await Promise.all(
 				channelIds.map(async (id) => {
 					let existing = await prisma.listItemMeta.findFirst({
@@ -76,7 +75,7 @@ export const actions: Actions = {
 					}
 					await prisma.listItem.create({
 						data: {
-							listId: insertedId,
+							listId: insertedList.id,
 							listItemMetaId: existing.id,
 							name: existing.name,
 						},
@@ -87,8 +86,8 @@ export const actions: Actions = {
 
 			return {
 				form,
-				success: isSuccess,
-				listId: insertedId,
+				success: true,
+				listId: insertedList.id,
 			};
 		} catch (e) {
 			const error = e as Error;

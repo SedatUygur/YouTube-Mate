@@ -8,17 +8,19 @@
 		type ListItemMeta,
 		type YouTubeMeta,
 	} from '@prisma/client';
+	import { superForm } from 'sveltekit-superforms/client';
 	import type { YouTubeChannelMetaAPIResponse } from '$lib/YouTubeAPI';
 	import { LL } from '$lib/i18n/i18n-svelte';
-	import type { ListSchema } from '$lib/schemas';
-	import { PlusSquare, FilePenLine } from 'lucide-svelte';
-	import { superForm } from 'sveltekit-superforms/client';
-	import type { Infer, SuperValidated } from 'sveltekit-superforms';
 	import ChannelCard from './ChannelCard.svelte';
+	import { PlusSquare, FilePenLine } from 'lucide-svelte';
+	import type { ListSchema } from '$lib/schemas';
+	import type { Infer, SuperValidated } from 'sveltekit-superforms';
+	//import type { SuperValidated } from 'sveltekit-superforms';
 	import ChannelCardActions from './ChannelActions.svelte';
 	import ChannelSearch from './ChannelSearch.svelte';
 
 	export let formData: SuperValidated<Infer<ListSchema>>;
+	//export let formData: SuperValidated<ListSchema>;
 
 	type ListWithItems = List & {
 		items: (ListItem & {
@@ -28,7 +30,6 @@
 		})[];
 	};
 
-	const visibilities = Object.keys(Visibility) as Visibility[];
 	const { form, errors, constraints, tainted, enhance } = superForm(formData);
 
 	export let list: undefined | ListWithItems;
@@ -46,7 +47,9 @@
 		}
 		return byId;
 	}, new Map<string, number>());
+
 	$: channelIdList = [...channelIds.keys()];
+
 	$: form.update(
 		($form) => {
 			$form.channelIds = channelIdList;
@@ -56,6 +59,8 @@
 			taint: channelIdList.length !== 0,
 		}
 	);
+
+	const visibilities = Object.keys(Visibility) as Visibility[];
 </script>
 
 <form class="mx-auto mt-4 flex max-w-lg flex-col gap-4" {action} method="post" use:enhance>
@@ -117,16 +122,6 @@
 			{/each}
 		</select>
 	</label>
-	{#if $errors.channelIds}
-		<div class="alert variant-filled-error">
-			<div class="alert-message">
-				<p>
-					<!-- eslint-disable-next-line no-underscore-dangle -->
-					{$errors.channelIds._errors?.join(' ')}
-				</p>
-			</div>
-		</div>
-	{/if}
 	<span class="label">Channels</span>
 	{#if !channels.length}
 		<span class="block text-gray-400">No channels added.</span>
@@ -146,5 +141,15 @@
 			<option value={channelId}>{channelId}</option>
 		{/each}
 	</select>
+	{#if $errors.channelIds}
+		<div class="alert variant-filled-error">
+			<div class="alert-message">
+				<p>
+					<!-- eslint-disable-next-line no-underscore-dangle -->
+					{$errors.channelIds._errors?.join(' ')}
+				</p>
+			</div>
+		</div>
+	{/if}
 </form>
 <ChannelSearch {results} {locale} bind:channels bind:channelIds />

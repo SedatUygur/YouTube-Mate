@@ -42,9 +42,9 @@
 
 <SEO {...seoProps} />
 <ListForm
-	action="/protected/create?/create"
-	error={form?.error}
 	formData={data.form}
 	list={undefined}
+	action={`/protected/create?/create`}
 	locale={data.locale}
+	error={form?.error}
 	results={form?.results} />
