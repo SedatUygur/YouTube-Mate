@@ -5,13 +5,18 @@
 	import { signIn } from '@auth/sveltekit/client';
 	import { ProgressRadial } from '@skeletonlabs/skeleton';
 	import { LL } from '../lib/i18n/i18n-svelte.ts';
-	import { PlusSquare } from 'lucide-svelte';
 	import type { PageData } from './$types';
 	import { page } from '$app/stores';
 	import ListCard from '$lib/components/ListCard.svelte';
+	import { PlusSquare } from 'lucide-svelte';
+	import { userStore } from '$/lib/stores/UserStore';
 
 	export let data: PageData;
 	let loading = false;
+	// needs fix Property 'user' does not exist on type
+	$: userStore.set({
+		user: data.user,
+	});
 </script>
 
 <div class="hero-container flex flex-col items-center justify-center p-4">

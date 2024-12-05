@@ -12,17 +12,19 @@ import Google from '@auth/sveltekit/providers/google';
 import PrismaAdapter from './lib/config/PrismaAdapter.ts';
 import { prisma, userSettings } from './lib/config/prisma.ts';
 import type { $Enums } from '@prisma/client';
+import { updateAccountUsername } from '$lib/youtube.ts';
 
 declare module '@auth/core/types' {
-	interface Session {
+	/*interface Session {
 		user: {
 			id: string;
 			settings: typeof userSettings;
 		} & DefaultSession['user'];
-	}
+	}*/
 
 	interface User {
 		settings: typeof userSettings;
+		username: string;
 	}
 }
 
@@ -35,7 +37,21 @@ declare module '@auth/sveltekit' {
 export const { handle, signIn, signOut } = SvelteKitAuth(async (event) => {
 	const authOptions = {
 		adapter: PrismaAdapter(prisma),
-		providers: [Google],
+		providers: [
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
+			Google({
+				id: 'google',
+				name: 'Google',
+				// for production
+				authorization: {
+					params: {
+						scope:
+							'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid https://www.googleapis.com/auth/youtube.readonly',
+					},
+				},
+			}),
+		],
 		trustHost: true,
 		callbacks: {
 			session: ({ session, user }) => {
@@ -45,7 +61,7 @@ export const { handle, signIn, signOut } = SvelteKitAuth(async (event) => {
 					email: user.email,
 					image: user.image,
 					settings: user.settings,
-					emailVerified: new Date(),
+					username: user.username,
 				};
 				event.locals.session = session;
 				return session;
@@ -77,6 +93,14 @@ export const { handle, signIn, signOut } = SvelteKitAuth(async (event) => {
 						},
 					});
 					message.user.settings = settings;
+				}
+			},
+			async signIn(message) {
+				if (message.account && message.account.provider === 'google') {
+					const username = await updateAccountUsername(message);
+					if (event.locals.session?.user) {
+						event.locals.session.user.username = username ?? '@Unknown';
+					}
 				}
 			},
 		},

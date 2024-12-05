@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -34,16 +35,15 @@ export const actions = {
 			return fail(400, { form });
 		}
 		try {
-			const { title, description, visibility, channelIds } = form.data;
-			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+			const { title, slug, description, visibility, channelIds } = form.data;
 			const { user } = event.locals.session!;
 			const insertedList = await prisma.list.create({
 				data: {
+					slug,
 					title,
 					description,
 					visibility,
-
-					userId: user.id,
+					userId: user!.id!,
 				},
 			});
 
@@ -83,11 +83,15 @@ export const actions = {
 					return existing;
 				})
 			);
-
+			console.log(
+				'protected create account pageserver actions create username is ',
+				event.locals.session?.user?.username
+			);
 			return {
 				form,
 				success: true,
-				listId: insertedList.id,
+				slug: insertedList.slug,
+				username: event.locals.session?.user?.username,
 			};
 		} catch (e) {
 			const error = e as Error;

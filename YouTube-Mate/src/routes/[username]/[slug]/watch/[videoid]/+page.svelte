@@ -18,6 +18,7 @@
 	import YouTubeVideo from '$lib/components/YouTubeVideo.svelte';
 
 	export let data;
+	export let username = $page.params.username;
 
 	let breadcrumbs: HTMLDivElement;
 	let videoStats: HTMLDivElement;
@@ -81,7 +82,7 @@
 </script>
 
 <div bind:this={breadcrumbs} class="flex w-full flex-wrap gap-2 text-2xl">
-	<a href={`/list/${data.list.id}`}>{data.list.title}</a>
+	<a href={`/${username}/${data.list.slug}`}>{data.list.title}</a>
 	<span class="crumb-separator" aria-hidden="true">&rsaquo;</span>
 	<span class="overflow-hidden break-words">
 		{#await videoPromise}

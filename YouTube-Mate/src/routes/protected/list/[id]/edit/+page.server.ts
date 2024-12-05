@@ -18,7 +18,10 @@ import { zod } from 'sveltekit-superforms/adapters';
 
 export async function load({ params, locals }) {
 	const $LL = get(LL);
-	const { list, channelIds } = await getList(params.id, locals.session?.user?.id);
+	const { list, channelIds } = await getList({
+		id: params.id,
+		userId: locals.session?.user?.id,
+	});
 	setLocale(locals.locale);
 	if (!list) {
 		throw httpError(404, $LL.errors.notFound());
@@ -26,7 +29,9 @@ export async function load({ params, locals }) {
 	const schema = createListSchema($LL);
 	const form = await superValidate(
 		{
+			id: list.id,
 			title: list.title,
+			slug: list.slug,
 			description: list.description ?? '',
 			visibility: list.visibility,
 			channelIds,
@@ -42,25 +47,27 @@ export async function load({ params, locals }) {
 }
 
 export const actions = {
-	// TODO: change to update
 	update: async (event) => {
 		setLocale(event.locals.locale);
-		const session = await event.locals.auth();
+		//const session = await event.locals.auth();
 		const schema = createListSchema(get(LL));
 		const form = await superValidate(event.request, zod(schema));
 		if (!form.valid) {
 			return fail(400, { form });
 		}
 		try {
-			const { title, description, visibility, channelIds } = form.data;
-			const { id: listId } = event.params;
+			const { id: listId, title, slug, description, visibility, channelIds } = form.data;
+			if (!listId) {
+				throw new Error('Missing list id');
+			}
 			const result = await prisma.list.updateMany({
 				where: {
 					id: listId,
-					userId: session?.user.id,
+					userId: event.locals.session?.user?.id,
 				},
 				data: {
 					title,
+					slug,
 					description,
 					visibility,
 				},
@@ -112,11 +119,15 @@ export const actions = {
 					return existing;
 				})
 			);
-
+			console.log(
+				'protected list id edit pageserver actions update username is ',
+				event.locals.session?.user?.username
+			);
 			return {
 				form,
 				success: true,
-				listId,
+				slug,
+				username: event.locals.session?.user?.username,
 			};
 		} catch (e) {
 			const error = e as Error;

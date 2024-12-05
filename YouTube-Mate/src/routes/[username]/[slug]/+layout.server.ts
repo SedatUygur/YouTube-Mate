@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 
@@ -11,7 +12,11 @@ import { getList } from '$/lib/queries';
 export async function load({ params, locals }) {
 	try {
 		// TODO: handle visibility
-		const { list, channelIds } = await getList(params.id, locals.session?.user?.id);
+		const { list, channelIds } = await getList({
+			username: params.username,
+			slug: params.slug,
+			userId: locals.session?.user?.id,
+		});
 		if (list) {
 			return {
 				list,

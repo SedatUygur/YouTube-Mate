@@ -42,7 +42,7 @@
 				type="text"
 				id="name"
 				name="name"
-				value={$page.data.session?.user.name}
+				value={$page.data.session?.user?.name}
 				disabled
 				minlength="4"
 				required />

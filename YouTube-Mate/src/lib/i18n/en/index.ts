@@ -18,6 +18,7 @@ const en = {
 	},
 	labels: {
 		title: 'Title',
+		slug: 'Slug',
 		description: 'Description',
 		visibility: 'Visibility',
 		views: '{0} views',
@@ -32,6 +33,8 @@ const en = {
 	},
 	errors: {
 		titleRequired: 'Title cannot be empty.',
+		slugRequired: 'Slug cannot be empty.',
+		slugSpecialCharacters: 'Slug cannot contain special characters.',
 		descriptionRequired: 'Description cannot be empty.',
 		notFound: 'Not found.',
 		listMinLength: 'A list must have at least 1 channel.',

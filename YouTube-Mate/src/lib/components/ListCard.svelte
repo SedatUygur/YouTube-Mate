@@ -1,9 +1,10 @@
 <script lang="ts">
 	/* eslint-disable import/no-unresolved */
+	import Avatar from './Avatar.svelte';
 	import { setupViewTransition } from 'sveltekit-view-transition';
 	import { Eye, Pencil } from 'lucide-svelte';
 	import { LL } from '$lib/i18n/i18n-svelte';
-	import Avatar from './Avatar.svelte';
+	import { userStore } from '$/lib/stores/UserStore';
 	import type { ListWithItems } from '../config/prisma.list.ts';
 
 	export let list: ListWithItems;
@@ -27,7 +28,7 @@
 				},
 			}}
 			class="text-xl hover:text-primary-500 hover:underline"
-			href="/list/{list.id}">{list.title}</a>
+			href="/{$userStore.user?.username}/{list.slug}">{list.title}</a>
 		{#if list.items}
 			<div class="mt-4">
 				{#each truncatedItems as item}
@@ -51,14 +52,14 @@
 			type="button"
 			title={$LL.buttons.view()}
 			class="variant-filled-primary btn-icon btn-icon-sm"
-			href="/list/{list.id}">
+			href="/{$userStore.user?.username}/{list.slug}">
 			<Eye class="h-4 w-4" />
 		</a>
 		<a
 			type="button"
 			title={$LL.buttons.edit()}
 			class="variant-filled-secondary btn-icon btn-icon-sm"
-			href="/protected/edit/{list.id}">
+			href="/protected/list/{list.id}/edit">
 			<Pencil class="h-4 w-4" />
 		</a>
 	</div>

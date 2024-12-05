@@ -14,7 +14,7 @@
 
 	$: if (form?.success) {
 		if (browser) {
-			const url = `/list/${form.listId}`;
+			const url = `/${form.username}/${form.slug}`;
 			goto(url);
 		}
 	}
@@ -43,7 +43,7 @@
 
 <SEO {...seoProps} />
 <ListForm
-	action={`/protected/edit/${data.list.id}?/update`}
+	action={`/protected/list/${data.list.id}/edit?/update`}
 	formData={data.form}
 	list={data.list}
 	locale={data.locale}

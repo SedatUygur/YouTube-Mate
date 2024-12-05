@@ -183,6 +183,9 @@ model Account {
   /// Account session state.
   session_state     String? @map("sessionState")
 
+  /// Account user name.
+  username          String? @db.Text
+
   //----
   // RELATIONS
   //----
@@ -247,6 +250,9 @@ model List {
   ///
   /// @format uuid
   id          String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  /// List slug.
+  slug        String
   
   /// List title.
   title        String
@@ -274,6 +280,8 @@ model List {
 
   /// Update time of list.
   updatedAt   DateTime   @updatedAt
+
+  @@unique([slug, userId])
 }
 
 enum ListItemType {

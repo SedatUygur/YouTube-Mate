@@ -18,6 +18,7 @@ const tr = {
 	},
 	labels: {
 		title: 'Başlık',
+		slug: 'Slug',
 		description: 'Tanım',
 		visibility: 'Görünürlük',
 		views: '{0} görüntüleme',
@@ -32,6 +33,8 @@ const tr = {
 	},
 	errors: {
 		titleRequired: 'Başlık boş bırakılamaz.',
+		slugRequired: 'Slug boş olamaz.',
+		slugSpecialCharacters: 'Slug özel karakterler içeremez.',
 		descriptionRequired: 'Tanım boş bırakılamaz.',
 		notFound: 'Bulunamadı.',
 		listMinLength: 'Bir listede en az 1 kanal bulunmalıdır.',

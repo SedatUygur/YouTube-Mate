@@ -18,6 +18,7 @@ const de = {
 	},
 	labels: {
 		title: 'Titel',
+		slug: 'Slug',
 		description: 'Beschreibung',
 		visibility: 'Sichtweite',
 		views: '{0} aufrufe',
@@ -32,6 +33,8 @@ const de = {
 	},
 	errors: {
 		titleRequired: 'Der Titel darf nicht leer sein.',
+		slugRequired: 'Der Slug darf nicht leer sein.',
+		slugSpecialCharacters: 'Der Slug darf keine Sonderzeichen enthalten.',
 		descriptionRequired: 'Die Beschreibung darf nicht leer sein.',
 		notFound: 'Nicht gefunden.',
 		listMinLength: 'Eine Liste muss mindestens 1 Kanal enthalten.',

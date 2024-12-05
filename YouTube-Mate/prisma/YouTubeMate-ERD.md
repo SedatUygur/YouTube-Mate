@@ -44,6 +44,7 @@ erDiagram
   String scope "nullable"
   String idToken "nullable"
   String sessionState "nullable"
+  String username "nullable"
 }
 "Session" {
   String id PK
@@ -58,6 +59,7 @@ erDiagram
 }
 "List" {
   String id PK
+  String slug
   String title
   String description "nullable"
   Visibility visibility
@@ -164,6 +166,7 @@ This comment will get attached to the `Account` node in the AST
   - `scope`: Account scope.
   - `idToken`: Account token id.
   - `sessionState`: Account session state.
+  - `username`: Account user name.
 
 ### `Session`
 This comment will get attached to the `Session` node in the AST
@@ -187,6 +190,7 @@ This comment will get attached to the `List` node in the AST
 
 **Properties**
   - `id`: Primary Key.
+  - `slug`: List slug.
   - `title`: List title.
   - `description`: List description.
   - `visibility`: Visibility of list.

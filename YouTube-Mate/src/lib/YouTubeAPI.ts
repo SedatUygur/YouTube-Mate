@@ -261,3 +261,17 @@ export async function searchChannels(q: string) {
 	);
 	return results;
 }
+
+export async function getUserChannel(access_token: string) {
+	const { data } = await ytClient.channels.list({
+		access_token,
+		part: channelParts,
+		mine: true,
+		maxResults: 1,
+	});
+	const ytChannel = data.items?.pop();
+	if (ytChannel) {
+		return ytChannel;
+	}
+	return null;
+}

@@ -7,7 +7,7 @@ export const load: PageServerLoad = async (events) => {
 	let account;
 	let lists: ListWithItems[] = [];
 	const session = await events.locals.auth();
-	const locale = events.locals.locale;
+	//const locale = events.locals.locale;
 
 	if (session?.user) {
 		lists = (await prisma.list.findMany({
@@ -37,8 +37,9 @@ export const load: PageServerLoad = async (events) => {
 	}
 	return {
 		account,
-		session,
-		locale,
+		/*session,
+		locale,*/
 		lists,
+		user: events.locals.session?.user,
 	};
 };
