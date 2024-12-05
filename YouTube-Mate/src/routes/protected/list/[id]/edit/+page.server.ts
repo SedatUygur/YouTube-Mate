@@ -119,10 +119,6 @@ export const actions = {
 					return existing;
 				})
 			);
-			console.log(
-				'protected list id edit pageserver actions update username is ',
-				event.locals.session?.user?.username
-			);
 			return {
 				form,
 				success: true,
