@@ -62,7 +62,6 @@
 				<ViewCount {locale} viewCount={video.viewCount} />
 				<span>{formatRelativeDate(video.publishedAt, locale)}</span>
 			</div>
-			<!-- TODO: something better than ellipses... -->
 			<p class="my-2 line-clamp-2 break-words">{video.title}</p>
 			<p class="my-2 line-clamp-2 break-words">{video.description}</p>
 		</div>

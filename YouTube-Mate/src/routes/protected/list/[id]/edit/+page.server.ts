@@ -83,42 +83,43 @@ export const actions = {
 				},
 			});
 
-			// TODO: fail gracefully... use transactions... refactor this
-			await Promise.all(
-				channelIds.map(async (id) => {
-					let existing = await prisma.listItemMeta.findFirst({
-						where: {
-							originId: id,
-						},
-					});
-					if (!existing) {
-						const channel = await YouTubeAPI.getChannel(id);
-						if (channel) {
-							existing = await prisma.listItemMeta.create({
-								data: {
-									originId: id,
-									name: channel.name,
-									type: ListItemType.YouTubeChannel,
-									imageUrl: channel.avatarUrl,
-									youtubeMeta: {
-										create: channel,
+			await prisma.$transaction(async (prisma) => {
+				await Promise.all(
+					channelIds.map(async (id) => {
+						let existing = await prisma.listItemMeta.findFirst({
+							where: {
+								originId: id,
+							},
+						});
+						if (!existing) {
+							const channel = await YouTubeAPI.getChannel(id);
+							if (channel) {
+								existing = await prisma.listItemMeta.create({
+									data: {
+										originId: id,
+										name: channel.name,
+										type: ListItemType.YouTubeChannel,
+										imageUrl: channel.avatarUrl,
+										youtubeMeta: {
+											create: channel,
+										},
 									},
-								},
-							});
-						} else {
-							throw new Error(`Channel with id: ${id} not found.`);
+								});
+							} else {
+								throw new Error(`Channel with id: ${id} not found.`);
+							}
 						}
-					}
-					await prisma.listItem.create({
-						data: {
-							listId,
-							listItemMetaId: existing.id,
-							name: existing.name,
-						},
-					});
-					return existing;
-				})
-			);
+						await prisma.listItem.create({
+							data: {
+								listId,
+								listItemMetaId: existing.id,
+								name: existing.name,
+							},
+						});
+						return existing;
+					})
+				);
+			});
 			return {
 				form,
 				success: true,
@@ -131,7 +132,6 @@ export const actions = {
 			return fail(400, { error: message });
 		}
 	},
-	// TODO: share this function with edit / create
 	search: async (event: { request: { formData: () => any } }) => {
 		const formData = event.request.formData();
 		const q = (formData.get('search') || '').toString();

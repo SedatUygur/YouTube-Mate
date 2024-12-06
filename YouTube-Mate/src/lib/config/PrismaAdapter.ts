@@ -27,8 +27,6 @@ async function getAnnotatedUser(
 	return userWithUsername;
 }
 
-// TODO: make sure every user query that requires it is updated...
-// TODO: fix ts-ignores
 export default function CustomPrismaAdapter(client: PrismaClient): Adapter {
 	return {
 		...PrismaAdapter(client),

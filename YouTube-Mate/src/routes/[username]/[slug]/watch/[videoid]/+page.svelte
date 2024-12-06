@@ -1,6 +1,8 @@
 <script lang="ts">
 	/* eslint-disable import/no-unresolved */
 	/* eslint-disable import-x/no-duplicates */
+	/* eslint-disable @typescript-eslint/no-non-null-assertion */
+	/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 	/* eslint-disable @typescript-eslint/no-unsafe-argument */
 	/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 	/* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -13,9 +15,11 @@
 	import { page } from '$app/stores';
 	import { MessageSquareText, ThumbsUp } from 'lucide-svelte';
 	import { formatNumberCompact, formatRelativeDate, parseDescription } from '$lib/formatters';
+	import { inview, type ObserverEventDetails, type Options } from 'svelte-inview';
 	import VideoPlayerStore from '$lib/stores/VideoPlayerStore.ts';
 	import ViewCount from '$lib/components/ViewCount.svelte';
 	import YouTubeVideo from '$lib/components/YouTubeVideo.svelte';
+	import Avatar from '$lib/components/Avatar.svelte';
 
 	export let data;
 	export let username = $page.params.username;
@@ -57,10 +61,9 @@
 			behavior: 'smooth',
 		});
 		descriptionVisible = false;
-		// TODO: handle back navigation and set correct video id
 		VideoPlayerStore.set({
 			type: 'setVideoId',
-			value: $page.params.videoid,
+			value: navigation.to?.params?.videoid!,
 		});
 		const seconds = navigation.to?.url.searchParams.get('t');
 		if (seconds) {
@@ -79,6 +82,15 @@
 			});
 		}
 	};
+
+	let isInView;
+
+	const options: Options = {
+		rootMargin: '50px',
+		unobserveOnEnter: true,
+	};
+	const handleChange = ({ detail }: CustomEvent<ObserverEventDetails>) =>
+		(isInView = detail.inView);
 </script>
 
 <div bind:this={breadcrumbs} class="flex w-full flex-wrap gap-2 text-2xl">
@@ -106,7 +118,6 @@
 			<div bind:this={videoWrapperElement} class="aspect-video w-full">
 				<YouTubeVideo videoId={video.videoId} />
 			</div>
-			<!-- TODO: the stuff below formatted... and scroll into view -->
 			<div class="light:text-gray-200 unstyled card p-4 text-2xl dark:text-gray-400">
 				{#await channelPromise}
 					<span class="grid w-full place-items-center p-4">
@@ -114,12 +125,17 @@
 					</span>
 				{:then channel}
 					{#if channel}
-						<div class="mb-2 flex items-center gap-2">
-							<img
-								class="mr-1 inline-block h-12 w-12 rounded-full"
-								referrerpolicy="no-referrer"
-								src={channel.meta.imageUrl}
-								alt={channel.name} />
+						<div
+							use:inview={options}
+							on:inview_change={handleChange}
+							class="mb-2 flex items-center gap-2">
+							{#if isInView}
+								<Avatar
+									avatarUrl={channel.meta.imageUrl}
+									altText={channel.name}
+									channelId={channel.id.toString()}
+									listId={data.list.id} />
+							{/if}
 							<div class="font-bold">{channel.name}</div>
 						</div>
 					{/if}

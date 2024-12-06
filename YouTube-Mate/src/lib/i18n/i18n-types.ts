@@ -127,6 +127,46 @@ type RootTranslation = {
 		 * P​l​e​a​s​e​ ​w​a​i​t​.​.​.
 		 */
 		pleaseWait: string
+		/**
+		 * N​o​ ​t​i​t​l​e
+		 */
+		noTitle: string
+		/**
+		 * N​o​ ​d​e​s​c​r​i​p​t​i​o​n
+		 */
+		noDescription: string
+		/**
+		 * N​o​ ​c​o​u​n​t​r​y​ ​c​o​d​e
+		 */
+		noCountryCode: string
+		/**
+		 * N​o​ ​f​a​v​o​r​i​t​e​ ​p​l​a​y​l​i​s​t​s
+		 */
+		noFavoritePlaylists: string
+		/**
+		 * N​o​ ​l​i​k​e​s​ ​p​l​a​y​l​i​s​t​s
+		 */
+		noLikesPlaylists: string
+		/**
+		 * N​o​ ​u​p​l​o​a​d​e​d​ ​p​l​a​y​l​i​s​t​s
+		 */
+		noUploadedPlaylists: string
+		/**
+		 * N​o​ ​w​a​t​c​h​ ​h​i​s​t​o​r​y​ ​p​l​a​y​l​i​s​t​s
+		 */
+		noWatchHistoryPlaylists: string
+		/**
+		 * N​o​ ​w​a​t​c​h​ ​l​a​t​e​r​ ​p​l​a​y​l​i​s​t​s
+		 */
+		noWatchLaterPlaylists: string
+		/**
+		 * N​o​ ​c​a​t​e​g​o​r​y​ ​i​d
+		 */
+		noCategoryId: string
+		/**
+		 * N​o​ ​c​h​a​n​n​e​l​ ​t​i​t​l​e
+		 */
+		noChannelTitle: string
 	}
 	pages: {
 		root: {
@@ -306,6 +346,46 @@ export type TranslationFunctions = {
 		 * Please wait...
 		 */
 		pleaseWait: () => LocalizedString
+		/**
+		 * No title
+		 */
+		noTitle: () => LocalizedString
+		/**
+		 * No description
+		 */
+		noDescription: () => LocalizedString
+		/**
+		 * No country code
+		 */
+		noCountryCode: () => LocalizedString
+		/**
+		 * No favorite playlists
+		 */
+		noFavoritePlaylists: () => LocalizedString
+		/**
+		 * No likes playlists
+		 */
+		noLikesPlaylists: () => LocalizedString
+		/**
+		 * No uploaded playlists
+		 */
+		noUploadedPlaylists: () => LocalizedString
+		/**
+		 * No watch history playlists
+		 */
+		noWatchHistoryPlaylists: () => LocalizedString
+		/**
+		 * No watch later playlists
+		 */
+		noWatchLaterPlaylists: () => LocalizedString
+		/**
+		 * No category id
+		 */
+		noCategoryId: () => LocalizedString
+		/**
+		 * No channel title
+		 */
+		noChannelTitle: () => LocalizedString
 	}
 	pages: {
 		root: {

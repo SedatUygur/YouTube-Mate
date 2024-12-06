@@ -41,6 +41,16 @@ const de = {
 	},
 	messages: {
 		pleaseWait: 'Bitte warten...',
+		noTitle: 'Kein Titel',
+		noDescription: 'Keine Beschreibung',
+		noCountryCode: 'Kein Ländercode',
+		noFavoritePlaylists: 'Keine Lieblings-Playlists',
+		noLikesPlaylists: 'Keine „Gefällt mir“-Playlists',
+		noUploadedPlaylists: 'Keine hochgeladenen Playlists',
+		noWatchHistoryPlaylists: 'Keine Playlists mit Wiedergabeverlauf',
+		noWatchLaterPlaylists: 'Keine „Später ansehen“-Playlists',
+		noCategoryId: 'Keine Kategorie-ID',
+		noChannelTitle: 'Kein Kanaltitel',
 	},
 	pages: {
 		root: {

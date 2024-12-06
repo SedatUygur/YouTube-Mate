@@ -11,7 +11,6 @@ import { getList } from '$/lib/queries';
 
 export async function load({ params, locals }) {
 	try {
-		// TODO: handle visibility
 		const { list, channelIds } = await getList({
 			username: params.username,
 			slug: params.slug,
@@ -27,9 +26,9 @@ export async function load({ params, locals }) {
 		}
 	} catch (e: unknown) {
 		if (typeof e === 'string') {
-			e.toUpperCase(); // works, `e` narrowed to string
+			e.toUpperCase(); // `e` narrowed to string
 		} else if (e instanceof Error) {
-			console.error(e.message); // works, `e` narrowed to Error
+			console.error(e.message); // `e` narrowed to Error
 		}
 	}
 	setLocale(locals.locale);

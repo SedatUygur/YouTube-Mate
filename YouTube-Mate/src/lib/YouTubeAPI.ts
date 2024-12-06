@@ -1,15 +1,20 @@
+/* eslint-disable import/no-unresolved */
 import { youtube, type youtube_v3 } from '@googleapis/youtube';
 import type { YouTubeMeta } from '@prisma/client';
 import { config } from './config/config.server.ts';
 import redisClient from './config/redis.client.ts';
+import { LL } from './i18n/i18n-svelte.ts';
+import { get } from 'svelte/store';
+
+const channelParts = ['id', 'brandingSettings', 'contentDetails', 'snippet', 'statistics'];
+const searchParts = ['id', 'snippet'];
+
+const $LL = get(LL);
 
 const ytClient = youtube({
 	version: 'v3',
 	auth: config.YOUTUBE_API_KEY,
 });
-
-const channelParts = ['id', 'brandingSettings', 'contentDetails', 'snippet', 'statistics'];
-const searchParts = ['id', 'snippet'];
 
 export type YouTubeChannelMetaAPIResponse = Omit<
 	YouTubeMeta,
@@ -65,24 +70,26 @@ export function createYouTubeMetaAPIResponse(originId: string, channel: youtube_
 	const subscriberCount = Number.isNaN(subscriberCountNumber) ? 0 : subscriberCountNumber;
 	const videoCount = channel.statistics?.videoCount ? Number(channel.statistics.videoCount) : 0;
 	const viewCount = channel.statistics?.viewCount ? Number(channel.statistics.viewCount) : 0;
-	// TODO: i18n
-	const name = channel.snippet?.title ?? 'No title';
-	const description = channel.snippet?.description ?? 'No description';
-	const countryCode = channel.snippet?.country ?? 'No country';
-	// TODO: use our own avatar service
+
+	const name = channel.snippet?.title ?? $LL.messages.noTitle();
+	const description = channel.snippet?.description ?? $LL.messages.noDescription();
+	const countryCode = channel.snippet?.country ?? $LL.messages.noCountryCode();
+
 	const avatarUrl =
 		channel.snippet?.thumbnails?.default?.url ?? `https://ui-avatars.com/api/?name=${name}`;
 	const bannerUrl = channel.brandingSettings?.image?.bannerImageUrl ?? null;
 	const customUrl = channel.snippet?.customUrl ?? '@notfound';
 	const favoritesPlaylist =
-		channel.contentDetails?.relatedPlaylists?.favorites ?? 'No favorite playlists';
-	const likesPlaylist = channel.contentDetails?.relatedPlaylists?.likes ?? 'No like playlists';
+		channel.contentDetails?.relatedPlaylists?.favorites ?? $LL.messages.noFavoritePlaylists();
+	const likesPlaylist =
+		channel.contentDetails?.relatedPlaylists?.likes ?? $LL.messages.noLikesPlaylists();
 	const uploadsPlaylist =
-		channel.contentDetails?.relatedPlaylists?.uploads ?? 'No uploaded playlists';
+		channel.contentDetails?.relatedPlaylists?.uploads ?? $LL.messages.noUploadedPlaylists();
 	const watchHistoryPlaylist =
-		channel.contentDetails?.relatedPlaylists?.watchHistory ?? 'No watch history playlists';
+		channel.contentDetails?.relatedPlaylists?.watchHistory ??
+		$LL.messages.noWatchHistoryPlaylists();
 	const watchLaterPlaylist =
-		channel.contentDetails?.relatedPlaylists?.watchLater ?? 'No watch later playlists';
+		channel.contentDetails?.relatedPlaylists?.watchLater ?? $LL.messages.noWatchLaterPlaylists();
 	return {
 		name,
 		originId,
@@ -143,24 +150,23 @@ async function getAllVideos(
 		videoData.items?.forEach((video) => {
 			if (video.id) {
 				const videoResponse = {
-					// TODO: i18n
-					categoryId: video.snippet?.categoryId ?? 'No Category Id',
+					categoryId: video.snippet?.categoryId ?? $LL.messages.noCategoryId(),
 					channelId,
-					channelTitle: video.snippet?.channelTitle ?? 'No Channel Title',
+					channelTitle: video.snippet?.channelTitle ?? $LL.messages.noChannelTitle(),
 					commentCount: parseYTNumber(video.statistics?.commentCount),
 					definition: video.contentDetails?.definition
 						? video.contentDetails.definition.toUpperCase()
 						: '',
 					defaultLanguage: video.snippet?.defaultLanguage ?? '',
 					defaultAudioLanguage: video.snippet?.defaultAudioLanguage ?? '',
-					description: video.snippet?.description ?? 'No Video Description',
+					description: video.snippet?.description ?? $LL.messages.noDescription(),
 					duration: video.contentDetails?.duration ?? 'PT0S',
 					favoriteCount: parseYTNumber(video.statistics?.favoriteCount),
 					licensedContent: video.contentDetails?.licensedContent ?? false,
 					likeCount: parseYTNumber(video.statistics?.likeCount),
 					live: video.snippet?.liveBroadcastContent === 'live',
 					tags: video.snippet?.tags ?? [],
-					title: video.snippet?.title ?? 'No Video Title',
+					title: video.snippet?.title ?? $LL.messages.noTitle(),
 					upcoming: video.snippet?.liveBroadcastContent === 'upcoming',
 					videoId: video.id,
 					viewCount: parseYTNumber(video.statistics?.viewCount),
@@ -222,7 +228,6 @@ export async function getVideos(channelIds: string[]) {
 }
 
 export async function searchChannels(q: string) {
-	// TODO: proxy, cache and use an API Key pool...
 	const { data: searchResults } = await ytClient.search.list({
 		part: searchParts,
 		q,

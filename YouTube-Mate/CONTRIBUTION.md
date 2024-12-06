@@ -26,7 +26,7 @@ Then, install the project's dependencies:
 npm install
 ```
 
-### Set up the database
+### Database Setup
 
 This project uses [PostgreSQL](https://www.postgresql.org/) as its database.
 
@@ -64,7 +64,7 @@ DB_PORT=5432
 
 - DATABASE_URL: The full database connection URL. This is required and is used by prisma.
 
-#### Set up PostgreSQL by Docker Compose
+#### PostgreSQL Setup by Docker Compose
 
 If you have [Docker](https://www.docker.com/) installed, you can use the following command to start a PostgreSQL container:
 
@@ -154,15 +154,83 @@ In order to maintain consistent and readable code, this project adheres to certa
 ### Linter
 
 This project uses `ESLint` as our linter tool. To configure your VSCode workspace to show lint warnings, you can find a suggested configuration file, named `default.settings.json`, in the `.vscode` directory. Copy and rename this file to `settings.json` to enable the linter warnings in VSCode. Please do not alter the original `default.settings.json`.
-To further improve your development experience while working on `listd`, this project also includes a list of suggested VSCode extensions in the file `.vscode/extensions.json`.
+To further improve your development experience while working on `YoutubeMate`, this project also includes a list of suggested VSCode extensions in the file `.vscode/extensions.json`.
+
+### ESLint Setup and Config
+
+Prerequisites: Node.js (^18.18.0, ^20.9.0, or >=21.1.0) built with SSL support. (If you are using an official Node.js distribution, SSL is always built in.)
+
+You can install and configure ESLint using this command:
+
+```bash
+npm init @eslint/config@latest
+```
+
+After that, you can run ESLint on any file or directory like this:
+
+```bash
+npx eslint yourfile.js
+```
+
+You can configure rules in your eslint.config.js files as in this example:
+
+```bash
+export default [
+    {
+        files: ["**/*.js", "**/*.cjs", "**/*.mjs"],
+        rules: {
+            "prefer-const": "warn",
+            "no-constant-binary-expression": "error"
+        }
+    }
+];
+```
 
 ### Formatter
 
 This project uses [Prettier](https://prettier.io/) to format the code. You can run `npm run format:fix` to format the code before committing.
 
-<!-- TODO: setup eslint -->
-<!-- TODO: setup github actions to run linter -->
-<!-- TODO: setup pre-commit hooks to run linter -->
+### Github Actions Setup
+
+To get started with preconfigured workflows, browse through the list of templates in the actions/starter-workflows repository. For more information, see "Using workflow templates."
+
+For an overview of GitHub Actions workflows, see "About workflows." If you want to learn about the various components that make up GitHub Actions, see "Understanding GitHub Actions."
+
+#### Creating your first workflow
+
+In your repository on GitHub, create a workflow file called github-actions-demo.yml in the .github/workflows directory. To do this:
+
+If the .github/workflows directory already exists, navigate to that directory on GitHub, click Add file, then click Create new file, and name the file github-actions-demo.yml.
+
+If your repository doesn't have a .github/workflows directory, go to the main page of the repository on GitHub, click Add file, then click Create new file, and name the file .github/workflows/github-actions-demo.yml. This creates the .github and workflows directories and the github-actions-demo.yml file in a single step.
+
+Note
+
+For GitHub to discover any GitHub Actions workflows in your repository, you must save the workflow files in a directory called .github/workflows.
+
+You can give the workflow file any name you like, but you must use .yml or .yaml as the file name extension. YAML is a markup language that's commonly used for configuration files.
+
+Add YAML contents into the github-actions-demo.yml file
+
+Click Commit changes.
+
+In the "Propose changes" dialog, select either the option to commit to the default branch or the option to create a new branch and start a pull request. Then click Commit changes or Propose changes.
+
+### Husky Setup
+
+Install
+
+```bash
+npm install --save-dev husky
+```
+
+husky init (recommended)
+
+The init command simplifies setting up husky in a project. It creates a pre-commit script in .husky/ and updates the prepare script in package.json. Modifications can be made later to suit your workflow.
+
+```bash
+npx husky init
+```
 
 ## License
 

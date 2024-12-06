@@ -41,6 +41,16 @@ const tr = {
 	},
 	messages: {
 		pleaseWait: 'Lütfen bekleyiniz...',
+		noTitle: 'Başlık yok',
+		noDescription: 'Açıklama yok',
+		noCountryCode: 'Ülke kodu yok',
+		noFavoritePlaylists: 'Favori oynatma listesi yok',
+		noLikesPlaylists: 'Beğenilen oynatma listesi yok',
+		noUploadedPlaylists: 'Yüklenmiş oynatma listesi yok',
+		noWatchHistoryPlaylists: 'İzleme geçmişi oynatma listesi yok',
+		noWatchLaterPlaylists: 'Daha sonra izle oynatma listesi yok',
+		noCategoryId: 'Kategori id yok',
+		noChannelTitle: 'Kanal başlığı yok',
 	},
 	pages: {
 		root: {

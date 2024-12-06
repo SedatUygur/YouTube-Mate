@@ -4,7 +4,7 @@ import type { Visibility } from '@prisma/client';
 type VisibilityTranslation = Record<Visibility, string>;
 
 const en = {
-	// TODO: your translations go here
+	// you can add your translations here
 	message: 'Hello World',
 	buttons: {
 		create: 'Create',
@@ -41,6 +41,16 @@ const en = {
 	},
 	messages: {
 		pleaseWait: 'Please wait...',
+		noTitle: 'No title',
+		noDescription: 'No description',
+		noCountryCode: 'No country code',
+		noFavoritePlaylists: 'No favorite playlists',
+		noLikesPlaylists: 'No likes playlists',
+		noUploadedPlaylists: 'No uploaded playlists',
+		noWatchHistoryPlaylists: 'No watch history playlists',
+		noWatchLaterPlaylists: 'No watch later playlists',
+		noCategoryId: 'No category id',
+		noChannelTitle: 'No channel title',
 	},
 	pages: {
 		root: {
